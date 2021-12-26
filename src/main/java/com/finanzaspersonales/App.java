@@ -3,7 +3,8 @@ package com.finanzaspersonales;
 import com.finanzaspersonales.model.Category;
 import com.finanzaspersonales.model.Transaction;
 import com.finanzaspersonales.model.TransactionType;
-import com.finanzaspersonales.view.AbstractView;
+import com.finanzaspersonales.presenter.Action;
+import com.finanzaspersonales.presenter.Presenter;
 import com.finanzaspersonales.view.MainView;
 import org.fusesource.jansi.AnsiConsole;
 
@@ -19,15 +20,34 @@ public class App
     public static List<Category> expenseCategories;
     public static List<Category> incomeCategories;
 
+    public static MainView activeView;
+    public static Presenter activePresenter;
+
     public static void main( String[] args )
     {
         startJansi();
 
-        MainView mainScreen = new MainView();
-        mainScreen.initialize();
-
         populateCategories();
         populateTransactions();
+
+        MainView mainView = MainView.getMainView();
+        mainView.initialize();
+        activeView = mainView;
+        activePresenter = activeView.getPresenter();
+
+        Action action = activePresenter.handleInput();
+
+        while (action.actionType != Action.ActionType.EXIT) {
+            if (action.actionType == Action.ActionType.NAVIGATION) {
+                activeView = action.nextView;
+                activeView.initialize();
+                activePresenter = activeView.getPresenter();
+            }
+
+            action = activePresenter.handleInput();
+        }
+
+        exit();
     }
 
     public static void populateCategories() {
@@ -77,5 +97,9 @@ public class App
     public static void startJansi() {
         System.setProperty("jansi.passthrough", "true");
         AnsiConsole.systemInstall();
+    }
+
+    public static void exit() {
+        System.exit(0);
     }
 }
