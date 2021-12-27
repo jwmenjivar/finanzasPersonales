@@ -1,5 +1,6 @@
 package com.finanzaspersonales.presenter;
 
+import com.finanzaspersonales.model.Database;
 import com.finanzaspersonales.view.MainView;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,6 +16,7 @@ import java.util.List;
  * @since 1.0
  */
 public abstract class Presenter {
+  public static Database db;
   protected List<MenuItem> menuItems;
 
   /**

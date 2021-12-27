@@ -1,8 +1,13 @@
 package com.finanzaspersonales.presenter;
 
-import com.finanzaspersonales.view.*;
+import com.finanzaspersonales.view.BudgetView;
+import com.finanzaspersonales.view.CategoryView;
+import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.ReportView;
+import com.finanzaspersonales.view.TransactionView;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,7 +46,8 @@ public class MainPresenter extends Presenter {
 
     // TODO: retrieve the top 10 transactions with date of today
     toDisplay += UIFormatter.titleStyle("Today's transactions");
-    toDisplay += TransactionFormatter.transactionsTable(new ArrayList<>());
+    toDisplay += TransactionFormatter.transactionsTable(
+        Presenter.db.getTransactionsByDate(LocalDate.now()));
     toDisplay = UIFormatter.addNewLine(toDisplay);
 
     /* MENU */

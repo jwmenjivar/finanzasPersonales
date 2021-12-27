@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.jetbrains.annotations.NotNull;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -23,13 +24,13 @@ public class Transaction {
   @Setter
   private Category category;
   @Setter
-  private Date date;
+  private LocalDate date;
   private TransactionType type;
   private double amount;
   private final String uniqueID;
 
   private Transaction() {
-    this.date = new Date();
+    this.date = LocalDate.now();
     this.uniqueID = UUID.randomUUID().toString();
   }
 

@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -28,7 +29,6 @@ public class TransactionFormatter {
   private static final String CATEGORY_H = "Category";
   private static final String DESCRIPTION_H = "Description";
   private static final String NO_TRANSACTIONS = "<No transactions>";
-  private static final String SIMPLE_DATE = "dd-MM-yy";
   private static final NumberFormat AMOUNT_FORMAT = NumberFormat.getCurrencyInstance();
 
   private TransactionFormatter() {}
@@ -41,11 +41,11 @@ public class TransactionFormatter {
    */
   public static String transactionInline(@NotNull Transaction transaction) {
     // date type description category amount
-    String formatted = "%s %s  %s %s %s";
+    String formatted = "%s %s %s %s %s";
+    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
+
     return String.format(formatted,
-        formatInlineText(
-            new SimpleDateFormat(SIMPLE_DATE).format(transaction.getDate()),
-            DATE_SPACE),
+        formatInlineText(transaction.getDate().format(dateTimeFormatter), DATE_SPACE),
         formatAmountType(formatInlineAmount(transaction.getAmount()), transaction.getType()),
         formatInlineText(transaction.getType().toString(), TYPE_SPACE),
         formatInlineText(transaction.getCategory().getName(), TEXT_SPACE),
@@ -60,7 +60,7 @@ public class TransactionFormatter {
    * @return Multiline ANSI String with a table of transactions
    */
   @NotNull
-  public static String transactionsTable(@NotNull List<Transaction> transactions) {
+  public static String transactionsTable(@NotNull Transaction[] transactions) {
     StringBuilder formatted = new StringBuilder();
 
     // format the header
@@ -75,7 +75,7 @@ public class TransactionFormatter {
             Ansi.ansi().bold().a(UIFormatter.center(DESCRIPTION_H.toUpperCase(), TEXT_SPACE))))
             .reset().toString()).append("\n");
 
-    if (!transactions.isEmpty()) {
+    if (transactions.length > 0) {
       int count = 1;
 
       for (Transaction t : transactions) {
@@ -109,7 +109,7 @@ public class TransactionFormatter {
         detailFormat,
         Ansi.ansi().bold().fgBrightDefault().a(
             formatInlineText(DATE_H + ":", DETAIL_SPACE)).reset().toString(),
-        new SimpleDateFormat(SIMPLE_DATE).format(transaction.getDate()));
+        transaction.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
     formatted += String.format(
         detailFormat,
         Ansi.ansi().bold().fgBrightDefault().a(

@@ -41,7 +41,7 @@ public class UIFormatter {
       return " ".repeat(spacing) + text + " ".repeat(spacing);
     }
 
-    return addNewLine(text);
+    return text;
   }
 
   /**
@@ -60,7 +60,7 @@ public class UIFormatter {
       text += " ".repeat(offset);
     }
 
-    return addNewLine(text);
+    return text;
   }
 
   /**
@@ -102,7 +102,7 @@ public class UIFormatter {
       text = temp + text;
     }
 
-    return addNewLine(text);
+    return text;
   }
 
   /**
