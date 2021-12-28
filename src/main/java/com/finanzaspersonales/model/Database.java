@@ -29,13 +29,28 @@ public interface Database {
 
   /**
    * Saves a transaction to the DB.
-   * @param t
    */
   void saveTransaction(Transaction t);
 
   /**
+   * Deletes the transaction with the same UUID.
+   * @param id UUID String
+   */
+  void deleteTransaction(String id);
+
+  /**
+   * Deletes all the transactions in the DB.
+   */
+  void deleteAllTransactions();
+
+  /**
+   * Verifies if a transaction exists
+   * @param id UUID String
+   */
+  boolean transactionExists(String id);
+
+  /**
    * Returns the database implementation.
-   * @return
    */
   @NotNull
   @Contract(" -> new")

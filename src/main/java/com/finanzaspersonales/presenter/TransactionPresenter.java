@@ -3,8 +3,6 @@ package com.finanzaspersonales.presenter;
 import com.finanzaspersonales.view.MainView;
 import com.finanzaspersonales.view.TransactionView;
 
-import java.util.List;
-
 public class TransactionPresenter extends Presenter {
   private final TransactionView transactionView;
 
@@ -29,6 +27,9 @@ public class TransactionPresenter extends Presenter {
             "Show",
             "Show recorded transactions."),
         new MenuItem(
+            "Delete",
+            "Delete recorded transactions."),
+        new MenuItem(
             "Back",
             "Back to the main menu.")};
     toDisplay += UIFormatter.titleStyle("Transactions menu");
@@ -42,7 +43,7 @@ public class TransactionPresenter extends Presenter {
 
   @Override
   public Action handleInput() {
-    String menuOption = MenuHandler.handleMenuOption(
+    String menuOption = MenuHandler.handleMenu(
         this.menuItems, this.transactionView);
     Action action = new Action();
 
@@ -52,7 +53,6 @@ public class TransactionPresenter extends Presenter {
 
         action.actionType = Action.ActionType.NAVIGATION;
         action.nextView = this.transactionView;
-
         return action;
       }
       case "Show" -> {
@@ -60,7 +60,13 @@ public class TransactionPresenter extends Presenter {
 
         action.actionType = Action.ActionType.NAVIGATION;
         action.nextView = this.transactionView;
+        return action;
+      }
+      case "Delete" -> {
+        DeleteTransaction.delete(this.transactionView);
 
+        action.actionType = Action.ActionType.NAVIGATION;
+        action.nextView = this.transactionView;
         return action;
       }
       case "Back" -> {

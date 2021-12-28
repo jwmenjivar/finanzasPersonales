@@ -60,6 +60,17 @@ public class InputReader {
     throw new InputMismatchException("Can not recognize the option.");
   }
 
+  @NotNull
+  public static String readYesOrNo() throws InputMismatchException {
+    String in = scanner.nextLine();
+
+    if (in.equals("Y") || in.equals("y") || in.equals("N") || in.equals("n")) {
+      return in;
+    }
+
+    throw new InputMismatchException("Input yes (Y/y) or no (N/n).");
+  }
+
   /**
    * Reads a double.
    */

@@ -242,6 +242,17 @@ public class UIFormatter {
   }
 
   /**
+   * Formats a message with the warning style.
+   * Error style: Bright yello color and italic.
+   * @param message String with no ANSI sequence
+   * @return ANSI String with formatted message
+   */
+  public static String warningStyle(String message) {
+    return Ansi.ansi().fgBrightYellow().bold()
+        .a(Ansi.Attribute.ITALIC).a(message).reset().toString();
+  }
+
+  /**
    * Adds a new line to the end of a String.
    * @return String with a new line at the end
    */

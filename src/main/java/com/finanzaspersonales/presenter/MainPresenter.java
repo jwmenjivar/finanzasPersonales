@@ -87,7 +87,7 @@ public class MainPresenter extends Presenter {
    */
   @Override
   public Action handleInput() {
-    String menuOption = MenuHandler.handleMenuOption(
+    String menuOption = MenuHandler.handleMenu(
         this.menuItems, this.mainView);
 
     switch (menuOption) {

@@ -3,8 +3,6 @@ package com.finanzaspersonales.presenter;
 import com.finanzaspersonales.view.CategoryView;
 import com.finanzaspersonales.view.MainView;
 
-import java.util.List;
-
 public class CategoryPresenter extends Presenter {
   private final CategoryView categoryView;
 
@@ -36,7 +34,7 @@ public class CategoryPresenter extends Presenter {
 
   @Override
   public Action handleInput() {
-    String menuOption = MenuHandler.handleMenuOption(
+    String menuOption = MenuHandler.handleMenu(
         this.menuItems, this.categoryView);
     Action action = new Action();
 

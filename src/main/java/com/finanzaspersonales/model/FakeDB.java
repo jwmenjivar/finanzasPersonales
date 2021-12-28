@@ -49,6 +49,25 @@ class FakeDB implements Database {
     transactions.add(t);
   }
 
+  @Override
+  public void deleteTransaction(String id) {
+    Optional<Transaction> t = transactions.stream()
+        .filter(transaction -> transaction.getUniqueID().equals(id)).findFirst();
+
+    t.ifPresent(transaction -> transactions.remove(transaction));
+  }
+
+  @Override
+  public void deleteAllTransactions() {
+    transactions.clear();
+  }
+
+  @Override
+  public boolean transactionExists(String id) {
+    return transactions.stream().anyMatch(
+        transaction -> transaction.getUniqueID().equals(id));
+  }
+
   public static FakeDB getInstance() {
     if (instance == null) {
       instance = new FakeDB();

@@ -3,8 +3,6 @@ package com.finanzaspersonales.presenter;
 import com.finanzaspersonales.view.BudgetView;
 import com.finanzaspersonales.view.MainView;
 
-import java.util.List;
-
 public class BudgetPresenter extends Presenter {
   private final BudgetView budgetView;
 
@@ -36,7 +34,7 @@ public class BudgetPresenter extends Presenter {
 
   @Override
   public Action handleInput() {
-    String menuOption = MenuHandler.handleMenuOption(
+    String menuOption = MenuHandler.handleMenu(
         this.menuItems, this.budgetView);
     Action action = new Action();
 

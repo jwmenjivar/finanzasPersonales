@@ -3,8 +3,6 @@ package com.finanzaspersonales.presenter;
 import com.finanzaspersonales.view.MainView;
 import com.finanzaspersonales.view.ReportView;
 
-import java.util.List;
-
 public class ReportPresenter extends Presenter {
   private final ReportView reportView;
 
@@ -36,7 +34,7 @@ public class ReportPresenter extends Presenter {
 
   @Override
   public Action handleInput() {
-    String menuOption = MenuHandler.handleMenuOption(
+    String menuOption = MenuHandler.handleMenu(
         this.menuItems, this.reportView);
     Action action = new Action();
 

@@ -3,6 +3,7 @@ package com.finanzaspersonales.presenter;
 import com.finanzaspersonales.view.MainView;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.InputMismatchException;
 
 public class MenuHandler {
@@ -13,7 +14,7 @@ public class MenuHandler {
    * @param view Presenter view
    * @return Menu item name
    */
-  protected static String handleMenuOption(@NotNull MenuItem[] menuItems, @NotNull MainView view) {
+  public static String handleMenu(@NotNull MenuItem[] menuItems, @NotNull MainView view) {
     String item = "";
 
     try {
@@ -27,5 +28,20 @@ public class MenuHandler {
     }
 
     return item;
+  }
+
+  public static boolean handleYesNo(@NotNull MainView view) {
+    String choice = "";
+    while (choice.isEmpty()) {
+      try {
+        view.appendWithoutNewline(UIFormatter.promptStyle("Enter choice", "Y/N"));
+        choice = InputReader.readYesOrNo();
+      } catch (InputMismatchException e) {
+        view.appendWithNewLine(UIFormatter.errorStyle(e.getMessage()));
+        choice = "";
+      }
+    }
+
+    return Arrays.asList("Y", "y").contains(choice);
   }
 }

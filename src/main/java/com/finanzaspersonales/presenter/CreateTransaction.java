@@ -46,7 +46,7 @@ public class CreateTransaction {
 
     String input = "";
     while (input.isEmpty()) {
-      input = MenuHandler.handleMenuOption(menuItems, view);
+      input = MenuHandler.handleMenu(menuItems, view);
     }
 
     if (input.equals("Income")) {
@@ -70,7 +70,7 @@ public class CreateTransaction {
 
     String input = "";
     while (input.isEmpty()) {
-      input = MenuHandler.handleMenuOption(menuItems, view);
+      input = MenuHandler.handleMenu(menuItems, view);
     }
     String finalInput = input;
     Optional<Category> optionalCategory = Arrays.stream(categories).filter(category1 ->
@@ -116,7 +116,7 @@ public class CreateTransaction {
 
     String input = "";
     while (input.isEmpty()) {
-      input = MenuHandler.handleMenuOption(menuItems, view);
+      input = MenuHandler.handleMenu(menuItems, view);
     }
 
     if (input.equals("Today")) {

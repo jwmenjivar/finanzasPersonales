@@ -19,7 +19,7 @@ public class ShowTransactions {
 
     String input = "";
     while (input.isEmpty()) {
-      input = MenuHandler.handleMenuOption(menuItems, view);
+      input = MenuHandler.handleMenu(menuItems, view);
     }
 
     if (input.equals("Summarized")) {
