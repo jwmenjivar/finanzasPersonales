@@ -1,6 +1,6 @@
 package com.finanzaspersonales.presenter.input;
 
-import com.finanzaspersonales.presenter.MenuItem;
+import com.finanzaspersonales.presenter.ui.MenuItem;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 

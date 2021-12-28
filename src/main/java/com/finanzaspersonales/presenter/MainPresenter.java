@@ -2,6 +2,9 @@ package com.finanzaspersonales.presenter;
 
 import com.finanzaspersonales.model.Database;
 import com.finanzaspersonales.presenter.input.MenuInput;
+import com.finanzaspersonales.presenter.ui.MenuItem;
+import com.finanzaspersonales.presenter.ui.TransactionFormatter;
+import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.BudgetView;
 import com.finanzaspersonales.view.CategoryView;
 import com.finanzaspersonales.view.MainView;
@@ -87,7 +90,7 @@ public class MainPresenter extends Presenter {
    * @return Action for the app to handle
    */
   @Override
-  public Action handleInput() {
+  public Action chooseOperation() {
     String menuOption = MenuInput.handleMenu(
         this.menuItems, this.mainView);
 

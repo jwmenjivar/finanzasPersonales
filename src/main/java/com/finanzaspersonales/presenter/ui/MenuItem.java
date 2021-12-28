@@ -1,4 +1,4 @@
-package com.finanzaspersonales.presenter;
+package com.finanzaspersonales.presenter.ui;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

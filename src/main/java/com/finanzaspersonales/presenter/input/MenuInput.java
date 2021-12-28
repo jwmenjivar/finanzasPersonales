@@ -1,7 +1,7 @@
 package com.finanzaspersonales.presenter.input;
 
-import com.finanzaspersonales.presenter.MenuItem;
-import com.finanzaspersonales.presenter.UIFormatter;
+import com.finanzaspersonales.presenter.ui.MenuItem;
+import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.MainView;
 import org.jetbrains.annotations.NotNull;
 

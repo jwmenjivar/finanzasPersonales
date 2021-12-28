@@ -58,6 +58,11 @@ class FakeDB implements Database {
   }
 
   @Override
+  public void updateTransaction(Transaction t) {
+    /* Doesn't really do anything lol */
+  }
+
+  @Override
   public void deleteTransaction(String id) {
     Optional<Transaction> t = transactions.stream()
         .filter(transaction -> transaction.getUniqueID().equals(id)).findFirst();

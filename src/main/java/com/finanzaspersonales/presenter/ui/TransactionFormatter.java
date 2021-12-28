@@ -1,4 +1,4 @@
-package com.finanzaspersonales.presenter;
+package com.finanzaspersonales.presenter.ui;
 
 import com.finanzaspersonales.model.Transaction;
 import com.finanzaspersonales.model.TransactionType;
@@ -7,9 +7,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 /**
  * Utility class that uses 'jansi' to format the way transactions are displayed
@@ -26,12 +24,12 @@ public class TransactionFormatter {
   private static final int TEXT_SPACE = 20;
   private static final int DETAIL_SPACE = 15;
   private static final int ID_SPACE = 4;
-  private static final String DATE_H = "Date";
-  private static final String AMOUNT_H = "Amount";
-  private static final String TYPE_H = "Type";
-  private static final String ID_H = "Transaction ID";
-  private static final String CATEGORY_H = "Category";
-  private static final String DESCRIPTION_H = "Description";
+  public static final String DATE_H = "Date";
+  public static final String AMOUNT_H = "Amount";
+  public static final String TYPE_H = "Type";
+  public static final String ID_H = "Transaction ID";
+  public static final String CATEGORY_H = "Category";
+  public static final String DESCRIPTION_H = "Description";
   private static final String NO_TRANSACTIONS = "<No transactions>";
   private static final NumberFormat AMOUNT_FORMAT = NumberFormat.getCurrencyInstance();
 

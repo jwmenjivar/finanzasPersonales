@@ -1,14 +1,25 @@
 package com.finanzaspersonales.presenter;
 
 import com.finanzaspersonales.presenter.input.MenuInput;
+import com.finanzaspersonales.presenter.operations.*;
+import com.finanzaspersonales.presenter.ui.MenuItem;
+import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.MainView;
 import com.finanzaspersonales.view.TransactionView;
 
 public class TransactionPresenter extends Presenter {
   private final TransactionView transactionView;
+  private final CreateTransaction createTransaction;
+  private final UpdateTransaction updateTransaction;
+  private final DeleteTransaction deleteTransaction;
+  private final ShowTransactions showTransactions;
 
   public TransactionPresenter(TransactionView transactionView) {
     this.transactionView = transactionView;
+    createTransaction = new CreateTransaction(this.transactionView);
+    updateTransaction = new UpdateTransaction(this.transactionView);
+    deleteTransaction = new DeleteTransaction(this.transactionView);
+    showTransactions = new ShowTransactions(this.transactionView);
   }
 
   @Override
@@ -22,17 +33,17 @@ public class TransactionPresenter extends Presenter {
     // MENU
     this.menuItems = new MenuItem[]{
         new MenuItem(
-            "Create",
+            Operation.CREATE,
             "Create a new transaction."),
         new MenuItem(
-            "Show",
+            Operation.SHOW,
             "Show recorded transactions."),
         new MenuItem(
-            "Delete",
-            "Delete recorded transactions."),
-        new MenuItem(
-            "Update",
+            Operation.UPDATE,
             "Update recorded transactions."),
+        new MenuItem(
+            Operation.DELETE,
+            "Delete recorded transactions."),
         new MenuItem(
             "Back",
             "Back to the main menu.")};
@@ -46,35 +57,35 @@ public class TransactionPresenter extends Presenter {
   }
 
   @Override
-  public Action handleInput() {
+  public Action chooseOperation() {
     String menuOption = MenuInput.handleMenu(
         this.menuItems, this.transactionView);
     Action action = new Action();
 
     switch (menuOption) {
-      case "Create" -> {
-        CreateTransaction.create(this.transactionView);
+      case Operation.CREATE -> {
+        createTransaction.create();
 
         action.actionType = Action.ActionType.NAVIGATION;
         action.nextView = this.transactionView;
         return action;
       }
-      case "Show" -> {
-        ShowTransactions.showAll(this.transactionView);
+      case Operation.SHOW -> {
+        showTransactions.showAll();
 
         action.actionType = Action.ActionType.NAVIGATION;
         action.nextView = this.transactionView;
         return action;
       }
-      case "Update" -> {
-        UpdateTransaction.update(this.transactionView);
+      case Operation.UPDATE -> {
+        updateTransaction.update();
 
         action.actionType = Action.ActionType.NAVIGATION;
         action.nextView = this.transactionView;
         return action;
       }
-      case "Delete" -> {
-        DeleteTransaction.delete(this.transactionView);
+      case Operation.DELETE -> {
+        deleteTransaction.delete();
 
         action.actionType = Action.ActionType.NAVIGATION;
         action.nextView = this.transactionView;

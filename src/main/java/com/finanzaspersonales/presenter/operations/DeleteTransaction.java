@@ -1,40 +1,55 @@
-package com.finanzaspersonales.presenter;
+package com.finanzaspersonales.presenter.operations;
 
 import com.finanzaspersonales.model.Database;
+import com.finanzaspersonales.presenter.ui.MenuItem;
+import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.presenter.input.SimpleInput;
 import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.view.MainView;
-import org.jetbrains.annotations.NotNull;
 
-public class DeleteTransaction {
+/**
+ * Operation to delete an existing transaction.
+ * It asks for the transaction ID.
+ * If the ID exists, it asks for confirmation and deletes accordingly.
+ * If the ID doesn't exist, it shows an error message and ends the operation.
+ *
+ * To use, instantiate and provide the view where it will print all
+ * the prompts.
+ * @author denisse
+ * @version 1.0
+ * @since 1.0
+ */
+public class DeleteTransaction extends Operation {
+  private final MenuItem[] deleteOptions =
+      new MenuItem[] { new MenuItem("Single"), new MenuItem("All") };
 
-  private DeleteTransaction() { }
-
-  public static void delete(@NotNull MainView view) {
-    String prompts = "\n";
-    prompts += UIFormatter.titleStyle("Deleting transactions");
-    prompts += UIFormatter.subtitleStyle("Choose what to delete: ");
-    MenuItem[] menuItems = new MenuItem[]{new MenuItem("Single"), new MenuItem("All")};
-    prompts += UIFormatter.menuStyle(menuItems);
-    view.appendWithNewline(prompts);
-
-    String input = "";
-    while (input.isEmpty()) {
-      input = MenuInput.handleMenu(menuItems, view);
-    }
-
-    if (input.equals("Single")) {
-      deleteSingleTransaction(view);
-    } else {
-      deleteAllTransactions(view);
-    }
-
-    view.appendWithoutNewline(
-        UIFormatter.confirmationPromptStyle("[Press ENTER to continue]"));
-    SimpleInput.readString();
+  public DeleteTransaction(MainView view) {
+    super(view, "Deleting transactions", "Choose what to delete: ");
   }
 
-  private static void deleteSingleTransaction(@NotNull MainView view) {
+  /**
+   * Operation that creates a new transaction following these steps:
+   * 1. Ask to delete a single transaction or all
+   * 2. If single: asks for ID and deletes
+   * 3. If all: asks for confirmation and deletes
+   *
+   * It performs a DB delete operation.
+   */
+  public void delete() {
+    startOperation();
+
+    String input = processMenu(deleteOptions);
+
+    if (input.equals("Single")) {
+      deleteSingleTransaction();
+    } else {
+      deleteAllTransactions();
+    }
+
+    endOperation();
+  }
+
+  private void deleteSingleTransaction() {
     view.appendWithoutNewline(
         UIFormatter.promptStyle("Enter ID", SimpleInput.TEXT));
 
@@ -55,7 +70,7 @@ public class DeleteTransaction {
     }
   }
 
-  private static void deleteAllTransactions(@NotNull MainView view) {
+  private void deleteAllTransactions() {
     view.appendWithNewline(
         UIFormatter.warningStyle("All the recorded transactions will be deleted."));
     view.appendWithNewline(

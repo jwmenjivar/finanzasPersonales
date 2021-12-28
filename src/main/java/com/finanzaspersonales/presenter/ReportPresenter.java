@@ -1,6 +1,8 @@
 package com.finanzaspersonales.presenter;
 
 import com.finanzaspersonales.presenter.input.MenuInput;
+import com.finanzaspersonales.presenter.ui.MenuItem;
+import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.MainView;
 import com.finanzaspersonales.view.ReportView;
 
@@ -34,7 +36,7 @@ public class ReportPresenter extends Presenter {
   }
 
   @Override
-  public Action handleInput() {
+  public Action chooseOperation() {
     String menuOption = MenuInput.handleMenu(
         this.menuItems, this.reportView);
     Action action = new Action();

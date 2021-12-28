@@ -1,4 +1,4 @@
-package com.finanzaspersonales.presenter;
+package com.finanzaspersonales.presenter.ui;
 
 import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.Ansi.Color;

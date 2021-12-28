@@ -11,9 +11,6 @@ import org.fusesource.jansi.AnsiConsole;
  */
 public class App 
 {
-    private static MainView activeView;
-    private static Presenter activePresenter;
-
     public static void main( String[] args )
     {
         startJansi();
@@ -21,11 +18,11 @@ public class App
         // instantiate and initialize first view
         MainView mainView = MainView.getMainView();
         mainView.initialize();
-        activeView = mainView;
-        activePresenter = activeView.getPresenter();
+        MainView activeView = mainView;
+        Presenter activePresenter = activeView.getPresenter();
 
         // start main app loop
-        Action action = activePresenter.handleInput();
+        Action action = activePresenter.chooseOperation();
 
         while (action.actionType != Action.ActionType.EXIT) {
             if (action.actionType == Action.ActionType.NAVIGATION) {
@@ -34,7 +31,7 @@ public class App
                 activePresenter = activeView.getPresenter();
             }
 
-            action = activePresenter.handleInput();
+            action = activePresenter.chooseOperation();
         }
 
         exit();

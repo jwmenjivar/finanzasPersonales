@@ -40,6 +40,11 @@ public interface Database {
   void saveTransaction(Transaction t);
 
   /**
+   * Updates a transaction in the DB.
+   */
+  void updateTransaction(Transaction t);
+
+  /**
    * Deletes the transaction with the same UUID.
    * @param id UUID String
    */

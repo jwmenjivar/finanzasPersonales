@@ -1,12 +1,6 @@
 package com.finanzaspersonales.presenter;
 
-import com.finanzaspersonales.model.Database;
-import com.finanzaspersonales.view.MainView;
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-import java.util.InputMismatchException;
-import java.util.List;
+import com.finanzaspersonales.presenter.ui.MenuItem;
 
 /**
  * Acts upon the model and the view.
@@ -28,7 +22,7 @@ public abstract class Presenter {
    * Asks for the user input, validates it, and returns an appropriate action.
    * @return Tells the app what to do next.
    */
-  public Action handleInput() {
+  public Action chooseOperation() {
     Action a = new Action();
     a.actionType = Action.ActionType.NONE;
     return a;
