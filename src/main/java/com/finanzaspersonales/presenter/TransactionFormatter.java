@@ -21,11 +21,14 @@ public class TransactionFormatter {
   private static final int DATE_SPACE = 10;
   private static final int AMOUNT_SPACE = 12;
   private static final int TYPE_SPACE = 10;
+  private static final int CATEGORY_SPACE = 19;
   private static final int TEXT_SPACE = 20;
   private static final int DETAIL_SPACE = 15;
+  private static final int ID_SPACE = 4;
   private static final String DATE_H = "Date";
   private static final String AMOUNT_H = "Amount";
   private static final String TYPE_H = "Type";
+  private static final String ID_H = "Transaction ID";
   private static final String CATEGORY_H = "Category";
   private static final String DESCRIPTION_H = "Description";
   private static final String NO_TRANSACTIONS = "<No transactions>";
@@ -41,6 +44,7 @@ public class TransactionFormatter {
    */
   public static String transactionInline(@NotNull Transaction transaction) {
     // date type description category amount
+    // date amount type category description
     String formatted = "%s  %s  %s %s %s";
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
 
@@ -48,7 +52,7 @@ public class TransactionFormatter {
         formatInlineText(transaction.getDate().format(dateTimeFormatter), DATE_SPACE),
         formatAmountType(formatInlineAmount(transaction.getAmount()), transaction.getType()),
         formatInlineText(transaction.getType().toString(), TYPE_SPACE),
-        formatInlineText(transaction.getCategory().getName(), TEXT_SPACE),
+        formatInlineText(transaction.getCategory().getName(), CATEGORY_SPACE),
         formatInlineText(transaction.getDescription(), TEXT_SPACE));
   }
 
@@ -65,13 +69,15 @@ public class TransactionFormatter {
 
     // format the header
     formatted.append(
+        // # date amount type category description
         Ansi.ansi().bg(Ansi.Color.BLACK).a(String.format(
-            "  %s %s  %s %s %s %s",
-            Ansi.ansi().bold().fgBright(Ansi.Color.WHITE).a("#").toString(),
+            "%s %s  %s %s %s  %s",
+            Ansi.ansi().bold().fgBright(Ansi.Color.WHITE).a(
+                formatInlineText("#", ID_SPACE)),
             Ansi.ansi().bold().a(UIFormatter.center(DATE_H.toUpperCase(), DATE_SPACE)),
             Ansi.ansi().bold().a(UIFormatter.center(AMOUNT_H.toUpperCase(), AMOUNT_SPACE)),
             Ansi.ansi().bold().a(UIFormatter.center(TYPE_H.toUpperCase(), TYPE_SPACE)),
-            Ansi.ansi().bold().a(UIFormatter.center(CATEGORY_H.toUpperCase(), TEXT_SPACE)),
+            Ansi.ansi().bold().a(UIFormatter.center(CATEGORY_H.toUpperCase(), CATEGORY_SPACE)),
             Ansi.ansi().bold().a(UIFormatter.center(DESCRIPTION_H.toUpperCase(), TEXT_SPACE))))
             .reset().toString()).append("\n");
 
@@ -79,8 +85,9 @@ public class TransactionFormatter {
       int count = 1;
 
       for (Transaction t : transactions) {
-        formatted.append(String.format("   %s %s%n",
-            Ansi.ansi().bold().a(String.valueOf(count)).reset().toString(),
+        formatted.append(String.format("%s %s%n",
+            Ansi.ansi().bold().a(
+                formatInlineText(String.valueOf(count), ID_SPACE)).reset().toString(),
             transactionInline(t)));
         count++;
       }
@@ -100,6 +107,11 @@ public class TransactionFormatter {
   public static String transactionDetailed(@NotNull Transaction transaction) {
     String formatted = "";
     String detailFormat = "%s %s\n";
+    formatted += String.format(
+        detailFormat,
+        Ansi.ansi().bold().fgBrightDefault().a(
+            formatInlineText(ID_H + ":", DETAIL_SPACE)).reset().toString(),
+        transaction.getUniqueID());
     formatted += String.format(
         detailFormat,
         Ansi.ansi().bold().fgBrightDefault().a(

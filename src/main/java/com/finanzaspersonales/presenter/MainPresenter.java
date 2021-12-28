@@ -43,7 +43,6 @@ public class MainPresenter extends Presenter {
     toDisplay += UIFormatter.addNewLine(UIFormatter.highlightStyle(
         UIFormatter.center("Today is " + simpleDateFormat.format(new Date()))));
 
-    // TODO: retrieve the top 10 transactions with date of today
     toDisplay += UIFormatter.titleStyle("Today's transactions");
     toDisplay += TransactionFormatter.transactionsTable(
         Database.db().getTransactionsByDate(LocalDate.now()));

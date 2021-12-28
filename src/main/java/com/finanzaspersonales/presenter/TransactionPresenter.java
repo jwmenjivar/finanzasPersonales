@@ -26,6 +26,9 @@ public class TransactionPresenter extends Presenter {
             "Create",
             "Create a new transaction."),
         new MenuItem(
+            "Show",
+            "Show recorded transactions."),
+        new MenuItem(
             "Back",
             "Back to the main menu.")};
     toDisplay += UIFormatter.titleStyle("Transactions menu");
@@ -46,6 +49,14 @@ public class TransactionPresenter extends Presenter {
     switch (menuOption) {
       case "Create" -> {
         CreateTransaction.create(this.transactionView);
+
+        action.actionType = Action.ActionType.NAVIGATION;
+        action.nextView = this.transactionView;
+
+        return action;
+      }
+      case "Show" -> {
+        ShowTransactions.showAll(this.transactionView);
 
         action.actionType = Action.ActionType.NAVIGATION;
         action.nextView = this.transactionView;
