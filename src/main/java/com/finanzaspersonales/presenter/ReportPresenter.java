@@ -21,22 +21,23 @@ public class ReportPresenter extends Presenter {
     toDisplay = UIFormatter.addNewLine(toDisplay);
 
     // MENU
-    this.menuItems = List.of(
+    this.menuItems = new MenuItem[]{
         new MenuItem(
             "Back",
-            "Back to the main menu."));
+            "Back to the main menu.")};
     toDisplay += UIFormatter.titleStyle("Reports menu");
     toDisplay +=
         UIFormatter.subtitleStyle(
             "Write the number or name of the menu option to navigate to that screen.");
-    toDisplay += UIFormatter.menu(menuItems);
+    toDisplay += UIFormatter.menuStyle(menuItems);
 
     this.reportView.displayContent(toDisplay);
   }
 
   @Override
   public Action handleInput() {
-    String menuOption = handleMenuOption(this.reportView);
+    String menuOption = MenuHandler.handleMenuOption(
+        this.menuItems, this.reportView);
     Action action = new Action();
 
     // return to the main view automatically

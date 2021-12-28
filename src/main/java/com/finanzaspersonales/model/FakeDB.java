@@ -12,6 +12,9 @@ class FakeDB implements Database {
   private List<Transaction> transactions;
   private List<Category> categories;
   private Random random;
+  private static FakeDB instance = null;
+
+  private FakeDB() { }
 
   public void connect() {
     this.random = new Random();
@@ -39,6 +42,20 @@ class FakeDB implements Database {
   public Transaction[] getTransactionsByDate(LocalDate date) {
     return transactions.stream().filter(transaction ->
         transaction.getDate().isEqual(date)).toArray(Transaction[]::new);
+  }
+
+  @Override
+  public void saveTransaction(Transaction t) {
+    transactions.add(t);
+  }
+
+  public static FakeDB getInstance() {
+    if (instance == null) {
+      instance = new FakeDB();
+      instance.connect();
+    }
+
+    return instance;
   }
 
   /**

@@ -21,36 +21,45 @@ public class TransactionPresenter extends Presenter {
     toDisplay = UIFormatter.addNewLine(toDisplay);
 
     // MENU
-    this.menuItems = List.of(
+    this.menuItems = new MenuItem[]{
+        new MenuItem(
+            "Create",
+            "Create a new transaction."),
         new MenuItem(
             "Back",
-            "Back to the main menu."));
+            "Back to the main menu.")};
     toDisplay += UIFormatter.titleStyle("Transactions menu");
     toDisplay +=
         UIFormatter.subtitleStyle(
             "Write the number or name of the menu option to navigate to that screen.");
-    toDisplay += UIFormatter.menu(menuItems);
+    toDisplay += UIFormatter.menuStyle(menuItems);
 
     this.transactionView.displayContent(toDisplay);
   }
 
   @Override
   public Action handleInput() {
-    String menuOption = handleMenuOption(this.transactionView);
+    String menuOption = MenuHandler.handleMenuOption(
+        this.menuItems, this.transactionView);
     Action action = new Action();
 
-    // return to the main view automatically
-    // TODO: show all the transaction options
     switch (menuOption) {
-      case "Back":
+      case "Create" -> {
+        CreateTransaction.create(this.transactionView);
+
+        action.actionType = Action.ActionType.NAVIGATION;
+        action.nextView = this.transactionView;
+
+        return action;
+      }
+      case "Back" -> {
         action.actionType = Action.ActionType.NAVIGATION;
         action.nextView = MainView.getMainView();
-        break;
-      default:
-        action.actionType = Action.ActionType.NONE;
-        break;
+        return action;
+      }
+      default -> {
+        return action;
+      }
     }
-
-    return action;
   }
 }

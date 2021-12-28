@@ -21,10 +21,6 @@ public class App
     {
         startJansi();
 
-        // instantiate and connect db
-        Presenter.db = Database.getDatabase();
-        Presenter.db.connect();
-
         // instantiate and initialize first view
         MainView mainView = MainView.getMainView();
         mainView.initialize();

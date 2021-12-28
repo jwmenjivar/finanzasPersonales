@@ -10,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class Action {
@@ -21,4 +20,8 @@ public class Action {
   @NotNull
   public ActionType actionType;
   public MainView nextView;
+
+  public Action() {
+    this.actionType = Action.ActionType.NONE;
+  }
 }

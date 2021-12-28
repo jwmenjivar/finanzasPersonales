@@ -5,6 +5,7 @@ import com.finanzaspersonales.view.MainView;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.List;
 
 /**
@@ -16,8 +17,7 @@ import java.util.List;
  * @since 1.0
  */
 public abstract class Presenter {
-  public static Database db;
-  protected List<MenuItem> menuItems;
+  protected MenuItem[] menuItems;
 
   /**
    * Creates all the ui elements, formats it and displays it in the view.
@@ -32,26 +32,5 @@ public abstract class Presenter {
     Action a = new Action();
     a.actionType = Action.ActionType.NONE;
     return a;
-  }
-
-  /**
-   * Asks the user to choose an option from the menu items. All the prompts
-   * are displayed in the provided view.
-   * @param view Presenter view
-   * @return Menu item name
-   */
-  protected String handleMenuOption(@NotNull MainView view) {
-    String item = "";
-
-    try {
-      view.showPrompt(
-          UIFormatter.promptStyle("Enter option", "[number/name]", "$>"));
-      item = InputHandler.readMenuOption(this.menuItems);
-      view.appendContent("You have chosen: " + item);
-    } catch (IOException exception) {
-      view.appendContent(exception.getMessage());
-    }
-
-    return item;
   }
 }

@@ -7,11 +7,6 @@ import java.time.LocalDate;
 
 public interface Database {
   /**
-   * Creates the DB connection.
-   */
-  void connect();
-
-  /**
    * Returns an array of all the existing categories.
    */
   Category[] getAllCategories();
@@ -33,12 +28,18 @@ public interface Database {
   Transaction[] getTransactionsByDate(LocalDate date);
 
   /**
+   * Saves a transaction to the DB.
+   * @param t
+   */
+  void saveTransaction(Transaction t);
+
+  /**
    * Returns the database implementation.
    * @return
    */
   @NotNull
   @Contract(" -> new")
-  static Database getDatabase() {
-    return new FakeDB();
+  static Database db() {
+    return FakeDB.getInstance();
   }
 }

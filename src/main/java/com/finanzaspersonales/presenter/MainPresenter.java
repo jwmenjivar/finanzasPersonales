@@ -1,5 +1,6 @@
 package com.finanzaspersonales.presenter;
 
+import com.finanzaspersonales.model.Database;
 import com.finanzaspersonales.view.BudgetView;
 import com.finanzaspersonales.view.CategoryView;
 import com.finanzaspersonales.view.MainView;
@@ -8,9 +9,7 @@ import com.finanzaspersonales.view.TransactionView;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Acts upon the main menu view.
@@ -41,18 +40,18 @@ public class MainPresenter extends Presenter {
     /* CONTENT */
     String pattern = "E dd, MMM yyyy";
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-    toDisplay += UIFormatter.highlightStyle(
-        UIFormatter.center("Today is " + simpleDateFormat.format(new Date())));
+    toDisplay += UIFormatter.addNewLine(UIFormatter.highlightStyle(
+        UIFormatter.center("Today is " + simpleDateFormat.format(new Date()))));
 
     // TODO: retrieve the top 10 transactions with date of today
     toDisplay += UIFormatter.titleStyle("Today's transactions");
     toDisplay += TransactionFormatter.transactionsTable(
-        Presenter.db.getTransactionsByDate(LocalDate.now()));
+        Database.db().getTransactionsByDate(LocalDate.now()));
     toDisplay = UIFormatter.addNewLine(toDisplay);
 
     /* MENU */
     // MAYBE: Load the items from a file
-    this.menuItems = List.of(
+    this.menuItems = new MenuItem[]{
         new MenuItem(
             "Transactions",
             "Create, update, search, and delete transactions."),
@@ -71,12 +70,12 @@ public class MainPresenter extends Presenter {
         new MenuItem(
             "Exit",
             "Close application."
-        ));
+        )};
     toDisplay += UIFormatter.titleStyle("Main menu");
     toDisplay +=
         UIFormatter.subtitleStyle(
             "Write the number or name of the menu option to navigate to that screen.");
-    toDisplay += UIFormatter.menu(menuItems);
+    toDisplay += UIFormatter.menuStyle(menuItems);
 
     /* DISPLAY VIEW */
     mainView.displayContent(toDisplay);
@@ -89,7 +88,8 @@ public class MainPresenter extends Presenter {
    */
   @Override
   public Action handleInput() {
-    String menuOption = handleMenuOption(this.mainView);
+    String menuOption = MenuHandler.handleMenuOption(
+        this.menuItems, this.mainView);
 
     switch (menuOption) {
       case "Transactions" -> {

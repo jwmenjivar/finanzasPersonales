@@ -1,5 +1,6 @@
 package com.finanzaspersonales.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,34 +17,19 @@ import java.util.UUID;
  * @version 1.0
  * @since 1.0
  */
-@Getter
+@Data
 @ToString
 public class Transaction {
-  @Setter
-  private String description;
-  @Setter
-  private Category category;
-  @Setter
+  private final String uniqueID;
+  private double amount;
   private LocalDate date;
   private TransactionType type;
-  private double amount;
-  private final String uniqueID;
+  private Category category;
+  private String description;
 
   private Transaction() {
     this.date = LocalDate.now();
     this.uniqueID = UUID.randomUUID().toString();
-  }
-
-  /**
-   * Sets the transaction, validating that the value is more than zero.
-   * @param amount Must be more than zero.
-   */
-  public void setAmount(double amount) throws IllegalArgumentException {
-    if (amount > 0) {
-      this.amount = amount;
-    } else {
-      throw new IllegalArgumentException("Amount must be more than zero");
-    }
   }
 
   /**

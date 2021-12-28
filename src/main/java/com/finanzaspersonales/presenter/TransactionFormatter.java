@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class TransactionFormatter {
   private static final int DATE_SPACE = 10;
-  private static final int AMOUNT_SPACE = 10;
+  private static final int AMOUNT_SPACE = 12;
   private static final int TYPE_SPACE = 10;
   private static final int TEXT_SPACE = 20;
   private static final int DETAIL_SPACE = 15;
@@ -41,7 +41,7 @@ public class TransactionFormatter {
    */
   public static String transactionInline(@NotNull Transaction transaction) {
     // date type description category amount
-    String formatted = "%s %s %s %s %s";
+    String formatted = "%s  %s  %s %s %s";
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
 
     return String.format(formatted,
@@ -66,7 +66,7 @@ public class TransactionFormatter {
     // format the header
     formatted.append(
         Ansi.ansi().bg(Ansi.Color.BLACK).a(String.format(
-            "    %s %s %s %s %s %s",
+            "  %s %s  %s %s %s %s",
             Ansi.ansi().bold().fgBright(Ansi.Color.WHITE).a("#").toString(),
             Ansi.ansi().bold().a(UIFormatter.center(DATE_H.toUpperCase(), DATE_SPACE)),
             Ansi.ansi().bold().a(UIFormatter.center(AMOUNT_H.toUpperCase(), AMOUNT_SPACE)),
@@ -79,7 +79,7 @@ public class TransactionFormatter {
       int count = 1;
 
       for (Transaction t : transactions) {
-        formatted.append(String.format("    %s %s%n",
+        formatted.append(String.format("   %s %s%n",
             Ansi.ansi().bold().a(String.valueOf(count)).reset().toString(),
             transactionInline(t)));
         count++;
