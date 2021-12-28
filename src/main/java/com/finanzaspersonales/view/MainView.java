@@ -33,7 +33,7 @@ public interface MainView {
    * Adds new content to the screen with a new line.
    * @param content
    */
-  void appendWithNewLine(String content);
+  void appendWithNewline(String content);
 
   /**
    * Returns the view presenter.

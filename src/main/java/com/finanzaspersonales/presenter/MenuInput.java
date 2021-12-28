@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 
-public class MenuHandler {
+public class MenuInput {
 
   /**
    * Asks the user to choose an option from the menu items. All the prompts
@@ -21,9 +21,9 @@ public class MenuHandler {
       view.appendWithoutNewline(
           UIFormatter.promptStyle("Enter option", InputReader.OPTIONS));
       item = InputReader.readMenuOption(menuItems);
-      view.appendWithNewLine(UIFormatter.addNewLine("You have chosen: " + item));
+      view.appendWithNewline(UIFormatter.addNewLine("You have chosen: " + item));
     } catch (InputMismatchException exception) {
-      view.appendWithNewLine("\n" +
+      view.appendWithNewline("\n" +
           UIFormatter.errorStyle(exception.getMessage()));
     }
 
@@ -37,7 +37,7 @@ public class MenuHandler {
         view.appendWithoutNewline(UIFormatter.promptStyle("Enter choice", "Y/N"));
         choice = InputReader.readYesOrNo();
       } catch (InputMismatchException e) {
-        view.appendWithNewLine(UIFormatter.errorStyle(e.getMessage()));
+        view.appendWithNewline(UIFormatter.errorStyle(e.getMessage()));
         choice = "";
       }
     }

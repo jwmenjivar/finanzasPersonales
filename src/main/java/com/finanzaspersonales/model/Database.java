@@ -28,6 +28,13 @@ public interface Database {
   Transaction[] getTransactionsByDate(LocalDate date);
 
   /**
+   * Returns a transaction by ID if it exists.
+   * @param id UUID String
+   * @return Transaction with the ID or null
+   */
+  Transaction getTransactionByID(String id);
+
+  /**
    * Saves a transaction to the DB.
    */
   void saveTransaction(Transaction t);

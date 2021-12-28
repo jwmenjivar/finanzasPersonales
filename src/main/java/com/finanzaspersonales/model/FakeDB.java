@@ -45,6 +45,13 @@ class FakeDB implements Database {
   }
 
   @Override
+  public Transaction getTransactionByID(String id) {
+    Optional<Transaction> t = transactions.stream().filter(
+        transaction -> transaction.getUniqueID().equals(id)).findFirst();
+    return t.orElse(null);
+  }
+
+  @Override
   public void saveTransaction(Transaction t) {
     transactions.add(t);
     transactions.sort(Comparator.comparing(Transaction::getDate));

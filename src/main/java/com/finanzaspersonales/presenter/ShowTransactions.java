@@ -15,11 +15,11 @@ public class ShowTransactions {
     prompts += UIFormatter.subtitleStyle("View format: ");
     MenuItem[] menuItems = new MenuItem[]{new MenuItem("Summarized"), new MenuItem("Detailed")};
     prompts += UIFormatter.menuStyle(menuItems);
-    view.appendWithNewLine(prompts);
+    view.appendWithNewline(prompts);
 
     String input = "";
     while (input.isEmpty()) {
-      input = MenuHandler.handleMenu(menuItems, view);
+      input = MenuInput.handleMenu(menuItems, view);
     }
 
     if (input.equals("Summarized")) {
@@ -35,7 +35,7 @@ public class ShowTransactions {
 
   private static void showSummarized(@NotNull MainView view) {
     view.appendWithoutNewline(UIFormatter.titleStyle("Summarized transactions:"));
-    view.appendWithNewLine(
+    view.appendWithNewline(
         TransactionFormatter.transactionsTable(Database.db().getAllTransactions()));
   }
 
@@ -43,6 +43,6 @@ public class ShowTransactions {
     view.appendWithoutNewline(UIFormatter.titleStyle("Detailed transactions:"));
 
     Transaction[] transactions = Database.db().getAllTransactions();
-    view.appendWithNewLine(TransactionFormatter.transactionsDetailed(transactions));
+    view.appendWithNewline(TransactionFormatter.transactionsDetailed(transactions));
   }
 }

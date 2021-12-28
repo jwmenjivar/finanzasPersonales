@@ -87,7 +87,7 @@ public class MainPresenter extends Presenter {
    */
   @Override
   public Action handleInput() {
-    String menuOption = MenuHandler.handleMenu(
+    String menuOption = MenuInput.handleMenu(
         this.menuItems, this.mainView);
 
     switch (menuOption) {
@@ -112,13 +112,13 @@ public class MainPresenter extends Presenter {
             ReportView.getReportView());
       }
       case "Help" -> {
-        this.mainView.appendWithNewLine(
+        this.mainView.appendWithNewline(
             UIFormatter.wrapText("This is supposed to be the help."));
         return new Action(
             Action.ActionType.NONE);
       }
       case "Exit" -> {
-        this.mainView.appendWithNewLine(UIFormatter.highlightStyle("Goodbye."));
+        this.mainView.appendWithNewline(UIFormatter.highlightStyle("Goodbye."));
         return new Action(
             Action.ActionType.EXIT);
       }

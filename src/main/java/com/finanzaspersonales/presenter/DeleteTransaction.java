@@ -14,11 +14,11 @@ public class DeleteTransaction {
     prompts += UIFormatter.subtitleStyle("Choose what to delete: ");
     MenuItem[] menuItems = new MenuItem[]{new MenuItem("Single"), new MenuItem("All")};
     prompts += UIFormatter.menuStyle(menuItems);
-    view.appendWithNewLine(prompts);
+    view.appendWithNewline(prompts);
 
     String input = "";
     while (input.isEmpty()) {
-      input = MenuHandler.handleMenu(menuItems, view);
+      input = MenuInput.handleMenu(menuItems, view);
     }
 
     if (input.equals("Single")) {
@@ -38,32 +38,32 @@ public class DeleteTransaction {
 
     String id = InputReader.readString();
     if (Database.db().transactionExists(id)) {
-      view.appendWithNewLine("\n" +
+      view.appendWithNewline("\n" +
           UIFormatter.warningStyle("This operation is not reversible. Do you want to continue?"));
 
-      boolean choice = MenuHandler.handleYesNo(view);
+      boolean choice = MenuInput.handleYesNo(view);
 
       if (choice) {
         Database.db().deleteTransaction(id);
-        view.appendWithNewLine(
+        view.appendWithNewline(
             UIFormatter.successStyle("Transaction deleted."));
       }
     } else {
-      view.appendWithNewLine(UIFormatter.errorStyle("Invalid or non existent ID."));
+      view.appendWithNewline(UIFormatter.errorStyle("Invalid or non existent ID."));
     }
   }
 
   private static void deleteAllTransactions(@NotNull MainView view) {
-    view.appendWithNewLine(
+    view.appendWithNewline(
         UIFormatter.warningStyle("All the recorded transactions will be deleted."));
-    view.appendWithNewLine(
+    view.appendWithNewline(
         UIFormatter.warningStyle("This operation is not reversible. Do you want to continue?"));
 
-    boolean choice = MenuHandler.handleYesNo(view);
+    boolean choice = MenuInput.handleYesNo(view);
 
     if (choice) {
       Database.db().deleteAllTransactions();
-      view.appendWithNewLine(
+      view.appendWithNewline(
           UIFormatter.successStyle("Transactions deleted."));
     }
   }

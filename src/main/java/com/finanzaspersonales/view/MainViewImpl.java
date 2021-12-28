@@ -32,7 +32,7 @@ class MainViewImpl implements MainView {
     System.out.print(prompt);
   }
 
-  public void appendWithNewLine(String content) {
+  public void appendWithNewline(String content) {
     System.out.println(content);
   }
 

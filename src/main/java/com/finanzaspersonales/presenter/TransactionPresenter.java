@@ -30,6 +30,9 @@ public class TransactionPresenter extends Presenter {
             "Delete",
             "Delete recorded transactions."),
         new MenuItem(
+            "Update",
+            "Update recorded transactions."),
+        new MenuItem(
             "Back",
             "Back to the main menu.")};
     toDisplay += UIFormatter.titleStyle("Transactions menu");
@@ -43,7 +46,7 @@ public class TransactionPresenter extends Presenter {
 
   @Override
   public Action handleInput() {
-    String menuOption = MenuHandler.handleMenu(
+    String menuOption = MenuInput.handleMenu(
         this.menuItems, this.transactionView);
     Action action = new Action();
 
@@ -57,6 +60,13 @@ public class TransactionPresenter extends Presenter {
       }
       case "Show" -> {
         ShowTransactions.showAll(this.transactionView);
+
+        action.actionType = Action.ActionType.NAVIGATION;
+        action.nextView = this.transactionView;
+        return action;
+      }
+      case "Update" -> {
+        UpdateTransaction.update(this.transactionView);
 
         action.actionType = Action.ActionType.NAVIGATION;
         action.nextView = this.transactionView;

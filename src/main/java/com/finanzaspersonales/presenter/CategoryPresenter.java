@@ -34,7 +34,7 @@ public class CategoryPresenter extends Presenter {
 
   @Override
   public Action handleInput() {
-    String menuOption = MenuHandler.handleMenu(
+    String menuOption = MenuInput.handleMenu(
         this.menuItems, this.categoryView);
     Action action = new Action();
 
