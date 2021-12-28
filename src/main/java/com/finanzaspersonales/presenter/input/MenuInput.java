@@ -1,5 +1,7 @@
-package com.finanzaspersonales.presenter;
+package com.finanzaspersonales.presenter.input;
 
+import com.finanzaspersonales.presenter.MenuItem;
+import com.finanzaspersonales.presenter.UIFormatter;
 import com.finanzaspersonales.view.MainView;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,8 +21,8 @@ public class MenuInput {
 
     try {
       view.appendWithoutNewline(
-          UIFormatter.promptStyle("Enter option", InputReader.OPTIONS));
-      item = InputReader.readMenuOption(menuItems);
+          UIFormatter.promptStyle("Enter option", SimpleInput.OPTIONS));
+      item = SimpleInput.readMenuOption(menuItems);
       view.appendWithNewline(UIFormatter.addNewLine("You have chosen: " + item));
     } catch (InputMismatchException exception) {
       view.appendWithNewline("\n" +
@@ -35,7 +37,7 @@ public class MenuInput {
     while (choice.isEmpty()) {
       try {
         view.appendWithoutNewline(UIFormatter.promptStyle("Enter choice", "Y/N"));
-        choice = InputReader.readYesOrNo();
+        choice = SimpleInput.readYesOrNo();
       } catch (InputMismatchException e) {
         view.appendWithNewline(UIFormatter.errorStyle(e.getMessage()));
         choice = "";

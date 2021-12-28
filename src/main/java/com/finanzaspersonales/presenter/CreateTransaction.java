@@ -2,6 +2,8 @@ package com.finanzaspersonales.presenter;
 
 import com.finanzaspersonales.model.Database;
 import com.finanzaspersonales.model.Transaction;
+import com.finanzaspersonales.presenter.input.SimpleInput;
+import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.view.MainView;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,7 +32,7 @@ public class CreateTransaction extends TransactionInput {
     Database.db().saveTransaction(t);
     view.appendWithoutNewline(
         UIFormatter.confirmationPromptStyle("[Press ENTER to continue]"));
-    InputReader.readString();
+    SimpleInput.readString();
   }
 
   private static Transaction newTransaction(@NotNull MainView view) {

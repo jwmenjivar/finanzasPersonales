@@ -1,5 +1,6 @@
-package com.finanzaspersonales.presenter;
+package com.finanzaspersonales.presenter.input;
 
+import com.finanzaspersonales.presenter.MenuItem;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,7 +14,7 @@ import java.util.regex.Pattern;
  * @version 1.0
  * @since 1.0
  */
-public class InputReader {
+public class SimpleInput {
   public static final String OPTIONS = "[integer/name]";
   public static final String NUMBER = "[number]";
   public static final String DATE = "[yyyy-mm-dd]";
@@ -22,7 +23,7 @@ public class InputReader {
   private static final Pattern numericPattern = Pattern.compile("-?\\d+(\\.\\d+)?");
   private static final Pattern datePattern = Pattern.compile("\\d{4}-\\d{1,2}-\\d{1,2}");
 
-  private InputReader() { }
+  private SimpleInput() { }
 
   /**
    * Given a list of menu items, asks the user for their input and returns

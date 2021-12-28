@@ -1,6 +1,8 @@
 package com.finanzaspersonales.presenter;
 
 import com.finanzaspersonales.model.*;
+import com.finanzaspersonales.presenter.input.SimpleInput;
+import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.view.MainView;
 import org.jetbrains.annotations.NotNull;
 
@@ -38,13 +40,13 @@ public class TransactionInput {
 
   public static void assignAmount(@NotNull MainView view, Transaction t) {
     view.appendWithoutNewline(
-        UIFormatter.promptStyle("Enter amount", InputReader.NUMBER));
+        UIFormatter.promptStyle("Enter amount", SimpleInput.NUMBER));
 
     AmountValidator amountValidator = new AmountValidator();
     double total = 0;
     while(!amountValidator.isValid()) {
       try {
-        total = InputReader.readDouble();
+        total = SimpleInput.readDouble();
 
         if(!amountValidator.validateAmount(total)) {
           total = 0;
@@ -61,8 +63,8 @@ public class TransactionInput {
 
   public static void assignDescription(@NotNull MainView view, @NotNull Transaction t) {
     view.appendWithoutNewline(
-        UIFormatter.promptStyle("Enter description", InputReader.TEXT));
-    t.setDescription(InputReader.readString());
+        UIFormatter.promptStyle("Enter description", SimpleInput.TEXT));
+    t.setDescription(SimpleInput.readString());
   }
 
   public static void assignDate(@NotNull MainView view, Transaction t) {
@@ -94,8 +96,8 @@ public class TransactionInput {
     while(!dateValidator.isValid()) {
       try {
         view.appendWithoutNewline(
-            UIFormatter.promptStyle("Enter the date", InputReader.DATE));
-        date = InputReader.readDate();
+            UIFormatter.promptStyle("Enter the date", SimpleInput.DATE));
+        date = SimpleInput.readDate();
 
         if (!dateValidator.validateDate(date)) {
           date = "";

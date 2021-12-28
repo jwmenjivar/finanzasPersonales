@@ -1,6 +1,8 @@
 package com.finanzaspersonales.presenter;
 
 import com.finanzaspersonales.model.Database;
+import com.finanzaspersonales.presenter.input.SimpleInput;
+import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.view.MainView;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,14 +31,14 @@ public class DeleteTransaction {
 
     view.appendWithoutNewline(
         UIFormatter.confirmationPromptStyle("[Press ENTER to continue]"));
-    InputReader.readString();
+    SimpleInput.readString();
   }
 
   private static void deleteSingleTransaction(@NotNull MainView view) {
     view.appendWithoutNewline(
-        UIFormatter.promptStyle("Enter ID", InputReader.TEXT));
+        UIFormatter.promptStyle("Enter ID", SimpleInput.TEXT));
 
-    String id = InputReader.readString();
+    String id = SimpleInput.readString();
     if (Database.db().transactionExists(id)) {
       view.appendWithNewline("\n" +
           UIFormatter.warningStyle("This operation is not reversible. Do you want to continue?"));

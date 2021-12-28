@@ -1,5 +1,6 @@
 package com.finanzaspersonales.presenter;
 
+import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.view.CategoryView;
 import com.finanzaspersonales.view.MainView;
 

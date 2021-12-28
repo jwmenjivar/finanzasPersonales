@@ -2,6 +2,8 @@ package com.finanzaspersonales.presenter;
 
 import com.finanzaspersonales.model.Database;
 import com.finanzaspersonales.model.Transaction;
+import com.finanzaspersonales.presenter.input.SimpleInput;
+import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.view.MainView;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,9 +18,9 @@ public class UpdateTransaction extends TransactionInput {
     view.appendWithoutNewline(UIFormatter.subtitleStyle("Enter a valid ID: "));
 
     view.appendWithoutNewline(
-        UIFormatter.promptStyle("Enter ID", InputReader.TEXT));
+        UIFormatter.promptStyle("Enter ID", SimpleInput.TEXT));
 
-    String id = InputReader.readString();
+    String id = SimpleInput.readString();
     if (Database.db().transactionExists(id)) {
       Transaction t = Database.db().getTransactionByID(id);
       view.appendWithNewline("\n" + TransactionFormatter.transactionDetailed(t));
@@ -57,6 +59,6 @@ public class UpdateTransaction extends TransactionInput {
 
     view.appendWithoutNewline(
         UIFormatter.confirmationPromptStyle("[Press ENTER to continue]"));
-    InputReader.readString();
+    SimpleInput.readString();
   }
 }
