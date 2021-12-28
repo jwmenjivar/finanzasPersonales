@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact name="finanzaspersonales:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/finanzaspersonales_jar</output-path>
+    <root id="root">
+      <element id="archive" name="finanzaspersonales.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="module-output" name="finanzaspersonales" />
+      </element>
+      <element id="library" level="project" name="Maven: org.fusesource.jansi:jansi:2.4.0" />
+      <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.18.22" />
+      <element id="library" level="project" name="Maven: org.jetbrains:annotations-java5:22.0.0" />
+    </root>
+  </artifact>
+</component>
