@@ -112,13 +112,13 @@ public class MainPresenter extends Presenter {
             ReportView.getReportView());
       }
       case "Help" -> {
-        this.mainView.appendContent(
+        this.mainView.appendWithNewLine(
             UIFormatter.wrapText("This is supposed to be the help."));
         return new Action(
             Action.ActionType.NONE);
       }
       case "Exit" -> {
-        this.mainView.appendContent(UIFormatter.highlightStyle("Goodbye."));
+        this.mainView.appendWithNewLine(UIFormatter.highlightStyle("Goodbye."));
         return new Action(
             Action.ActionType.EXIT);
       }

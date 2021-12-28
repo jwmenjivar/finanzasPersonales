@@ -19,19 +19,19 @@ public class CreateTransaction {
     chooseCategory(view, t);
     assignDate(view, t);
 
-    view.showPrompt(
+    view.appendWithoutNewline(
         UIFormatter.subtitleStyle("Enter transaction amount and description:"));
     assignAmount(view, t);
     assignDescription(view, t);
 
-    view.appendContent(
+    view.appendWithNewLine(
         UIFormatter.successStyle("Transaction created."));
-    view.appendContent("\n" +
+    view.appendWithNewLine("\n" +
         UIFormatter.highlightStyle("New transaction:"));
-    view.appendContent(TransactionFormatter.transactionDetailed(t));
+    view.appendWithNewLine(TransactionFormatter.transactionDetailed(t));
 
     Database.db().saveTransaction(t);
-    view.showPrompt(
+    view.appendWithoutNewline(
         UIFormatter.confirmationPromptStyle("[Press ENTER to continue]"));
     InputReader.readString();
   }
@@ -42,7 +42,7 @@ public class CreateTransaction {
     prompts += UIFormatter.subtitleStyle("Choose the transaction type: ");
     MenuItem[] menuItems = new MenuItem[]{new MenuItem("Income"), new MenuItem("Expense")};
     prompts += UIFormatter.menuStyle(menuItems);
-    view.appendContent(prompts);
+    view.appendWithNewLine(prompts);
 
     String input = "";
     while (input.isEmpty()) {
@@ -66,7 +66,7 @@ public class CreateTransaction {
     MenuItem[] menuItems = categoryOptions.toArray(new MenuItem[0]);
     prompts += UIFormatter.subtitleStyle("Choose the category type: ");
     prompts += UIFormatter.menuStyle(menuItems);
-    view.appendContent(prompts);
+    view.appendWithNewLine(prompts);
 
     String input = "";
     while (input.isEmpty()) {
@@ -79,7 +79,7 @@ public class CreateTransaction {
   }
 
   private static void assignAmount(@NotNull MainView view, Transaction t) {
-    view.showPrompt(
+    view.appendWithoutNewline(
         UIFormatter.promptStyle("Enter total", InputReader.NUMBER));
 
     AmountValidator amountValidator = new AmountValidator();
@@ -90,11 +90,11 @@ public class CreateTransaction {
 
         if(!amountValidator.validateAmount(total)) {
           total = 0;
-          view.appendContent("\n" +
+          view.appendWithNewLine("\n" +
               UIFormatter.errorStyle(amountValidator.getMessages().trim()));
         }
       } catch (Exception e) {
-        view.appendContent("\n" +
+        view.appendWithNewLine("\n" +
             UIFormatter.errorStyle(e.getMessage()));
       }
     }
@@ -102,7 +102,7 @@ public class CreateTransaction {
   }
 
   private static void assignDescription(@NotNull MainView view, @NotNull Transaction t) {
-    view.showPrompt(
+    view.appendWithoutNewline(
         UIFormatter.promptStyle("Enter description", InputReader.TEXT));
     t.setDescription(InputReader.readString());
   }
@@ -112,7 +112,7 @@ public class CreateTransaction {
     prompts += UIFormatter.subtitleStyle("Choose the date: ");
     MenuItem[] menuItems = new MenuItem[]{new MenuItem("Today"), new MenuItem("Other day")};
     prompts += UIFormatter.menuStyle(menuItems);
-    view.appendContent(prompts);
+    view.appendWithNewLine(prompts);
 
     String input = "";
     while (input.isEmpty()) {
@@ -122,7 +122,7 @@ public class CreateTransaction {
     if (input.equals("Today")) {
       t.setDate(LocalDate.now());
     } else {
-      view.showPrompt(
+      view.appendWithoutNewline(
           UIFormatter.subtitleStyle("Input the date:"));
       String date = readDate(view);
       t.setDate(LocalDate.parse(date));
@@ -135,17 +135,17 @@ public class CreateTransaction {
     DateValidator dateValidator = new DateValidator();
     while(!dateValidator.isValid()) {
       try {
-        view.showPrompt(
+        view.appendWithoutNewline(
             UIFormatter.promptStyle("Enter the date", InputReader.DATE));
         date = InputReader.readDate();
 
         if (!dateValidator.validateDate(date)) {
           date = "";
-          view.appendContent("\n" +
+          view.appendWithNewLine("\n" +
               UIFormatter.errorStyle(dateValidator.getMessages().trim()));
         }
       } catch (Exception e) {
-        view.appendContent("\n" +
+        view.appendWithNewLine("\n" +
             UIFormatter.errorStyle(e.getMessage()));
       }
     }

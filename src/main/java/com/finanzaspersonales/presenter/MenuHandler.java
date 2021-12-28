@@ -17,12 +17,12 @@ public class MenuHandler {
     String item = "";
 
     try {
-      view.showPrompt(
+      view.appendWithoutNewline(
           UIFormatter.promptStyle("Enter option", InputReader.OPTIONS));
       item = InputReader.readMenuOption(menuItems);
-      view.appendContent(UIFormatter.addNewLine("You have chosen: " + item));
+      view.appendWithNewLine(UIFormatter.addNewLine("You have chosen: " + item));
     } catch (InputMismatchException exception) {
-      view.appendContent("\n" +
+      view.appendWithNewLine("\n" +
           UIFormatter.errorStyle(exception.getMessage()));
     }
 

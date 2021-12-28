@@ -28,11 +28,11 @@ class MainViewImpl implements MainView {
     System.out.println(content);
   }
 
-  public void showPrompt(String prompt) {
+  public void appendWithoutNewline(String prompt) {
     System.out.print(prompt);
   }
 
-  public void appendContent(String content) {
+  public void appendWithNewLine(String content) {
     System.out.println(content);
   }
 

@@ -5,8 +5,6 @@ import com.finanzaspersonales.model.Transaction;
 import com.finanzaspersonales.view.MainView;
 import org.jetbrains.annotations.NotNull;
 
-import java.time.LocalDate;
-
 public class ShowTransactions {
 
   private ShowTransactions() { }
@@ -17,7 +15,7 @@ public class ShowTransactions {
     prompts += UIFormatter.subtitleStyle("View format: ");
     MenuItem[] menuItems = new MenuItem[]{new MenuItem("Summarized"), new MenuItem("Detailed")};
     prompts += UIFormatter.menuStyle(menuItems);
-    view.appendContent(prompts);
+    view.appendWithNewLine(prompts);
 
     String input = "";
     while (input.isEmpty()) {
@@ -30,24 +28,21 @@ public class ShowTransactions {
       showDetailed(view);
     }
 
-    view.showPrompt(
+    view.appendWithoutNewline(
         UIFormatter.confirmationPromptStyle("[Press ENTER to continue]"));
     InputReader.readString();
   }
 
   private static void showSummarized(@NotNull MainView view) {
-    view.appendContent(UIFormatter.titleStyle("Summarized transactions:"));
-    view.appendContent(
+    view.appendWithoutNewline(UIFormatter.titleStyle("Summarized transactions:"));
+    view.appendWithNewLine(
         TransactionFormatter.transactionsTable(Database.db().getAllTransactions()));
   }
 
   private static void showDetailed(@NotNull MainView view) {
-    view.appendContent(UIFormatter.titleStyle("Detailed transactions:"));
+    view.appendWithoutNewline(UIFormatter.titleStyle("Detailed transactions:"));
 
     Transaction[] transactions = Database.db().getAllTransactions();
-    for (Transaction t : transactions) {
-      view.appendContent(
-          TransactionFormatter.transactionDetailed(t));
-    }
+    view.appendWithNewLine(TransactionFormatter.transactionsDetailed(transactions));
   }
 }

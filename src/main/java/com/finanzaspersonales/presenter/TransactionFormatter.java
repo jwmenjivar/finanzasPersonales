@@ -3,6 +3,7 @@ package com.finanzaspersonales.presenter;
 import com.finanzaspersonales.model.Transaction;
 import com.finanzaspersonales.model.TransactionType;
 import org.fusesource.jansi.Ansi;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.NumberFormat;
@@ -109,8 +110,8 @@ public class TransactionFormatter {
     String detailFormat = "%s %s\n";
     formatted += String.format(
         detailFormat,
-        Ansi.ansi().bold().fgBrightDefault().a(
-            formatInlineText(ID_H + ":", DETAIL_SPACE)).reset().toString(),
+        Ansi.ansi().bold().fgBrightDefault().a(Ansi.Attribute.UNDERLINE)
+            .a(formatInlineText(ID_H + ":", DETAIL_SPACE)).reset().toString(),
         transaction.getUniqueID());
     formatted += String.format(
         detailFormat,
@@ -139,6 +140,17 @@ public class TransactionFormatter {
         formatAmountType(AMOUNT_FORMAT.format(transaction.getAmount()), transaction.getType()));
 
     return formatted;
+  }
+
+  @NotNull
+  @Contract(pure = true)
+  public static String transactionsDetailed(@NotNull Transaction[] transactions) {
+    StringBuilder formatted = new StringBuilder();
+    for (Transaction t : transactions) {
+      formatted.append(TransactionFormatter.transactionDetailed(t));
+    }
+
+    return formatted.toString();
   }
 
   /**
