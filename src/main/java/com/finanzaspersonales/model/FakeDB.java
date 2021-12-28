@@ -47,6 +47,7 @@ class FakeDB implements Database {
   @Override
   public void saveTransaction(Transaction t) {
     transactions.add(t);
+    transactions.sort(Comparator.comparing(Transaction::getDate));
   }
 
   @Override
@@ -128,6 +129,8 @@ class FakeDB implements Database {
 
       this.transactions.add(t);
     }
+
+    this.transactions.sort(Comparator.comparing(Transaction::getDate));
   }
 
   /**
