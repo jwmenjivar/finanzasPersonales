@@ -1,7 +1,6 @@
 package com.finanzaspersonales.presenter.ui;
 
 import com.finanzaspersonales.model.Transaction;
-import com.finanzaspersonales.model.TransactionType;
 import org.fusesource.jansi.Ansi;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -196,8 +195,8 @@ public class TransactionFormatter {
    * @param type
    * @return ANSI String with formatted amount
    */
-  private static String formatAmountType(String amount, TransactionType type) {
-    return type == TransactionType.INCOME ?
+  private static String formatAmountType(String amount, Transaction.TransactionType type) {
+    return type == Transaction.TransactionType.INCOME ?
         Ansi.ansi().fgGreen().a(amount).reset().toString() :
         Ansi.ansi().fgRed().a(amount).reset().toString();
   }

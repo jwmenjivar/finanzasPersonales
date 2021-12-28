@@ -14,7 +14,7 @@ public interface Database {
   /**
    * Returns an array of transactions by their type.
    */
-  Category[] getCategoriesByType(TransactionType type);
+  Category[] getCategoriesByType(Transaction.TransactionType type);
 
   /**
    * Returns an array with all the transactions.

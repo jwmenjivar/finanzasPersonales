@@ -2,7 +2,6 @@ package com.finanzaspersonales.presenter.operations;
 
 import com.finanzaspersonales.model.Database;
 import com.finanzaspersonales.model.Transaction;
-import com.finanzaspersonales.model.TransactionType;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.MainView;
@@ -19,8 +18,8 @@ import com.finanzaspersonales.view.MainView;
  */
 public class CreateTransaction extends TransactionData {
   private final MenuItem[] typeOptions = new MenuItem[] {
-      new MenuItem(TransactionType.INCOME.name()),
-      new MenuItem(TransactionType.EXPENSE.name())
+      new MenuItem(Transaction.TransactionType.INCOME.name()),
+      new MenuItem(Transaction.TransactionType.EXPENSE.name())
   };
 
   public CreateTransaction(MainView view) {
@@ -61,7 +60,7 @@ public class CreateTransaction extends TransactionData {
   private Transaction newTransaction() {
     String input = processMenu(typeOptions);
 
-    if (input.equals(TransactionType.INCOME.name())) {
+    if (input.equals(Transaction.TransactionType.INCOME.name())) {
       return Transaction.makeIncomeTransaction();
     } else {
       return Transaction.makeExpenseTransaction();

@@ -19,7 +19,7 @@ import java.util.UUID;
 public class Category {
   @Setter
   @NotNull
-  private TransactionType transactionType;
+  private Transaction.TransactionType transactionType;
   private final String uniqueID = UUID.randomUUID().toString();
   private String name;
 

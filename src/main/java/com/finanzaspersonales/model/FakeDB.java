@@ -28,7 +28,7 @@ class FakeDB implements Database {
   }
 
   @Override
-  public Category[] getCategoriesByType(TransactionType type) {
+  public Category[] getCategoriesByType(Transaction.TransactionType type) {
     return categories.stream().filter(category ->
         category.getTransactionType().equals(type)).toArray(Category[]::new);
   }
@@ -95,21 +95,21 @@ class FakeDB implements Database {
    */
   private void populateCategories() {
     this.categories = Arrays.asList(
-        new Category(TransactionType.INCOME, "Salario"),
-        new Category(TransactionType.INCOME, "Mesada"),
-        new Category(TransactionType.INCOME, "Bonus"),
-        new Category(TransactionType.INCOME, "Inversión"),
-        new Category(TransactionType.INCOME, "Regalo"),
-        new Category(TransactionType.EXPENSE, "Mantenimiento"),
-        new Category(TransactionType.EXPENSE, "Electricidad"),
-        new Category(TransactionType.EXPENSE, "Ahorro"),
-        new Category(TransactionType.EXPENSE, "Préstamos"),
-        new Category(TransactionType.EXPENSE, "Internet"),
-        new Category(TransactionType.EXPENSE, "Ropa"),
-        new Category(TransactionType.EXPENSE, "Gimnasio"),
-        new Category(TransactionType.EXPENSE, "Salud"),
-        new Category(TransactionType.EXPENSE, "Belleza"),
-        new Category(TransactionType.EXPENSE, "Comida"));
+        new Category(Transaction.TransactionType.INCOME, "Salario"),
+        new Category(Transaction.TransactionType.INCOME, "Mesada"),
+        new Category(Transaction.TransactionType.INCOME, "Bonus"),
+        new Category(Transaction.TransactionType.INCOME, "Inversión"),
+        new Category(Transaction.TransactionType.INCOME, "Regalo"),
+        new Category(Transaction.TransactionType.EXPENSE, "Mantenimiento"),
+        new Category(Transaction.TransactionType.EXPENSE, "Electricidad"),
+        new Category(Transaction.TransactionType.EXPENSE, "Ahorro"),
+        new Category(Transaction.TransactionType.EXPENSE, "Préstamos"),
+        new Category(Transaction.TransactionType.EXPENSE, "Internet"),
+        new Category(Transaction.TransactionType.EXPENSE, "Ropa"),
+        new Category(Transaction.TransactionType.EXPENSE, "Gimnasio"),
+        new Category(Transaction.TransactionType.EXPENSE, "Salud"),
+        new Category(Transaction.TransactionType.EXPENSE, "Belleza"),
+        new Category(Transaction.TransactionType.EXPENSE, "Comida"));
   }
 
   /**
@@ -118,8 +118,8 @@ class FakeDB implements Database {
   private void populateTransactions() {
     this.transactions = new ArrayList<>();
 
-    Category[] incomeCategories = getCategoriesByType(TransactionType.INCOME);
-    Category[] expenseCategories = getCategoriesByType(TransactionType.EXPENSE);
+    Category[] incomeCategories = getCategoriesByType(Transaction.TransactionType.INCOME);
+    Category[] expenseCategories = getCategoriesByType(Transaction.TransactionType.EXPENSE);
 
     // calculate the date 20 days ago
     long aDay = TimeUnit.DAYS.toMillis(1);
