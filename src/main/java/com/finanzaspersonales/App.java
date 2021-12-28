@@ -1,12 +1,9 @@
 package com.finanzaspersonales;
 
-import com.finanzaspersonales.model.Database;
 import com.finanzaspersonales.presenter.Action;
 import com.finanzaspersonales.presenter.Presenter;
 import com.finanzaspersonales.view.MainView;
 import org.fusesource.jansi.AnsiConsole;
-
-import javax.xml.crypto.Data;
 
 /**
  * Main class and entry point.
@@ -14,8 +11,8 @@ import javax.xml.crypto.Data;
  */
 public class App 
 {
-    public static MainView activeView;
-    public static Presenter activePresenter;
+    private static MainView activeView;
+    private static Presenter activePresenter;
 
     public static void main( String[] args )
     {
