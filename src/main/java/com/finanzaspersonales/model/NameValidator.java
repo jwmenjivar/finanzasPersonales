@@ -12,9 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Getter
 @NoArgsConstructor
-public class NameValidator {
-  private String messages = "";
-  private boolean isValid = false;
+public class NameValidator extends Validator {
 
   /**
    * Verifies if the name is not null, empty, or already exists.

@@ -10,11 +10,8 @@ import lombok.NoArgsConstructor;
  * @version 1.0
  * @since 1.0
  */
-@Getter
 @NoArgsConstructor
-public class AmountValidator {
-  private boolean isValid = false;
-  private String messages = "";
+public class AmountValidator extends Validator {
 
   /**
    * Validates if a double amount is correct for a transaction.

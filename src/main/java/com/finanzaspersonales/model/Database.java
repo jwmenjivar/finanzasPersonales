@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import java.time.LocalDate;
 
 public interface Database {
+
   /**
    * Returns an array of all the existing categories.
    */

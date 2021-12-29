@@ -15,9 +15,7 @@ import java.time.LocalDate;
  */
 @Getter
 @NoArgsConstructor
-public class DateValidator {
-  private String messages = "";
-  private boolean isValid = false;
+public class DateValidator extends Validator {
 
   /**
    * Validates a string with a date following the DateTimeFormatter.ISO_LOCAL_DATE.
