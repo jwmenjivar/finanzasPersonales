@@ -1,7 +1,6 @@
 package com.finanzaspersonales.presenter.operations.transaction;
 
-import com.finanzaspersonales.model.Database;
-import com.finanzaspersonales.model.Transaction;
+import com.finanzaspersonales.model.Transactions;
 import com.finanzaspersonales.presenter.operations.Operation;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.TransactionFormatter;
@@ -49,13 +48,12 @@ public class ShowTransactions extends Operation {
   private void showSummarized() {
     view.appendWithoutNewline(UIFormatter.titleStyle("Summarized transactions:"));
     view.appendWithNewline(
-        TransactionFormatter.transactionsTable(Database.db().getAllTransactions()));
+        TransactionFormatter.transactionsTable(Transactions.getAll()));
   }
 
   private void showDetailed() {
     view.appendWithoutNewline(UIFormatter.titleStyle("Detailed transactions:"));
-
-    Transaction[] transactions = Database.db().getAllTransactions();
-    view.appendWithNewline(TransactionFormatter.transactionsDetailed(transactions));
+    view.appendWithNewline(
+        TransactionFormatter.transactionsDetailed(Transactions.getAll()));
   }
 }

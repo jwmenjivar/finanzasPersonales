@@ -1,6 +1,7 @@
 package com.finanzaspersonales.presenter.operations.category;
 
-import com.finanzaspersonales.model.Database;
+import com.finanzaspersonales.model.Categories;
+import com.finanzaspersonales.model.Category;
 import com.finanzaspersonales.presenter.input.SimpleInput;
 import com.finanzaspersonales.presenter.ui.CategoryFormatter;
 import com.finanzaspersonales.presenter.ui.MenuItem;
@@ -44,8 +45,7 @@ public class UpdateCategory extends CategoryData {
         UIFormatter.promptStyle("Enter name", SimpleInput.TEXT));
 
     String name = SimpleInput.readString();
-    if (Database.db().categoryExists(name)) {
-      this.category = Database.db().getCategoryByName(name);
+    if (Categories.exists(name)) {
       view.appendWithNewline("\n" + CategoryFormatter.categoryDetailed(category));
 
       view.appendWithoutNewline(UIFormatter.subtitleStyle("Choose what to edit: "));
@@ -57,16 +57,19 @@ public class UpdateCategory extends CategoryData {
 
       String input = processMenu(menuItems);
 
-      switch (input) {
-        case CategoryFormatter.NAME_H -> category.setName(inputName());
-        case CategoryFormatter.DESCRIPTION_H -> category.setDescription(inputDescription());
-        default -> { /* go back */ }
+      if (!input.equals("Back")) {
+        Category category = Categories.getByName(name);
+
+        switch (input) {
+          case CategoryFormatter.NAME_H -> category.setName(inputName());
+          case CategoryFormatter.DESCRIPTION_H -> category.setDescription(inputDescription());
+          default -> { /* go back */ }
+        }
+
+        Categories.update(category);
+        showResult(category);
       }
 
-      if (!input.equals("Back")) {
-        Database.db().updateCategory(category);
-        showResult();
-      }
     } else {
       view.appendWithNewline(UIFormatter.errorStyle("Invalid or non existent ID."));
     }

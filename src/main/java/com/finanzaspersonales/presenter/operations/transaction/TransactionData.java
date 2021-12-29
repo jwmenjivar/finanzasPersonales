@@ -10,9 +10,7 @@ import com.finanzaspersonales.view.MainView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Represents a transaction operation that manipulates data.
@@ -21,7 +19,6 @@ import java.util.Optional;
  * @since 1.0
  */
 abstract class TransactionData extends Operation {
-  protected Transaction transaction;
   protected final String success;
 
   TransactionData(MainView view, String title, String subtitle, String success) {
@@ -33,26 +30,25 @@ abstract class TransactionData extends Operation {
    * Executes steps to choose a transaction category.
    * Performs a DB get category operation.
    */
-  protected void chooseCategory() {
-    Category[] categories = Database.db().getCategoriesByType(transaction.getType());
+  protected Category inputCategory(Transaction.TransactionType type) {
+    Category[] categories = Categories.getByType(type);
+
     List<MenuItem> categoryOptions = new ArrayList<>();
     for (Category c : categories) {
-      categoryOptions.add(new MenuItem(c.getName()));
+      categoryOptions.add(new MenuItem(c.getName(), c.getDescription()));
     }
     MenuItem[] menuItems = categoryOptions.toArray(new MenuItem[0]);
     view.appendWithoutNewline(UIFormatter.subtitleStyle("Choose the category type: "));
-
     String input = processMenu(menuItems);
-    Optional<Category> optionalCategory = Arrays.stream(categories).filter(category1 ->
-        category1.getName().equalsIgnoreCase(input)).findFirst();
-    optionalCategory.ifPresent(transaction::setCategory);
+
+    return Categories.getByName(input);
   }
 
   /**
    * Executes steps to ask for a transaction amount.
    * Validates the amount against an AmountValidator.
    */
-  protected void assignAmount() {
+  protected double inputAmount() {
     view.appendWithoutNewline(
         UIFormatter.promptStyle("Enter amount", SimpleInput.NUMBER));
 
@@ -72,23 +68,24 @@ abstract class TransactionData extends Operation {
             UIFormatter.errorStyle(e.getMessage()));
       }
     }
-    transaction.setAmount(total);
+
+    return total;
   }
 
   /**
    * Executes steps to ask for a transaction description.
    */
-  protected void assignDescription() {
+  protected String inputDescription() {
     view.appendWithoutNewline(
         UIFormatter.promptStyle("Enter description", SimpleInput.TEXT));
-    transaction.setDescription(SimpleInput.readString());
+    return SimpleInput.readString();
   }
 
   /**
    * Executes steps to ask for a transaction date.
    * Validates the date against an DateValidator.
    */
-  protected void assignDate() {
+  protected LocalDate inputDate() {
     String prompts = "";
     prompts += UIFormatter.subtitleStyle("Choose the date: ");
     MenuItem[] menuItems = new MenuItem[]{new MenuItem("Today"), new MenuItem("Other day")};
@@ -98,19 +95,19 @@ abstract class TransactionData extends Operation {
     String input = processMenu(menuItems);
 
     if (input.equals("Today")) {
-      transaction.setDate(LocalDate.now());
+      return LocalDate.now();
     } else {
       view.appendWithoutNewline(
           UIFormatter.subtitleStyle("Input the date:"));
       String date = readDate();
-      transaction.setDate(LocalDate.parse(date));
+      return LocalDate.parse(date);
     }
   }
 
   /**
    * Shows the transaction after applying the operation.
    */
-  protected void showResult() {
+  protected void showResult(Transaction transaction) {
     view.appendWithNewline(
         UIFormatter.successStyle(success));
     view.appendWithNewline("\n" +

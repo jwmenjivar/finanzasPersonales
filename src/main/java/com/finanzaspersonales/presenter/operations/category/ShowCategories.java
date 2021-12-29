@@ -1,7 +1,6 @@
 package com.finanzaspersonales.presenter.operations.category;
 
-import com.finanzaspersonales.model.Category;
-import com.finanzaspersonales.model.Database;
+import com.finanzaspersonales.model.Categories;
 import com.finanzaspersonales.presenter.operations.Operation;
 import com.finanzaspersonales.presenter.ui.CategoryFormatter;
 import com.finanzaspersonales.presenter.ui.MenuItem;
@@ -49,13 +48,12 @@ public class ShowCategories extends Operation {
   private void showSummarized() {
     view.appendWithoutNewline(UIFormatter.titleStyle("Summarized categories:"));
     view.appendWithNewline(
-        CategoryFormatter.categoryTable(Database.db().getAllCategories()));
+        CategoryFormatter.categoryTable(Categories.getAll()));
   }
 
   private void showDetailed() {
     view.appendWithoutNewline(UIFormatter.titleStyle("Detailed categories:"));
-
-    Category[] categories = Database.db().getAllCategories();
-    view.appendWithNewline(CategoryFormatter.categoriesDetailed(categories));
+    view.appendWithNewline(
+        CategoryFormatter.categoriesDetailed(Categories.getAll()));
   }
 }

@@ -1,7 +1,6 @@
 package com.finanzaspersonales.model;
 
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
@@ -15,18 +14,16 @@ import java.util.UUID;
  * @since 1.0
  */
 @Data
-@ToString
 public class Transaction {
-  private final String uniqueID;
-  private double amount;
+  private final String uniqueID = UUID.randomUUID().toString();
+  @NotNull private TransactionType type;
   private LocalDate date;
-  private TransactionType type;
   private Category category;
-  private String description;
+  private String description = "";
+  private double amount;
 
-  private Transaction() {
-    this.date = LocalDate.now();
-    this.uniqueID = UUID.randomUUID().toString();
+  protected Transaction(@NotNull TransactionType type) {
+    this.type = type;
   }
 
   /**
@@ -35,9 +32,7 @@ public class Transaction {
    */
   @NotNull
   public static Transaction makeIncomeTransaction() {
-    Transaction t = new Transaction();
-    t.type = TransactionType.INCOME;
-    return t;
+    return new Transaction(TransactionType.INCOME);
   }
 
   /**
@@ -46,9 +41,7 @@ public class Transaction {
    */
   @NotNull
   public static Transaction makeExpenseTransaction() {
-    Transaction t = new Transaction();
-    t.type = TransactionType.EXPENSE;
-    return t;
+    return new Transaction(TransactionType.EXPENSE);
   }
 
   /**

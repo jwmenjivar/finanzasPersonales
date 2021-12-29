@@ -115,8 +115,9 @@ public class SimpleInput {
   /**
    * Reads a string.
    */
+  @NotNull
   public static String readString() {
-    return scanner.nextLine();
+    return scanner.nextLine().trim();
   }
 
   /**

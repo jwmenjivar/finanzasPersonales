@@ -1,6 +1,6 @@
 package com.finanzaspersonales.presenter;
 
-import com.finanzaspersonales.model.Database;
+import com.finanzaspersonales.model.Transactions;
 import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.TransactionFormatter;
@@ -12,7 +12,6 @@ import com.finanzaspersonales.view.ReportView;
 import com.finanzaspersonales.view.TransactionView;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -48,8 +47,8 @@ public class MainPresenter extends Presenter {
         UIFormatter.center("Today is " + simpleDateFormat.format(new Date()))));
 
     toDisplay += UIFormatter.titleStyle("Today's transactions");
-    toDisplay += TransactionFormatter.transactionsTable(
-        Database.db().getTransactionsByDate(LocalDate.now()));
+    toDisplay += TransactionFormatter
+        .transactionsTable(Transactions.getToday());
     toDisplay = UIFormatter.addNewLine(toDisplay);
 
     /* MENU */

@@ -13,13 +13,16 @@ import java.util.UUID;
  * @since 1.0
  */
 @Data
-@RequiredArgsConstructor
-@AllArgsConstructor
 public class Category {
-  @NotNull
-  private Transaction.TransactionType type;
-  @NotNull
-  private String name;
-  private String description;
   private final String uniqueID = UUID.randomUUID().toString();
+  @NotNull private Transaction.TransactionType type;
+  @NotNull private String name;
+  private String description = "";
+
+  protected Category(@NotNull Transaction.TransactionType type,
+                     @NotNull String name, String description) {
+    this.type = type;
+    this.name = name;
+    this.description = description;
+  }
 }

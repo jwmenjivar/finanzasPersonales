@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 
-public interface Database {
+interface Database {
 
   /**
    * Retrieves an array with all the transactions.

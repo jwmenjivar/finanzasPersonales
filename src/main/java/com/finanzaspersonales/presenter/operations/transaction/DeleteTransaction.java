@@ -1,6 +1,6 @@
 package com.finanzaspersonales.presenter.operations.transaction;
 
-import com.finanzaspersonales.model.Database;
+import com.finanzaspersonales.model.Transactions;
 import com.finanzaspersonales.presenter.operations.Operation;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
@@ -55,14 +55,14 @@ public class DeleteTransaction extends Operation {
         UIFormatter.promptStyle("Enter ID", SimpleInput.TEXT));
 
     String id = SimpleInput.readString();
-    if (Database.db().transactionExists(id)) {
+    if (Transactions.exists(id)) {
       view.appendWithNewline("\n" +
           UIFormatter.warningStyle("This operation is not reversible. Do you want to continue?"));
 
       boolean choice = MenuInput.handleYesNo(view);
 
       if (choice) {
-        Database.db().deleteTransaction(id);
+        Transactions.delete(id);
         view.appendWithNewline(
             UIFormatter.successStyle("Transaction deleted."));
       }
@@ -80,7 +80,7 @@ public class DeleteTransaction extends Operation {
     boolean choice = MenuInput.handleYesNo(view);
 
     if (choice) {
-      Database.db().deleteAllTransactions();
+      Transactions.deleteAll();
       view.appendWithNewline(
           UIFormatter.successStyle("Transactions deleted."));
     }

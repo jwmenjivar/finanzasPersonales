@@ -1,6 +1,6 @@
 package com.finanzaspersonales.presenter.operations.category;
 
-import com.finanzaspersonales.model.Database;
+import com.finanzaspersonales.model.Categories;
 import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.input.SimpleInput;
 import com.finanzaspersonales.presenter.operations.Operation;
@@ -55,9 +55,9 @@ public class DeleteCategory extends Operation {
         UIFormatter.promptStyle("Enter category name", SimpleInput.TEXT));
 
     String name = SimpleInput.readString();
-    if (Database.db().categoryExists(name)) {
+    if (Categories.exists(name)) {
       String warning = "\n";
-      if (Database.db().categoryHasTransactions(name)) {
+      if (Categories.hasTransactions(name)) {
         warning += "This category has transactions associated with it.";
       }
       warning += "This operation is not reversible. Do you want to continue?";
@@ -65,7 +65,7 @@ public class DeleteCategory extends Operation {
       boolean choice = MenuInput.handleYesNo(view);
 
       if (choice) {
-        Database.db().deleteCategory(name);
+        Categories.delete(name);
         view.appendWithNewline(
             UIFormatter.successStyle("Category deleted."));
       }
@@ -83,7 +83,7 @@ public class DeleteCategory extends Operation {
     boolean choice = MenuInput.handleYesNo(view);
 
     if (choice) {
-      Database.db().deleteAllCategories();
+      Categories.deleteAll();;
       view.appendWithNewline(
           UIFormatter.successStyle("Categories deleted."));
     }

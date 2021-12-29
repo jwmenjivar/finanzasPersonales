@@ -1,7 +1,7 @@
 package com.finanzaspersonales.presenter.operations.category;
 
+import com.finanzaspersonales.model.Categories;
 import com.finanzaspersonales.model.Category;
-import com.finanzaspersonales.model.Database;
 import com.finanzaspersonales.model.Transaction;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.view.MainView;
@@ -45,11 +45,9 @@ public class CreateCategory extends CategoryData {
     String name = inputName();
     String description = inputDescription();
 
-    this.category = new Category(type, name, description);
+    Category newCategory = Categories.create(type, name, description);
 
-    showResult();
-
-    Database.db().saveCategory(this.category);
+    showResult(newCategory);
     endOperation();
   }
 
