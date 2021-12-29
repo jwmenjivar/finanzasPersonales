@@ -23,8 +23,6 @@ public abstract class Presenter {
    * @return Tells the app what to do next.
    */
   public Action chooseOperation() {
-    Action a = new Action();
-    a.actionType = Action.ActionType.NONE;
-    return a;
+    return new Action(Action.ActionType.NONE);
   }
 }

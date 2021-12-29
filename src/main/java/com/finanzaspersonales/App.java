@@ -24,16 +24,17 @@ public class App
         // start main app loop
         Action action = activePresenter.chooseOperation();
 
-        while (action.actionType != Action.ActionType.EXIT) {
-            if (action.actionType == Action.ActionType.NAVIGATION) {
-                activeView = action.nextView;
+        while (action.getActionType() != Action.ActionType.EXIT) {
+            if (action.getActionType() == Action.ActionType.NAVIGATION) {
+                activeView = action.getNextView();
                 activeView.initialize();
                 activePresenter = activeView.getPresenter();
+            } else if (action.getActionType() == Action.ActionType.RELOAD) {
+                activeView.initialize();
             }
 
             action = activePresenter.chooseOperation();
         }
-
         exit();
     }
 

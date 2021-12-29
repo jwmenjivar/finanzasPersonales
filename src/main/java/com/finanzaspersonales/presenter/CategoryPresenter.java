@@ -71,36 +71,31 @@ public class CategoryPresenter extends Presenter {
       case Operation.CREATE -> {
         createCategory.create();
 
-        action.actionType = Action.ActionType.NAVIGATION;
-        action.nextView = this.categoryView;
+        action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case Operation.SHOW -> {
         showCategories.showAll();
 
-        action.actionType = Action.ActionType.NAVIGATION;
-        action.nextView = this.categoryView;
+        action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case Operation.DELETE -> {
         deleteCategory.delete();
 
-        action.actionType = Action.ActionType.NAVIGATION;
-        action.nextView = this.categoryView;
+        action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case Operation.UPDATE -> {
         updateCategory.update();
 
-        action.actionType = Action.ActionType.NAVIGATION;
-        action.nextView = this.categoryView;
+        action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case "Back" -> {
-        action.actionType = Action.ActionType.NAVIGATION;
-        action.nextView = MainView.getMainView();
+        action.setActionType(Action.ActionType.NAVIGATION);
+        action.setNextView(MainView.getMainView());
         return action;
-
       }
       default -> {
         return action;

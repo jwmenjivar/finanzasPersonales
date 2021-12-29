@@ -6,6 +6,8 @@ import java.time.LocalDate;
 
 public class Transactions {
 
+  private Transactions() {}
+
   public static void create(Transaction transaction) {
     Database.db().saveTransaction(transaction);
   }

@@ -70,34 +70,30 @@ public class TransactionPresenter extends Presenter {
       case Operation.CREATE -> {
         createTransaction.create();
 
-        action.actionType = Action.ActionType.NAVIGATION;
-        action.nextView = this.transactionView;
+        action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case Operation.SHOW -> {
         showTransactions.showAll();
 
-        action.actionType = Action.ActionType.NAVIGATION;
-        action.nextView = this.transactionView;
+        action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case Operation.UPDATE -> {
         updateTransaction.update();
 
-        action.actionType = Action.ActionType.NAVIGATION;
-        action.nextView = this.transactionView;
+        action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case Operation.DELETE -> {
         deleteTransaction.delete();
 
-        action.actionType = Action.ActionType.NAVIGATION;
-        action.nextView = this.transactionView;
+        action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case "Back" -> {
-        action.actionType = Action.ActionType.NAVIGATION;
-        action.nextView = MainView.getMainView();
+        action.setActionType(Action.ActionType.NAVIGATION);
+        action.setNextView(MainView.getMainView());
         return action;
       }
       default -> {

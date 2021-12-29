@@ -13,12 +13,12 @@ import org.jetbrains.annotations.NotNull;
 @AllArgsConstructor
 public class Action {
   public enum ActionType {
-    NAVIGATION, EXIT, NONE
+    NAVIGATION, RELOAD, EXIT, NONE
   }
 
   @NotNull
-  public ActionType actionType;
-  public MainView nextView;
+  private ActionType actionType;
+  private MainView nextView;
 
   public Action() {
     this.actionType = Action.ActionType.NONE;
