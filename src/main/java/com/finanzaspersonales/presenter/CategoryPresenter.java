@@ -1,10 +1,7 @@
 package com.finanzaspersonales.presenter;
 
 import com.finanzaspersonales.presenter.input.MenuInput;
-import com.finanzaspersonales.presenter.operations.CreateCategory;
-import com.finanzaspersonales.presenter.operations.DeleteCategory;
-import com.finanzaspersonales.presenter.operations.Operation;
-import com.finanzaspersonales.presenter.operations.ShowCategories;
+import com.finanzaspersonales.presenter.operations.*;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.CategoryView;
@@ -15,12 +12,14 @@ public class CategoryPresenter extends Presenter {
   private final CreateCategory createCategory;
   private final ShowCategories showCategories;
   private final DeleteCategory deleteCategory;
+  private final UpdateCategory updateCategory;
 
   public CategoryPresenter(CategoryView categoryView) {
     this.categoryView = categoryView;
     createCategory = new CreateCategory(this.categoryView);
     showCategories = new ShowCategories(this.categoryView);
     deleteCategory = new DeleteCategory(this.categoryView);
+    updateCategory = new UpdateCategory(this.categoryView);
   }
 
   @Override
@@ -42,6 +41,9 @@ public class CategoryPresenter extends Presenter {
         new MenuItem(
             Operation.DELETE,
             "Delete recorded categories."),
+        new MenuItem(
+            Operation.UPDATE,
+            "Update recorded category."),
         new MenuItem(
             "Back",
             "Back to the main menu.")};
@@ -78,6 +80,13 @@ public class CategoryPresenter extends Presenter {
       }
       case Operation.DELETE -> {
         deleteCategory.delete();
+
+        action.actionType = Action.ActionType.NAVIGATION;
+        action.nextView = this.categoryView;
+        return action;
+      }
+      case Operation.UPDATE -> {
+        updateCategory.update();
 
         action.actionType = Action.ActionType.NAVIGATION;
         action.nextView = this.categoryView;

@@ -73,7 +73,7 @@ public class CategoryFormatter extends DataFormatter {
         // # date amount type category description
         // # > Name > Type > Description
         Ansi.ansi().bg(Ansi.Color.BLACK).a(String.format(
-                "%s %s %s %s",
+                " %s %s %s %s",
                 Ansi.ansi().bold().fgBright(Ansi.Color.WHITE).a(
                     formatInlineText("#", NUMBER_SPACE)),
                 Ansi.ansi().bold().a(UIFormatter.center(NAME_H.toUpperCase(), NAME_SPACE)),
@@ -84,7 +84,7 @@ public class CategoryFormatter extends DataFormatter {
     if (categories.length > 0) {
       int count = 1;
       for (Category c : categories) {
-        formatted.append(String.format("%s %s %s %s%n",
+        formatted.append(String.format(" %s %s %s %s%n",
             Ansi.ansi().bold().a(
                 formatInlineText(String.valueOf(count), NUMBER_SPACE)).reset().toString(),
             formatInlineText(c.getName(), NAME_SPACE),

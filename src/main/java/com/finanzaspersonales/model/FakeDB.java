@@ -23,17 +23,6 @@ class FakeDB implements Database {
   }
 
   @Override
-  public Category[] getAllCategories() {
-    return categories.toArray(new Category[0]);
-  }
-
-  @Override
-  public Category[] getCategoriesByType(Transaction.TransactionType type) {
-    return categories.stream().filter(category ->
-        category.getType().equals(type)).toArray(Category[]::new);
-  }
-
-  @Override
   public Transaction[] getAllTransactions() {
     return transactions.toArray(new Transaction[0]);
   }
@@ -82,8 +71,31 @@ class FakeDB implements Database {
   }
 
   @Override
+  public Category[] getAllCategories() {
+    return categories.toArray(new Category[0]);
+  }
+
+  @Override
+  public Category[] getCategoriesByType(Transaction.TransactionType type) {
+    return categories.stream().filter(category ->
+        category.getType().equals(type)).toArray(Category[]::new);
+  }
+
+  @Override
+  public Category getCategoryByName(String name) {
+    Optional<Category> c = categories.stream().filter(
+        category -> category.getName().equals(name)).findFirst();
+    return c.orElse(null);
+  }
+
+  @Override
   public void saveCategory(Category category) {
     categories.add(category);
+  }
+
+  @Override
+  public void updateCategory(Category category) {
+    /* does nothing yet */
   }
 
   @Override

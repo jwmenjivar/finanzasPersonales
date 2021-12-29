@@ -33,9 +33,8 @@ public class UpdateTransaction extends TransactionData {
    * 2. If it exists, asks for the attribute to edit.
    * 3. Asks for the new value.
    * 4. Updates the transaction.
-   * 5. Ends the operation.
    *
-   * It performs a DB save operation.
+   * It performs a DB update operation.
    */
   public void update() {
     startOperation();
@@ -56,7 +55,6 @@ public class UpdateTransaction extends TransactionData {
           new MenuItem(TransactionFormatter.DESCRIPTION_H),
           new MenuItem("Back")
       };
-      view.appendWithNewline(UIFormatter.menuStyle(menuItems));
 
       String input = processMenu(menuItems);
 

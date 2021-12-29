@@ -20,14 +20,17 @@ import com.finanzaspersonales.view.MainView;
  * @version 1.0
  * @since 1.0
  */
-public class CreateCategory extends Operation {
+public class CreateCategory extends CategoryData {
   private final MenuItem[] typeOptions = new MenuItem[] {
       new MenuItem(Transaction.TransactionType.INCOME.name()),
       new MenuItem(Transaction.TransactionType.EXPENSE.name())
   };
 
   public CreateCategory(MainView view) {
-    super(view, "Creating Category", "Choose the category type:");
+    super(view,
+        "Creating Category",
+        "Choose the category type:",
+        "Category created.");
   }
 
   /**
@@ -46,15 +49,11 @@ public class CreateCategory extends Operation {
     String name = inputName();
     String description = inputDescription();
 
-    Category category = new Category(type, name, description);
+    this.category = new Category(type, name, description);
 
-    view.appendWithNewline(
-        UIFormatter.successStyle("Category created."));
-    view.appendWithNewline("\n" +
-        UIFormatter.highlightStyle("Category:"));
-    view.appendWithoutNewline(CategoryFormatter.categoryDetailed(category));
+    showResult();
 
-    Database.db().saveCategory(category);
+    Database.db().saveCategory(this.category);
     endOperation();
   }
 
@@ -66,33 +65,5 @@ public class CreateCategory extends Operation {
     } else {
       return Transaction.TransactionType.EXPENSE;
     }
-  }
-
-  private String inputName() {
-    view.appendWithoutNewline(
-        UIFormatter.subtitleStyle("Enter a unique category name:"));
-    view.appendWithoutNewline(
-        UIFormatter.promptStyle("Enter name", SimpleInput.TEXT));
-
-    NameValidator categoryValidator = new NameValidator();
-    String name = "";
-    while (!categoryValidator.isValid()) {
-      name = SimpleInput.readString();
-      categoryValidator.validateName(name);
-
-      if (!categoryValidator.isValid()) {
-        name = "";
-        view.appendWithNewline("\n" +
-            UIFormatter.errorStyle(categoryValidator.getMessages().trim()));
-      }
-    }
-
-    return name;
-  }
-
-  private String inputDescription() {
-    view.appendWithoutNewline(
-        UIFormatter.promptStyle("Enter description", SimpleInput.TEXT));
-    return SimpleInput.readString();
   }
 }

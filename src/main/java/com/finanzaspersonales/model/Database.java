@@ -8,28 +8,18 @@ import java.time.LocalDate;
 public interface Database {
 
   /**
-   * Returns an array of all the existing categories.
-   */
-  Category[] getAllCategories();
-
-  /**
-   * Returns an array of transactions by their type.
-   */
-  Category[] getCategoriesByType(Transaction.TransactionType type);
-
-  /**
-   * Returns an array with all the transactions.
+   * Retrieves an array with all the transactions.
    */
   Transaction[] getAllTransactions();
 
   /**
-   * Returns an array of all transactions by date.
+   * Retrieves an array of all transactions by date.
    * Considers the day, month and year, but not the time.
    */
   Transaction[] getTransactionsByDate(LocalDate date);
 
   /**
-   * Returns a transaction by ID if it exists.
+   * Retrieves a transaction by ID if it exists.
    * @param id UUID String
    * @return Transaction with the ID or null
    */
@@ -63,12 +53,38 @@ public interface Database {
   boolean transactionExists(String id);
 
   /**
+   * Retrieves an array of all the existing categories.
+   */
+  Category[] getAllCategories();
+
+  /**
+   * Retrieves an array of transactions by their type.
+   */
+  Category[] getCategoriesByType(Transaction.TransactionType type);
+
+  /**
+   * Retrieves a category from the DB by name.
+   */
+  Category getCategoryByName(String name);
+
+  /**
    * Saves a category to the DB.
    */
   void saveCategory(Category category);
 
+  /**
+   * Updates a category to the DB.
+   */
+  void updateCategory(Category category);
+
+  /**
+   * Deletes a category from the DB.
+   */
   void deleteCategory(String name);
 
+  /**
+   * Deletes all categories from the DB.
+   */
   void deleteAllCategories();
 
   /**
