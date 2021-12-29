@@ -3,6 +3,7 @@ package com.finanzaspersonales.presenter;
 import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.operations.CreateCategory;
 import com.finanzaspersonales.presenter.operations.Operation;
+import com.finanzaspersonales.presenter.operations.ShowCategories;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.CategoryView;
@@ -10,11 +11,13 @@ import com.finanzaspersonales.view.MainView;
 
 public class CategoryPresenter extends Presenter {
   private final CategoryView categoryView;
-  private CreateCategory createCategory;
+  private final CreateCategory createCategory;
+  private final ShowCategories showCategories;
 
   public CategoryPresenter(CategoryView categoryView) {
     this.categoryView = categoryView;
     createCategory = new CreateCategory(this.categoryView);
+    showCategories = new ShowCategories(this.categoryView);
   }
 
   @Override
@@ -29,7 +32,10 @@ public class CategoryPresenter extends Presenter {
     this.menuItems = new MenuItem[]{
         new MenuItem(
             Operation.CREATE,
-            "Back to the main menu."),
+            "Create new category."),
+        new MenuItem(
+            Operation.SHOW,
+            "Show recorded categories."),
         new MenuItem(
             "Back",
             "Back to the main menu.")};
@@ -52,6 +58,13 @@ public class CategoryPresenter extends Presenter {
     switch (menuOption) {
       case Operation.CREATE -> {
         createCategory.create();
+
+        action.actionType = Action.ActionType.NAVIGATION;
+        action.nextView = this.categoryView;
+        return action;
+      }
+      case Operation.SHOW -> {
+        showCategories.showAll();
 
         action.actionType = Action.ActionType.NAVIGATION;
         action.nextView = this.categoryView;
