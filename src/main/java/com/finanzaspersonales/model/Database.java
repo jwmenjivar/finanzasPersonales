@@ -93,6 +93,8 @@ public interface Database {
    */
   boolean categoryExists(String name);
 
+  boolean categoryHasTransactions(String name);
+
   /**
    * Returns the database implementation.
    */

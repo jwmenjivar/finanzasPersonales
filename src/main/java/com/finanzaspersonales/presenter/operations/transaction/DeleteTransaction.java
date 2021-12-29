@@ -1,10 +1,11 @@
-package com.finanzaspersonales.presenter.operations;
+package com.finanzaspersonales.presenter.operations.transaction;
 
 import com.finanzaspersonales.model.Database;
-import com.finanzaspersonales.presenter.input.MenuInput;
-import com.finanzaspersonales.presenter.input.SimpleInput;
+import com.finanzaspersonales.presenter.operations.Operation;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
+import com.finanzaspersonales.presenter.input.SimpleInput;
+import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.view.MainView;
 
 /**
@@ -19,18 +20,18 @@ import com.finanzaspersonales.view.MainView;
  * @version 1.0
  * @since 1.0
  */
-public class DeleteCategory extends Operation {
+public class DeleteTransaction extends Operation {
   private final MenuItem[] deleteOptions =
       new MenuItem[] { new MenuItem("Single"), new MenuItem("All") };
 
-  public DeleteCategory(MainView view) {
+  public DeleteTransaction(MainView view) {
     super(view, "Deleting transactions", "Choose what to delete: ");
   }
 
   /**
-   * Operation that deletes an existing category following these steps:
-   * 1. Ask to delete a single category or all
-   * 2. If single: asks for name and deletes
+   * Operation that deletes an existing transaction following these steps:
+   * 1. Ask to delete a single transaction or all
+   * 2. If single: asks for ID and deletes
    * 3. If all: asks for confirmation and deletes
    *
    * It performs a DB delete operation.
@@ -41,47 +42,47 @@ public class DeleteCategory extends Operation {
     String input = processMenu(deleteOptions);
 
     if (input.equals("Single")) {
-      deleteSingleCategory();
+      deleteSingleTransaction();
     } else {
-      deleteAllCategories();
+      deleteAllTransactions();
     }
 
     endOperation();
   }
 
-  private void deleteSingleCategory() {
+  private void deleteSingleTransaction() {
     view.appendWithoutNewline(
-        UIFormatter.promptStyle("Enter category name", SimpleInput.TEXT));
+        UIFormatter.promptStyle("Enter ID", SimpleInput.TEXT));
 
-    String name = SimpleInput.readString();
-    if (Database.db().categoryExists(name)) {
+    String id = SimpleInput.readString();
+    if (Database.db().transactionExists(id)) {
       view.appendWithNewline("\n" +
           UIFormatter.warningStyle("This operation is not reversible. Do you want to continue?"));
 
       boolean choice = MenuInput.handleYesNo(view);
 
       if (choice) {
-        Database.db().deleteCategory(name);
+        Database.db().deleteTransaction(id);
         view.appendWithNewline(
-            UIFormatter.successStyle("Category deleted."));
+            UIFormatter.successStyle("Transaction deleted."));
       }
     } else {
       view.appendWithNewline(UIFormatter.errorStyle("Invalid or non existent ID."));
     }
   }
 
-  private void deleteAllCategories() {
+  private void deleteAllTransactions() {
     view.appendWithNewline(
-        UIFormatter.warningStyle("All the recorded categories will be deleted."));
+        UIFormatter.warningStyle("All the recorded transactions will be deleted."));
     view.appendWithNewline(
         UIFormatter.warningStyle("This operation is not reversible. Do you want to continue?"));
 
     boolean choice = MenuInput.handleYesNo(view);
 
     if (choice) {
-      Database.db().deleteAllCategories();
+      Database.db().deleteAllTransactions();
       view.appendWithNewline(
-          UIFormatter.successStyle("Categories deleted."));
+          UIFormatter.successStyle("Transactions deleted."));
     }
   }
 }

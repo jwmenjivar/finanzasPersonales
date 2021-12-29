@@ -1,4 +1,4 @@
-package com.finanzaspersonales.presenter.operations;
+package com.finanzaspersonales.presenter.operations.transaction;
 
 import com.finanzaspersonales.model.Database;
 import com.finanzaspersonales.model.Transaction;

@@ -2,6 +2,10 @@ package com.finanzaspersonales.presenter;
 
 import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.operations.*;
+import com.finanzaspersonales.presenter.operations.transaction.CreateTransaction;
+import com.finanzaspersonales.presenter.operations.transaction.DeleteTransaction;
+import com.finanzaspersonales.presenter.operations.transaction.ShowTransactions;
+import com.finanzaspersonales.presenter.operations.transaction.UpdateTransaction;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.MainView;

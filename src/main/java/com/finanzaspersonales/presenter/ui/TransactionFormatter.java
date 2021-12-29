@@ -45,12 +45,18 @@ public class TransactionFormatter extends DataFormatter {
     String formatted = "%s  %s  %s %s %s";
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
 
+    // prevent error from null category
+    String categoryName = "<No category>";
+    if (transaction.getCategory() != null) {
+      categoryName = transaction.getCategory().getName();
+    }
+
     return String.format(formatted,
         formatInlineText(transaction.getDate().format(dateTimeFormatter), DATE_SPACE),
         formatTextByType(
             formatInlineAmount(transaction.getAmount()), transaction.getType()),
         formatInlineText(transaction.getType().toString(), TYPE_SPACE),
-        formatInlineText(transaction.getCategory().getName(), CATEGORY_SPACE),
+        formatInlineText(categoryName, CATEGORY_SPACE),
         formatInlineText(transaction.getDescription(), TEXT_SPACE));
   }
 
@@ -118,11 +124,18 @@ public class TransactionFormatter extends DataFormatter {
         Ansi.ansi().bold().fgBrightDefault().a(
             formatInlineText(DATE_H + ":", DETAIL_SPACE)).reset().toString(),
         transaction.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
+
+    // prevent error from null category
+    String categoryName = "<No category>";
+    if (transaction.getCategory() != null) {
+      categoryName = transaction.getCategory().getName();
+    }
     formatted += String.format(
         detailFormat,
         Ansi.ansi().bold().fgBrightDefault().a(
             formatInlineText(CATEGORY_H+ ":", DETAIL_SPACE)).reset().toString(),
-        transaction.getCategory().getName());
+        categoryName);
+
     formatted += UIFormatter.wrapText(String.format(
         detailFormat,
         Ansi.ansi().bold().fgBrightDefault().a(

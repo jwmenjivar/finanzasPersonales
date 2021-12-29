@@ -2,6 +2,10 @@ package com.finanzaspersonales.presenter;
 
 import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.operations.*;
+import com.finanzaspersonales.presenter.operations.category.CreateCategory;
+import com.finanzaspersonales.presenter.operations.category.DeleteCategory;
+import com.finanzaspersonales.presenter.operations.category.ShowCategories;
+import com.finanzaspersonales.presenter.operations.category.UpdateCategory;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.CategoryView;

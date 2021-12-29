@@ -103,18 +103,36 @@ class FakeDB implements Database {
     Optional<Category> c = categories.stream()
         .filter(category -> category.getName().equals(name)).findFirst();
 
-    c.ifPresent(category -> categories.remove(category));
+    c.ifPresent(category -> {
+      categories.remove(category);
+
+      // remove the category from transactions
+      transactions.forEach(transaction -> {
+        if (transaction.getCategory().getUniqueID().equals(category.getUniqueID())) {
+          transaction.setCategory(null);
+        }
+      });
+    });
   }
 
   @Override
   public void deleteAllCategories() {
     categories.clear();
+
+    // removes all categories from transactions
+    transactions.forEach(transaction -> transaction.setCategory(null));
   }
 
   @Override
   public boolean categoryExists(String name) {
     return categories.stream().anyMatch(
         category -> category.getName().equals(name));
+  }
+
+  @Override
+  public boolean categoryHasTransactions(String name) {
+    return transactions.stream().anyMatch(
+        transaction -> transaction.getCategory().getName().equals(name));
   }
 
   public static FakeDB getInstance() {

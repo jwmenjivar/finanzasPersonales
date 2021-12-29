@@ -1,13 +1,9 @@
-package com.finanzaspersonales.presenter.operations;
+package com.finanzaspersonales.presenter.operations.category;
 
 import com.finanzaspersonales.model.Category;
-import com.finanzaspersonales.model.NameValidator;
 import com.finanzaspersonales.model.Database;
 import com.finanzaspersonales.model.Transaction;
-import com.finanzaspersonales.presenter.input.SimpleInput;
-import com.finanzaspersonales.presenter.ui.CategoryFormatter;
 import com.finanzaspersonales.presenter.ui.MenuItem;
-import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.MainView;
 
 /**

@@ -1,14 +1,15 @@
-package com.finanzaspersonales.presenter.operations;
+package com.finanzaspersonales.presenter.operations.transaction;
 
-import com.finanzaspersonales.model.Category;
 import com.finanzaspersonales.model.Database;
-import com.finanzaspersonales.presenter.ui.CategoryFormatter;
+import com.finanzaspersonales.model.Transaction;
+import com.finanzaspersonales.presenter.operations.Operation;
 import com.finanzaspersonales.presenter.ui.MenuItem;
+import com.finanzaspersonales.presenter.ui.TransactionFormatter;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.MainView;
 
 /**
- * Operation to show all the existing categories.
+ * Operation to show all the existing transactions.
  * Transactions can be displayed in a summarized or detailed style.
  *
  * To use, instantiate and provide the view where it will print all
@@ -17,16 +18,16 @@ import com.finanzaspersonales.view.MainView;
  * @version 1.0
  * @since 1.0
  */
-public class ShowCategories extends Operation {
+public class ShowTransactions extends Operation {
   private final MenuItem[] displayOptions =
       new MenuItem[] { new MenuItem("Summarized"), new MenuItem("Detailed") };
 
-  public ShowCategories(MainView view) {
-    super(view, "Showing categories", "View format: ");
+  public ShowTransactions(MainView view) {
+    super(view, "Showing transactions", "View format: ");
   }
 
   /**
-   * Operation that shows all existing categories in summarized or detailed style.
+   * Operation that shows all existing transactions in summarized or detailed style.
    * 1. Asks which style to use.
    * 2. Prints all the transactions.
    *
@@ -46,15 +47,15 @@ public class ShowCategories extends Operation {
   }
 
   private void showSummarized() {
-    view.appendWithoutNewline(UIFormatter.titleStyle("Summarized categories:"));
+    view.appendWithoutNewline(UIFormatter.titleStyle("Summarized transactions:"));
     view.appendWithNewline(
-        CategoryFormatter.categoryTable(Database.db().getAllCategories()));
+        TransactionFormatter.transactionsTable(Database.db().getAllTransactions()));
   }
 
   private void showDetailed() {
-    view.appendWithoutNewline(UIFormatter.titleStyle("Detailed categories:"));
+    view.appendWithoutNewline(UIFormatter.titleStyle("Detailed transactions:"));
 
-    Category[] categories = Database.db().getAllCategories();
-    view.appendWithNewline(CategoryFormatter.categoriesDetailed(categories));
+    Transaction[] transactions = Database.db().getAllTransactions();
+    view.appendWithNewline(TransactionFormatter.transactionsDetailed(transactions));
   }
 }
