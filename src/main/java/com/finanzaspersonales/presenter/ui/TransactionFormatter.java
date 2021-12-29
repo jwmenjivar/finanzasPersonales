@@ -1,13 +1,12 @@
-package com.finanzaspersonales.presenter;
+package com.finanzaspersonales.presenter.ui;
 
 import com.finanzaspersonales.model.Transaction;
-import com.finanzaspersonales.model.TransactionType;
 import org.fusesource.jansi.Ansi;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.List;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Utility class that uses 'jansi' to format the way transactions are displayed
@@ -18,17 +17,19 @@ import java.util.List;
  */
 public class TransactionFormatter {
   private static final int DATE_SPACE = 10;
-  private static final int AMOUNT_SPACE = 10;
+  private static final int AMOUNT_SPACE = 12;
   private static final int TYPE_SPACE = 10;
+  private static final int CATEGORY_SPACE = 19;
   private static final int TEXT_SPACE = 20;
   private static final int DETAIL_SPACE = 15;
-  private static final String DATE_H = "Date";
-  private static final String AMOUNT_H = "Amount";
-  private static final String TYPE_H = "Type";
-  private static final String CATEGORY_H = "Category";
-  private static final String DESCRIPTION_H = "Description";
+  private static final int ID_SPACE = 4;
+  public static final String DATE_H = "Date";
+  public static final String AMOUNT_H = "Amount";
+  public static final String TYPE_H = "Type";
+  public static final String ID_H = "Transaction ID";
+  public static final String CATEGORY_H = "Category";
+  public static final String DESCRIPTION_H = "Description";
   private static final String NO_TRANSACTIONS = "<No transactions>";
-  private static final String SIMPLE_DATE = "dd-MM-yy";
   private static final NumberFormat AMOUNT_FORMAT = NumberFormat.getCurrencyInstance();
 
   private TransactionFormatter() {}
@@ -41,14 +42,15 @@ public class TransactionFormatter {
    */
   public static String transactionInline(@NotNull Transaction transaction) {
     // date type description category amount
-    String formatted = "%s %s  %s %s %s";
+    // date amount type category description
+    String formatted = "%s  %s  %s %s %s";
+    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
+
     return String.format(formatted,
-        formatInlineText(
-            new SimpleDateFormat(SIMPLE_DATE).format(transaction.getDate()),
-            DATE_SPACE),
+        formatInlineText(transaction.getDate().format(dateTimeFormatter), DATE_SPACE),
         formatAmountType(formatInlineAmount(transaction.getAmount()), transaction.getType()),
         formatInlineText(transaction.getType().toString(), TYPE_SPACE),
-        formatInlineText(transaction.getCategory().getName(), TEXT_SPACE),
+        formatInlineText(transaction.getCategory().getName(), CATEGORY_SPACE),
         formatInlineText(transaction.getDescription(), TEXT_SPACE));
   }
 
@@ -60,27 +62,30 @@ public class TransactionFormatter {
    * @return Multiline ANSI String with a table of transactions
    */
   @NotNull
-  public static String transactionsTable(@NotNull List<Transaction> transactions) {
+  public static String transactionsTable(@NotNull Transaction[] transactions) {
     StringBuilder formatted = new StringBuilder();
 
     // format the header
     formatted.append(
+        // # date amount type category description
         Ansi.ansi().bg(Ansi.Color.BLACK).a(String.format(
-            "    %s %s %s %s %s %s",
-            Ansi.ansi().bold().fgBright(Ansi.Color.WHITE).a("#").toString(),
+            "%s %s  %s %s %s  %s",
+            Ansi.ansi().bold().fgBright(Ansi.Color.WHITE).a(
+                formatInlineText("#", ID_SPACE)),
             Ansi.ansi().bold().a(UIFormatter.center(DATE_H.toUpperCase(), DATE_SPACE)),
             Ansi.ansi().bold().a(UIFormatter.center(AMOUNT_H.toUpperCase(), AMOUNT_SPACE)),
             Ansi.ansi().bold().a(UIFormatter.center(TYPE_H.toUpperCase(), TYPE_SPACE)),
-            Ansi.ansi().bold().a(UIFormatter.center(CATEGORY_H.toUpperCase(), TEXT_SPACE)),
+            Ansi.ansi().bold().a(UIFormatter.center(CATEGORY_H.toUpperCase(), CATEGORY_SPACE)),
             Ansi.ansi().bold().a(UIFormatter.center(DESCRIPTION_H.toUpperCase(), TEXT_SPACE))))
             .reset().toString()).append("\n");
 
-    if (!transactions.isEmpty()) {
+    if (transactions.length > 0) {
       int count = 1;
 
       for (Transaction t : transactions) {
-        formatted.append(String.format("    %s %s%n",
-            Ansi.ansi().bold().a(String.valueOf(count)).reset().toString(),
+        formatted.append(String.format("%s %s%n",
+            Ansi.ansi().bold().a(
+                formatInlineText(String.valueOf(count), ID_SPACE)).reset().toString(),
             transactionInline(t)));
         count++;
       }
@@ -102,6 +107,11 @@ public class TransactionFormatter {
     String detailFormat = "%s %s\n";
     formatted += String.format(
         detailFormat,
+        Ansi.ansi().bold().fgBrightDefault().a(Ansi.Attribute.UNDERLINE)
+            .a(formatInlineText(ID_H + ":", DETAIL_SPACE)).reset().toString(),
+        transaction.getUniqueID());
+    formatted += String.format(
+        detailFormat,
         Ansi.ansi().bold().fgBrightDefault().a(
             formatInlineText(TYPE_H + ":", DETAIL_SPACE)).reset().toString(),
         transaction.getType().toString());
@@ -109,7 +119,7 @@ public class TransactionFormatter {
         detailFormat,
         Ansi.ansi().bold().fgBrightDefault().a(
             formatInlineText(DATE_H + ":", DETAIL_SPACE)).reset().toString(),
-        new SimpleDateFormat(SIMPLE_DATE).format(transaction.getDate()));
+        transaction.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
     formatted += String.format(
         detailFormat,
         Ansi.ansi().bold().fgBrightDefault().a(
@@ -127,6 +137,17 @@ public class TransactionFormatter {
         formatAmountType(AMOUNT_FORMAT.format(transaction.getAmount()), transaction.getType()));
 
     return formatted;
+  }
+
+  @NotNull
+  @Contract(pure = true)
+  public static String transactionsDetailed(@NotNull Transaction[] transactions) {
+    StringBuilder formatted = new StringBuilder();
+    for (Transaction t : transactions) {
+      formatted.append(TransactionFormatter.transactionDetailed(t));
+    }
+
+    return formatted.toString();
   }
 
   /**
@@ -174,8 +195,8 @@ public class TransactionFormatter {
    * @param type
    * @return ANSI String with formatted amount
    */
-  private static String formatAmountType(String amount, TransactionType type) {
-    return type == TransactionType.INCOME ?
+  private static String formatAmountType(String amount, Transaction.TransactionType type) {
+    return type == Transaction.TransactionType.INCOME ?
         Ansi.ansi().fgGreen().a(amount).reset().toString() :
         Ansi.ansi().fgRed().a(amount).reset().toString();
   }

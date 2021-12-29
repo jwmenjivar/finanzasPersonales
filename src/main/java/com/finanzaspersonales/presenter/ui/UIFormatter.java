@@ -1,12 +1,10 @@
-package com.finanzaspersonales.presenter;
+package com.finanzaspersonales.presenter.ui;
 
 import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.Ansi.Color;
 import org.fusesource.jansi.io.Colors;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 /**
  * Utility class that uses 'jansi' to format all the strings to UI elements.
@@ -15,6 +13,7 @@ import java.util.List;
 public class UIFormatter {
   // width of the screen
   private static final int MAX_WIDTH = 80;
+  private static final String PROMPT_END = "$>";
 
   private UIFormatter() { }
 
@@ -41,7 +40,7 @@ public class UIFormatter {
       return " ".repeat(spacing) + text + " ".repeat(spacing);
     }
 
-    return addNewLine(text);
+    return text;
   }
 
   /**
@@ -60,7 +59,7 @@ public class UIFormatter {
       text += " ".repeat(offset);
     }
 
-    return addNewLine(text);
+    return text;
   }
 
   /**
@@ -102,7 +101,7 @@ public class UIFormatter {
       text = temp + text;
     }
 
-    return addNewLine(text);
+    return text;
   }
 
   /**
@@ -110,7 +109,7 @@ public class UIFormatter {
    * @return ANSI String with numbered list of menu items
    */
   @NotNull
-  public static String menu(@NotNull List<MenuItem> menuItems) {
+  public static String menuStyle(@NotNull MenuItem[] menuItems) {
     int count = 1;
     StringBuilder menu = new StringBuilder();
 
@@ -129,15 +128,19 @@ public class UIFormatter {
       String element = String.format("%d. %s%s", count, s.getItem(), offsetSpace);
       menu.append(element);
 
-      String details = "\t"
-          + Ansi.ansi().fg(Color.WHITE)
-                .a(Ansi.Attribute.ITALIC)
-                .a(s.getDescription()).reset().toString();
-      menu.append(details).append("\n");
+      if (s.getDescription() != null) {
+        String details = "\t"
+            + Ansi.ansi().fg(Color.WHITE)
+            .a(Ansi.Attribute.ITALIC)
+            .a(s.getDescription()).reset().toString();
+        menu.append(details);
+      }
+      menu.append("\n");
+
       count++;
     }
 
-    return menu.toString();
+    return menu.toString().trim();
   }
 
   /**
@@ -161,8 +164,8 @@ public class UIFormatter {
    */
   @NotNull
   public static String titleStyle(@NotNull String title) {
-    return addNewLine(
-        Ansi.ansi().bold().fgBrightCyan().a("== " + title.toUpperCase()).reset().toString());
+    return addNewLine(Ansi.ansi().bold().fgBrightCyan()
+        .a("== " + title.toUpperCase()).reset().toString());
   }
 
   /**
@@ -184,30 +187,73 @@ public class UIFormatter {
    */
   @NotNull
   public static String highlightStyle(String text) {
-    return addNewLine(
-        Ansi.ansi().fg(Colors.roundColor(0, 0)).a(text).reset().toString());
+    return Ansi.ansi().fg(Colors.roundColor(0, 0))
+        .a(text).reset().toString();
   }
 
   /**
    * Formats a message, input type and end into an input prompt.
+   * Prompt style: Blue message, yellow input type, and bold end.
    * @param message Describes what the input is for
    * @param inputType Hints the type of data expected
-   * @param end Symbols to end the prompt
    * @return ANSI String with formatted prompt
    */
   @NotNull
   public static String promptStyle(
-      @NotNull String message, @NotNull String inputType, @NotNull String end) {
+      @NotNull String message, @NotNull String inputType) {
     return String.format(
         "%s %s: %s ",
         Ansi.ansi().fgBlue().a(message).reset().toString(),
         Ansi.ansi().fgYellow().a(inputType).reset().toString(),
-        Ansi.ansi().bold().a(end).reset().toString());
+        Ansi.ansi().bold().a(PROMPT_END).reset().toString());
+  }
+
+  /**
+   * Formats a message into a confirmation prompt.
+   * Confirmation style: White font and italic.
+   * @return ANSI String with formatted prompt
+   */
+  public static String confirmationPromptStyle(@NotNull String message) {
+    return String.format("%s: ",
+        Ansi.ansi().fg(Colors.roundColor(0, 0))
+            .a(Ansi.Attribute.ITALIC).a(message).reset().toString());
+  }
+
+  /**
+   * Formats a message with the error style.
+   * Error style: Bright red color and italic.
+   * @param message String with no ANSI sequence
+   * @return ANSI String with formatted message
+   */
+  public static String errorStyle(String message) {
+    return Ansi.ansi().fgBrightRed().bold()
+        .a(Ansi.Attribute.ITALIC).a(message).reset().toString();
+  }
+
+  /**
+   * Formats a message with the success style.
+   * Success tyle: Bright green color and italic.
+   * @param message String with no ANSI sequence
+   * @return ANSI String with formatted message
+   */
+  public static String successStyle(String message) {
+    return Ansi.ansi().fgBrightGreen().bold()
+        .a(Ansi.Attribute.ITALIC).a(message).reset().toString();
+  }
+
+  /**
+   * Formats a message with the warning style.
+   * Error style: Bright yello color and italic.
+   * @param message String with no ANSI sequence
+   * @return ANSI String with formatted message
+   */
+  public static String warningStyle(String message) {
+    return Ansi.ansi().fgBrightYellow().bold()
+        .a(Ansi.Attribute.ITALIC).a(message).reset().toString();
   }
 
   /**
    * Adds a new line to the end of a String.
-   * @param text
    * @return String with a new line at the end
    */
   @NotNull

@@ -1,15 +1,25 @@
 package com.finanzaspersonales.presenter;
 
+import com.finanzaspersonales.presenter.input.MenuInput;
+import com.finanzaspersonales.presenter.operations.*;
+import com.finanzaspersonales.presenter.ui.MenuItem;
+import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.MainView;
 import com.finanzaspersonales.view.TransactionView;
 
-import java.util.List;
-
 public class TransactionPresenter extends Presenter {
   private final TransactionView transactionView;
+  private final CreateTransaction createTransaction;
+  private final UpdateTransaction updateTransaction;
+  private final DeleteTransaction deleteTransaction;
+  private final ShowTransactions showTransactions;
 
   public TransactionPresenter(TransactionView transactionView) {
     this.transactionView = transactionView;
+    createTransaction = new CreateTransaction(this.transactionView);
+    updateTransaction = new UpdateTransaction(this.transactionView);
+    deleteTransaction = new DeleteTransaction(this.transactionView);
+    showTransactions = new ShowTransactions(this.transactionView);
   }
 
   @Override
@@ -21,36 +31,74 @@ public class TransactionPresenter extends Presenter {
     toDisplay = UIFormatter.addNewLine(toDisplay);
 
     // MENU
-    this.menuItems = List.of(
+    this.menuItems = new MenuItem[]{
+        new MenuItem(
+            Operation.CREATE,
+            "Create a new transaction."),
+        new MenuItem(
+            Operation.SHOW,
+            "Show recorded transactions."),
+        new MenuItem(
+            Operation.UPDATE,
+            "Update recorded transactions."),
+        new MenuItem(
+            Operation.DELETE,
+            "Delete recorded transactions."),
         new MenuItem(
             "Back",
-            "Back to the main menu."));
+            "Back to the main menu.")};
     toDisplay += UIFormatter.titleStyle("Transactions menu");
     toDisplay +=
         UIFormatter.subtitleStyle(
             "Write the number or name of the menu option to navigate to that screen.");
-    toDisplay += UIFormatter.menu(menuItems);
+    toDisplay += UIFormatter.menuStyle(menuItems);
 
     this.transactionView.displayContent(toDisplay);
   }
 
   @Override
-  public Action handleInput() {
-    String menuOption = handleMenuOption(this.transactionView);
+  public Action chooseOperation() {
+    String menuOption = MenuInput.handleMenu(
+        this.menuItems, this.transactionView);
     Action action = new Action();
 
-    // return to the main view automatically
-    // TODO: show all the transaction options
     switch (menuOption) {
-      case "Back":
+      case Operation.CREATE -> {
+        createTransaction.create();
+
+        action.actionType = Action.ActionType.NAVIGATION;
+        action.nextView = this.transactionView;
+        return action;
+      }
+      case Operation.SHOW -> {
+        showTransactions.showAll();
+
+        action.actionType = Action.ActionType.NAVIGATION;
+        action.nextView = this.transactionView;
+        return action;
+      }
+      case Operation.UPDATE -> {
+        updateTransaction.update();
+
+        action.actionType = Action.ActionType.NAVIGATION;
+        action.nextView = this.transactionView;
+        return action;
+      }
+      case Operation.DELETE -> {
+        deleteTransaction.delete();
+
+        action.actionType = Action.ActionType.NAVIGATION;
+        action.nextView = this.transactionView;
+        return action;
+      }
+      case "Back" -> {
         action.actionType = Action.ActionType.NAVIGATION;
         action.nextView = MainView.getMainView();
-        break;
-      default:
-        action.actionType = Action.ActionType.NONE;
-        break;
+        return action;
+      }
+      default -> {
+        return action;
+      }
     }
-
-    return action;
   }
 }

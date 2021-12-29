@@ -1,11 +1,19 @@
 package com.finanzaspersonales.presenter;
 
-import com.finanzaspersonales.view.*;
+import com.finanzaspersonales.model.Database;
+import com.finanzaspersonales.presenter.input.MenuInput;
+import com.finanzaspersonales.presenter.ui.MenuItem;
+import com.finanzaspersonales.presenter.ui.TransactionFormatter;
+import com.finanzaspersonales.presenter.ui.UIFormatter;
+import com.finanzaspersonales.view.BudgetView;
+import com.finanzaspersonales.view.CategoryView;
+import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.ReportView;
+import com.finanzaspersonales.view.TransactionView;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Acts upon the main menu view.
@@ -36,17 +44,17 @@ public class MainPresenter extends Presenter {
     /* CONTENT */
     String pattern = "E dd, MMM yyyy";
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-    toDisplay += UIFormatter.highlightStyle(
-        UIFormatter.center("Today is " + simpleDateFormat.format(new Date())));
+    toDisplay += UIFormatter.addNewLine(UIFormatter.highlightStyle(
+        UIFormatter.center("Today is " + simpleDateFormat.format(new Date()))));
 
-    // TODO: retrieve the top 10 transactions with date of today
     toDisplay += UIFormatter.titleStyle("Today's transactions");
-    toDisplay += TransactionFormatter.transactionsTable(new ArrayList<>());
+    toDisplay += TransactionFormatter.transactionsTable(
+        Database.db().getTransactionsByDate(LocalDate.now()));
     toDisplay = UIFormatter.addNewLine(toDisplay);
 
     /* MENU */
     // MAYBE: Load the items from a file
-    this.menuItems = List.of(
+    this.menuItems = new MenuItem[]{
         new MenuItem(
             "Transactions",
             "Create, update, search, and delete transactions."),
@@ -65,12 +73,12 @@ public class MainPresenter extends Presenter {
         new MenuItem(
             "Exit",
             "Close application."
-        ));
+        )};
     toDisplay += UIFormatter.titleStyle("Main menu");
     toDisplay +=
         UIFormatter.subtitleStyle(
             "Write the number or name of the menu option to navigate to that screen.");
-    toDisplay += UIFormatter.menu(menuItems);
+    toDisplay += UIFormatter.menuStyle(menuItems);
 
     /* DISPLAY VIEW */
     mainView.displayContent(toDisplay);
@@ -82,8 +90,9 @@ public class MainPresenter extends Presenter {
    * @return Action for the app to handle
    */
   @Override
-  public Action handleInput() {
-    String menuOption = handleMenuOption(this.mainView);
+  public Action chooseOperation() {
+    String menuOption = MenuInput.handleMenu(
+        this.menuItems, this.mainView);
 
     switch (menuOption) {
       case "Transactions" -> {
@@ -107,13 +116,13 @@ public class MainPresenter extends Presenter {
             ReportView.getReportView());
       }
       case "Help" -> {
-        this.mainView.appendContent(
+        this.mainView.appendWithNewline(
             UIFormatter.wrapText("This is supposed to be the help."));
         return new Action(
             Action.ActionType.NONE);
       }
       case "Exit" -> {
-        this.mainView.appendContent(UIFormatter.highlightStyle("Goodbye."));
+        this.mainView.appendWithNewline(UIFormatter.highlightStyle("Goodbye."));
         return new Action(
             Action.ActionType.EXIT);
       }

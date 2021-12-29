@@ -27,13 +27,13 @@ public interface MainView {
    * Prints the prompt without a new line.
    * @param prompt
    */
-  void showPrompt(String prompt);
+  void appendWithoutNewline(String prompt);
 
   /**
    * Adds new content to the screen with a new line.
    * @param content
    */
-  void appendContent(String content);
+  void appendWithNewline(String content);
 
   /**
    * Returns the view presenter.
