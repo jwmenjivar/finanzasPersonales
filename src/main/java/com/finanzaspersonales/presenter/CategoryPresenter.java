@@ -1,6 +1,8 @@
 package com.finanzaspersonales.presenter;
 
 import com.finanzaspersonales.presenter.input.MenuInput;
+import com.finanzaspersonales.presenter.operations.CreateCategory;
+import com.finanzaspersonales.presenter.operations.Operation;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.CategoryView;
@@ -8,9 +10,11 @@ import com.finanzaspersonales.view.MainView;
 
 public class CategoryPresenter extends Presenter {
   private final CategoryView categoryView;
+  private CreateCategory createCategory;
 
   public CategoryPresenter(CategoryView categoryView) {
     this.categoryView = categoryView;
+    createCategory = new CreateCategory(this.categoryView);
   }
 
   @Override
@@ -23,6 +27,9 @@ public class CategoryPresenter extends Presenter {
 
     // MENU
     this.menuItems = new MenuItem[]{
+        new MenuItem(
+            Operation.CREATE,
+            "Back to the main menu."),
         new MenuItem(
             "Back",
             "Back to the main menu.")};
@@ -42,17 +49,23 @@ public class CategoryPresenter extends Presenter {
     Action action = new Action();
 
     // return to the main view automatically
-    // TODO: show all the categories options
     switch (menuOption) {
-      case "Back":
+      case Operation.CREATE -> {
+        createCategory.create();
+
+        action.actionType = Action.ActionType.NAVIGATION;
+        action.nextView = this.categoryView;
+        return action;
+      }
+      case "Back" -> {
         action.actionType = Action.ActionType.NAVIGATION;
         action.nextView = MainView.getMainView();
-        break;
-      default:
-        action.actionType = Action.ActionType.NONE;
-        break;
-    }
+        return action;
 
-    return action;
+      }
+      default -> {
+        return action;
+      }
+    }
   }
 }

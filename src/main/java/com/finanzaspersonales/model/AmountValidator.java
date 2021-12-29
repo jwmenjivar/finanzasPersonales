@@ -23,7 +23,7 @@ public class AmountValidator {
     this.isValid = amount > 0;
 
     if (!this.isValid) {
-      this.messages += "The value cannot be zero.";
+      this.messages += "The value cannot be zero.\n";
     }
 
     return this.isValid;

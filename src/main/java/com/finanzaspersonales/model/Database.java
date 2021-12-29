@@ -62,6 +62,17 @@ public interface Database {
   boolean transactionExists(String id);
 
   /**
+   * Saves a category to the DB.
+   */
+  void saveCategory(Category category);
+
+  /**
+   * Verifies if a category exists.
+   * @param name Unique category name
+   */
+  boolean categoryExists(String name);
+
+  /**
    * Returns the database implementation.
    */
   @NotNull

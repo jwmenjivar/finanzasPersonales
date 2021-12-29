@@ -33,16 +33,13 @@ abstract class TransactionData extends Operation {
    * Performs a DB get category operation.
    */
   protected void chooseCategory() {
-    String prompts = "";
     Category[] categories = Database.db().getCategoriesByType(transaction.getType());
     List<MenuItem> categoryOptions = new ArrayList<>();
     for (Category c : categories) {
       categoryOptions.add(new MenuItem(c.getName()));
     }
     MenuItem[] menuItems = categoryOptions.toArray(new MenuItem[0]);
-    prompts += UIFormatter.subtitleStyle("Choose the category type: ");
-    prompts += UIFormatter.menuStyle(menuItems);
-    view.appendWithNewline(prompts);
+    view.appendWithoutNewline(UIFormatter.subtitleStyle("Choose the category type: "));
 
     String input = processMenu(menuItems);
     Optional<Category> optionalCategory = Arrays.stream(categories).filter(category1 ->
