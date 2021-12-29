@@ -2,6 +2,7 @@ package com.finanzaspersonales.model;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
 
@@ -93,7 +94,22 @@ interface Database {
    */
   boolean categoryExists(String name);
 
+  /**
+   * Verifies if there are any transactions created with that category
+   * @param name Existing category name
+   */
   boolean categoryHasTransactions(String name);
+
+  /**
+   * Retrieves the budget
+   */
+  @Nullable
+  Budget getBudget();
+
+  /**
+   * Saves the budget to the database.
+   */
+  void saveBudget(Budget budget);
 
   /**
    * Returns the database implementation.

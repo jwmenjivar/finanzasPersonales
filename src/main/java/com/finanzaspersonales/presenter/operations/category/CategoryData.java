@@ -1,6 +1,5 @@
 package com.finanzaspersonales.presenter.operations.category;
 
-import com.finanzaspersonales.model.Categories;
 import com.finanzaspersonales.model.Category;
 import com.finanzaspersonales.model.NameValidator;
 import com.finanzaspersonales.presenter.input.SimpleInput;
@@ -38,12 +37,6 @@ public class CategoryData extends Operation {
     }
 
     return name;
-  }
-
-  protected String inputDescription() {
-    view.appendWithoutNewline(
-        UIFormatter.promptStyle("Enter description", SimpleInput.TEXT));
-    return SimpleInput.readString();
   }
 
   protected void showResult(Category category) {

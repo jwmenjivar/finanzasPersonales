@@ -2,6 +2,8 @@ package com.finanzaspersonales.presenter.operations.category;
 
 import com.finanzaspersonales.model.Categories;
 import com.finanzaspersonales.model.Category;
+import com.finanzaspersonales.presenter.input.DataInput;
+import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.input.SimpleInput;
 import com.finanzaspersonales.presenter.ui.CategoryFormatter;
 import com.finanzaspersonales.presenter.ui.MenuItem;
@@ -38,7 +40,7 @@ public class UpdateCategory extends CategoryData {
    *
    * It performs a DB update operation.
    */
-  public void update() {
+  public void updateCategories() {
     startOperation();
 
     view.appendWithoutNewline(
@@ -55,14 +57,18 @@ public class UpdateCategory extends CategoryData {
           new MenuItem("Back")
       };
 
-      String input = processMenu(menuItems);
+      String input = MenuInput.processMenu(menuItems, view);
 
       if (!input.equals("Back")) {
         Category category = Categories.getByName(name);
 
         switch (input) {
-          case CategoryFormatter.NAME_H -> category.setName(inputName());
-          case CategoryFormatter.DESCRIPTION_H -> category.setDescription(inputDescription());
+          case CategoryFormatter.NAME_H -> {
+            category.setName(inputName());
+          }
+          case CategoryFormatter.DESCRIPTION_H -> {
+            category.setDescription(DataInput.inputDescription(view));
+          }
           default -> { /* go back */ }
         }
 

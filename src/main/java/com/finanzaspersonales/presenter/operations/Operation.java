@@ -1,8 +1,6 @@
 package com.finanzaspersonales.presenter.operations;
 
-import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
-import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.input.SimpleInput;
 import com.finanzaspersonales.view.MainView;
 
@@ -34,20 +32,6 @@ public abstract class Operation {
   protected void startOperation() {
     view.appendWithoutNewline(UIFormatter.titleStyle(title));
     view.appendWithoutNewline(UIFormatter.subtitleStyle(subtitle));
-  }
-
-  /**
-   * Displays a menu and handles the input.
-   */
-  protected String processMenu(MenuItem[] items) {
-    view.appendWithNewline(UIFormatter.menuStyle(items));
-
-    String input = "";
-    while (input.isEmpty()) {
-      input = MenuInput.handleMenu(items, view);
-    }
-
-    return input;
   }
 
   /**

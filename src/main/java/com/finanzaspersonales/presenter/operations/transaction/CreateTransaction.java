@@ -3,6 +3,8 @@ package com.finanzaspersonales.presenter.operations.transaction;
 import com.finanzaspersonales.model.Category;
 import com.finanzaspersonales.model.Transaction;
 import com.finanzaspersonales.model.Transactions;
+import com.finanzaspersonales.presenter.input.DataInput;
+import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.MainView;
@@ -38,17 +40,17 @@ public class CreateTransaction extends TransactionData {
    *
    * It performs a DB save operation.
    */
-  public void create() {
+  public void createTransaction() {
     startOperation();
 
     Transaction.TransactionType type = inputType();
     Category category = inputCategory(type);
-    LocalDate date = inputDate();
+    LocalDate date = DataInput.inputDate(view);
 
     view.appendWithoutNewline(
         UIFormatter.subtitleStyle("Enter transaction amount and description:"));
-    double amount = inputAmount();
-    String description = inputDescription();
+    double amount = DataInput.inputAmount(view);
+    String description = DataInput.inputDescription(view);
 
     Transaction transaction = Transactions.create(type, category, date, amount, description);
     showResult(transaction);
@@ -61,7 +63,7 @@ public class CreateTransaction extends TransactionData {
         new MenuItem(Transaction.TransactionType.EXPENSE.name())
     };
 
-    String input = processMenu(typeOptions);
+    String input = MenuInput.processMenu(typeOptions, view);
 
     if (input.equals(Transaction.TransactionType.INCOME.name())) {
       return Transaction.TransactionType.INCOME;

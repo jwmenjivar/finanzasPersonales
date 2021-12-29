@@ -66,28 +66,27 @@ public class CategoryPresenter extends Presenter {
         this.menuItems, this.categoryView);
     Action action = new Action();
 
-    // return to the main view automatically
     switch (menuOption) {
       case Operation.CREATE -> {
-        createCategory.create();
+        createCategory.createCategory();
 
         action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case Operation.SHOW -> {
-        showCategories.showAll();
+        showCategories.showCategories();
 
         action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case Operation.DELETE -> {
-        deleteCategory.delete();
+        deleteCategory.deleteCategory();
 
         action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case Operation.UPDATE -> {
-        updateCategory.update();
+        updateCategory.updateCategories();
 
         action.setActionType(Action.ActionType.RELOAD);
         return action;

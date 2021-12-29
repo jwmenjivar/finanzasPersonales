@@ -28,12 +28,8 @@ public class Categories {
     return Database.db().getAllCategories();
   }
 
-  @Nullable
   public static Category getByName(@NotNull String name) {
-    if (!name.isEmpty())
-      return Database.db().getCategoryByName(name);
-
-    return null;
+    return Database.db().getCategoryByName(name);
   }
 
   public static Category[] getByType(@NotNull Transaction.TransactionType type) {

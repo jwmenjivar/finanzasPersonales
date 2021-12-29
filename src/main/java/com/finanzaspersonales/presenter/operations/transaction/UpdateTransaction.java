@@ -2,6 +2,8 @@ package com.finanzaspersonales.presenter.operations.transaction;
 
 import com.finanzaspersonales.model.Transaction;
 import com.finanzaspersonales.model.Transactions;
+import com.finanzaspersonales.presenter.input.DataInput;
+import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.TransactionFormatter;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
@@ -37,7 +39,7 @@ public class UpdateTransaction extends TransactionData {
    *
    * It performs a DB update operation.
    */
-  public void update() {
+  public void updateTransaction() {
     startOperation();
 
     view.appendWithoutNewline(
@@ -58,17 +60,17 @@ public class UpdateTransaction extends TransactionData {
           new MenuItem("Back")
       };
 
-      String input = processMenu(menuItems);
+      String input = MenuInput.processMenu(menuItems, view);
 
       switch (input) {
         case TransactionFormatter.AMOUNT_H ->
-            transaction.setAmount(inputAmount());
+            transaction.setAmount(DataInput.inputAmount(view));
         case TransactionFormatter.DATE_H ->
-            transaction.setDate(inputDate());
+            transaction.setDate(DataInput.inputDate(view));
         case TransactionFormatter.CATEGORY_H ->
             transaction.setCategory(inputCategory(transaction.getType()));
         case TransactionFormatter.DESCRIPTION_H ->
-            transaction.setDescription(inputDescription());
+            transaction.setDescription(DataInput.inputDescription(view));
         default -> { /* go back */ }
       }
 

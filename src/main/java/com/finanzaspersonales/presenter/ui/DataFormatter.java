@@ -22,7 +22,7 @@ class DataFormatter {
    * @return String with the formatted text and a length of size.
    */
   @NotNull
-  public static String formatInlineText(@NotNull String text, int space) {
+  protected static String formatInlineText(@NotNull String text, int space) {
     if (text.length() < space) {
       text = UIFormatter.textAlignLeft(text, space - text.length());
     } else if (text.length() > space) {
@@ -38,9 +38,18 @@ class DataFormatter {
    * Colors: INCOME -> Green, EXPENSE -> Red
    * @return ANSI String with formatted amount
    */
-  public static String formatTextByType(String text, Transaction.TransactionType type) {
+  protected static String formatTextByType(String text, Transaction.TransactionType type) {
     return type == Transaction.TransactionType.INCOME ?
         Ansi.ansi().fgGreen().a(text).reset().toString() :
         Ansi.ansi().fgRed().a(text).reset().toString();
+  }
+
+  @NotNull
+  protected static String formatDetail(String format, String term, String value, int space) {
+    return UIFormatter.wrapText(String.format(
+        format,
+        Ansi.ansi().bold().fgBrightDefault().a(
+            formatInlineText(term+ ":", space)).reset().toString(),
+        value));
   }
 }

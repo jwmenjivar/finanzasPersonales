@@ -68,25 +68,25 @@ public class TransactionPresenter extends Presenter {
 
     switch (menuOption) {
       case Operation.CREATE -> {
-        createTransaction.create();
+        createTransaction.createTransaction();
 
         action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case Operation.SHOW -> {
-        showTransactions.showAll();
+        showTransactions.showTransaction();
 
         action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case Operation.UPDATE -> {
-        updateTransaction.update();
+        updateTransaction.updateTransaction();
 
         action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case Operation.DELETE -> {
-        deleteTransaction.delete();
+        deleteTransaction.deleteTransaction();
 
         action.setActionType(Action.ActionType.RELOAD);
         return action;

@@ -36,10 +36,10 @@ public class DeleteCategory extends Operation {
    *
    * It performs a DB delete operation.
    */
-  public void delete() {
+  public void deleteCategory() {
     startOperation();
 
-    String input = processMenu(deleteOptions);
+    String input = MenuInput.processMenu(deleteOptions, view);
 
     if (input.equals("Single")) {
       deleteSingleCategory();

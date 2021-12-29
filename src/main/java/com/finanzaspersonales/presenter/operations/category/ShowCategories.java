@@ -1,6 +1,7 @@
 package com.finanzaspersonales.presenter.operations.category;
 
 import com.finanzaspersonales.model.Categories;
+import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.operations.Operation;
 import com.finanzaspersonales.presenter.ui.CategoryFormatter;
 import com.finanzaspersonales.presenter.ui.MenuItem;
@@ -32,9 +33,9 @@ public class ShowCategories extends Operation {
    *
    * It performs a DB get operation.
    */
-  public void showAll() {
+  public void showCategories() {
     startOperation();
-    String input = processMenu(displayOptions);
+    String input = MenuInput.processMenu(displayOptions, view);
 
     if (input.equals("Summarized")) {
       showSummarized();

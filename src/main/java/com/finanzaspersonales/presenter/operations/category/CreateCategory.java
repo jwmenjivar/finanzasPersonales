@@ -3,6 +3,8 @@ package com.finanzaspersonales.presenter.operations.category;
 import com.finanzaspersonales.model.Categories;
 import com.finanzaspersonales.model.Category;
 import com.finanzaspersonales.model.Transaction;
+import com.finanzaspersonales.presenter.input.DataInput;
+import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.view.MainView;
 
@@ -38,12 +40,12 @@ public class CreateCategory extends CategoryData {
    *
    * It performs a DB save operation.
    */
-  public void create() {
+  public void createCategory() {
     startOperation();
 
     Transaction.TransactionType type = inputTransactionType();
     String name = inputName();
-    String description = inputDescription();
+    String description = DataInput.inputDescription(view);
 
     Category newCategory = Categories.create(type, name, description);
 
@@ -52,7 +54,7 @@ public class CreateCategory extends CategoryData {
   }
 
   private Transaction.TransactionType inputTransactionType() {
-    String input = processMenu(typeOptions);
+    String input = MenuInput.processMenu(typeOptions, view);
 
     if (input.equals(Transaction.TransactionType.INCOME.name())) {
       return Transaction.TransactionType.INCOME;

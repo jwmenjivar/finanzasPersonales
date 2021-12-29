@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 class FakeDB implements Database {
   private List<Transaction> transactions;
   private List<Category> categories;
+  private Budget budget;
   private Random random;
   private static FakeDB instance = null;
 
@@ -133,6 +134,16 @@ class FakeDB implements Database {
   public boolean categoryHasTransactions(String name) {
     return transactions.stream().anyMatch(
         transaction -> transaction.getCategory().getName().equals(name));
+  }
+
+  @Override
+  public void saveBudget(Budget budget) {
+    this.budget = budget;
+  }
+
+  @Override
+  public Budget getBudget() {
+    return this.budget;
   }
 
   public static FakeDB getInstance() {
