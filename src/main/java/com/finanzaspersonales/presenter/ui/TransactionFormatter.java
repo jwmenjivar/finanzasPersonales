@@ -142,8 +142,13 @@ public class TransactionFormatter extends DataFormatter {
   @Contract(pure = true)
   public static String transactionsDetailed(@NotNull Transaction[] transactions) {
     StringBuilder formatted = new StringBuilder();
-    for (Transaction t : transactions) {
-      formatted.append(transactionDetailed(t));
+
+    if (transactions.length > 0) {
+      for (Transaction t : transactions) {
+        formatted.append(transactionDetailed(t));
+      }
+    } else {
+      formatted.append(NO_TRANSACTIONS).append("\n");
     }
 
     return formatted.toString();

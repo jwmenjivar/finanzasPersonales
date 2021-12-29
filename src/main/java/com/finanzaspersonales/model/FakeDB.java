@@ -87,6 +87,19 @@ class FakeDB implements Database {
   }
 
   @Override
+  public void deleteCategory(String name){
+    Optional<Category> c = categories.stream()
+        .filter(category -> category.getName().equals(name)).findFirst();
+
+    c.ifPresent(category -> categories.remove(category));
+  }
+
+  @Override
+  public void deleteAllCategories() {
+    categories.clear();
+  }
+
+  @Override
   public boolean categoryExists(String name) {
     return categories.stream().anyMatch(
         category -> category.getName().equals(name));

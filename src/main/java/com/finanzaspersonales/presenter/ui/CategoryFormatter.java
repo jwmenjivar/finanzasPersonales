@@ -103,8 +103,13 @@ public class CategoryFormatter extends DataFormatter {
   @Contract(pure = true)
   public static String categoriesDetailed(@NotNull Category[] categories) {
     StringBuilder formatted = new StringBuilder();
-    for (Category c : categories) {
-      formatted.append(categoryDetailed(c));
+
+    if (categories.length > 0) {
+      for (Category c : categories) {
+        formatted.append(categoryDetailed(c));
+      }
+    } else {
+      formatted.append(NO_CATEGORIES).append("\n");
     }
 
     return formatted.toString();

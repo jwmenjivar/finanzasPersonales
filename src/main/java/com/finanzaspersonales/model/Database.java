@@ -67,6 +67,10 @@ public interface Database {
    */
   void saveCategory(Category category);
 
+  void deleteCategory(String name);
+
+  void deleteAllCategories();
+
   /**
    * Verifies if a category exists.
    * @param name Unique category name
