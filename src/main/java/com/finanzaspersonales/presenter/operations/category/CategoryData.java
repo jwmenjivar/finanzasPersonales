@@ -10,7 +10,6 @@ import com.finanzaspersonales.view.View;
 
 public class CategoryData extends Operation {
   protected final String success;
-  protected Category category;
 
   protected CategoryData(View view, String title, String subtitle, String success) {
     super(view, title, subtitle);
@@ -18,9 +17,9 @@ public class CategoryData extends Operation {
   }
 
   protected String inputName() {
-    view.appendWithoutNewline(
+    view.append(
         UIFormatter.subtitleStyle("Enter a unique category name:"));
-    view.appendWithoutNewline(
+    view.append(
         UIFormatter.promptStyle("Enter name", SimpleInput.TEXT));
 
     NameValidator categoryValidator = new NameValidator();
@@ -31,7 +30,7 @@ public class CategoryData extends Operation {
 
       if (!categoryValidator.isValid()) {
         name = "";
-        view.appendWithNewline("\n" +
+        view.append("\n" +
             UIFormatter.errorStyle(categoryValidator.getMessages().trim()));
       }
     }
@@ -40,10 +39,10 @@ public class CategoryData extends Operation {
   }
 
   protected void showResult(Category category) {
-    view.appendWithNewline(
-        UIFormatter.successStyle(success));
-    view.appendWithNewline("\n" +
-        UIFormatter.highlightStyle("Category:"));
-    view.appendWithoutNewline(CategoryFormatter.categoryDetailed(category));
+    view.append(
+        UIFormatter.successStyle(success) + "\n");
+    view.append("\n" +
+        UIFormatter.highlightStyle("Category:")+ "\n");
+    view.append(CategoryFormatter.categoryDetailed(category));
   }
 }

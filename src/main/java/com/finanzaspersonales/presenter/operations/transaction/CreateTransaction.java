@@ -46,7 +46,7 @@ public class CreateTransaction extends TransactionData {
     Category category = inputCategory(type);
     LocalDate date = DataInput.inputDate(view);
 
-    view.appendWithoutNewline(
+    view.append(
         UIFormatter.subtitleStyle("Enter transaction amount and description:"));
     double amount = DataInput.inputAmount(view);
     String description = DataInput.inputDescription(view);

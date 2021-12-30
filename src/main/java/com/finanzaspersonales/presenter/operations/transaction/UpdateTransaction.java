@@ -41,16 +41,16 @@ public class UpdateTransaction extends TransactionData {
    */
   @Override
   protected void operation() {
-    view.appendWithoutNewline(
+    view.append(
         UIFormatter.promptStyle("Enter ID", SimpleInput.TEXT));
 
     String id = SimpleInput.readString();
     if (Transactions.exists(id)) {
       Transaction transaction = Transactions.getByID(id);
-      view.appendWithNewline("\n" +
+      view.append("\n" +
           TransactionFormatter.transactionDetailed(transaction));
 
-      view.appendWithoutNewline(UIFormatter.subtitleStyle("Choose what to edit: "));
+      view.append(UIFormatter.subtitleStyle("Choose what to edit: "));
       MenuItem[] menuItems = new MenuItem[]{
           new MenuItem(TransactionFormatter.AMOUNT_H),
           new MenuItem(TransactionFormatter.DATE_H),
@@ -78,7 +78,7 @@ public class UpdateTransaction extends TransactionData {
         showResult(transaction);
       }
     } else {
-      view.appendWithNewline(UIFormatter.errorStyle("Invalid or non existent ID."));
+      view.append(UIFormatter.errorStyle("Invalid or non existent ID."));
     }
   }
 }

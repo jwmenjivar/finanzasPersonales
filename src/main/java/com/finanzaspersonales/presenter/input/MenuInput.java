@@ -16,7 +16,7 @@ public class MenuInput extends SimpleInput {
    * Displays a menu and handles the input.
    */
   public static String processMenu(@NotNull MenuItem[] menuItems, @NotNull View view) {
-    view.appendWithNewline(UIFormatter.menuStyle(menuItems));
+    view.append(UIFormatter.menuStyle(menuItems) + "\n");
 
     String input = "";
     while (input.isEmpty()) {
@@ -35,10 +35,10 @@ public class MenuInput extends SimpleInput {
     String choice = "";
     while (choice.isEmpty()) {
       try {
-        view.appendWithoutNewline(UIFormatter.promptStyle("Enter choice", "Y/N"));
+        view.append(UIFormatter.promptStyle("Enter choice", "Y/N"));
         choice = readYesOrNo();
       } catch (InputMismatchException e) {
-        view.appendWithNewline(UIFormatter.errorStyle(e.getMessage()));
+        view.append(UIFormatter.errorStyle(e.getMessage()));
         choice = "";
       }
     }
@@ -56,13 +56,12 @@ public class MenuInput extends SimpleInput {
     String item = "";
 
     try {
-      view.appendWithoutNewline(
+      view.append(
           UIFormatter.promptStyle("Enter option", SimpleInput.OPTIONS));
       item = readMenuOption(menuItems);
-      view.appendWithNewline(UIFormatter.addNewLine("You have chosen: " + item));
+      view.append(UIFormatter.addNewLine("You have chosen: " + item) + "\n");
     } catch (InputMismatchException exception) {
-      view.appendWithNewline("\n" +
-          UIFormatter.errorStyle(exception.getMessage()));
+      view.append(UIFormatter.addNewLine(UIFormatter.errorStyle(exception.getMessage())));
     }
 
     return item;

@@ -4,7 +4,7 @@ import com.finanzaspersonales.presenter.*;
 import com.finanzaspersonales.view.View;
 import org.fusesource.jansi.AnsiConsole;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 
 /**
  * Main class and entry point.
@@ -33,7 +33,7 @@ public class App
         // Set the MenuPresenter as the active presenter
         Presenter activePresenter = menuPresenter;
         // Create map of (Action, Presenter) to change between presenters easily
-        HashMap<Action, Presenter> presentersMap = new HashMap<>();
+        EnumMap<Action, Presenter> presentersMap = new EnumMap<>(Action.class);
         presentersMap.put(Action.MENU, menuPresenter);
         presentersMap.put(Action.TRANSACTION, transactionPresenter);
         presentersMap.put(Action.CATEGORY, categoryPresenter);

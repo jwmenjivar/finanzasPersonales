@@ -69,8 +69,11 @@ public class TransactionPresenter extends Presenter {
         exportOperation.operate();
         return Action.RELOAD;
       }
-      default -> {
+      case "Back" -> {
         return Action.MENU;
+      }
+      default -> {
+        return Action.NONE;
       }
     }
   }

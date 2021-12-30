@@ -48,38 +48,38 @@ public class DeleteTransaction extends Operation {
   }
 
   private void deleteSingleTransaction() {
-    view.appendWithoutNewline(
+    view.append(
         UIFormatter.promptStyle("Enter ID", SimpleInput.TEXT));
 
     String id = SimpleInput.readString();
     if (Transactions.exists(id)) {
-      view.appendWithNewline("\n" +
-          UIFormatter.warningStyle("This operation is not reversible. Do you want to continue?"));
+      view.append("\n" +
+          UIFormatter.warningStyle("This operation is not reversible. Do you want to continue?")+ "\n");
 
       boolean choice = MenuInput.handleYesNo(view);
 
       if (choice) {
         Transactions.delete(id);
-        view.appendWithNewline(
-            UIFormatter.successStyle("Transaction deleted."));
+        view.append(
+            UIFormatter.successStyle("Transaction deleted.")+ "\n");
       }
     } else {
-      view.appendWithNewline(UIFormatter.errorStyle("Invalid or non existent ID."));
+      view.append(UIFormatter.errorStyle("Invalid or non existent ID.")+ "\n");
     }
   }
 
   private void deleteAllTransactions() {
-    view.appendWithNewline(
-        UIFormatter.warningStyle("All the recorded transactions will be deleted."));
-    view.appendWithNewline(
-        UIFormatter.warningStyle("This operation is not reversible. Do you want to continue?"));
+    view.append(
+        UIFormatter.warningStyle("All the recorded transactions will be deleted.") + "\n");
+    view.append(
+        UIFormatter.warningStyle("This operation is not reversible. Do you want to continue?")+ "\n");
 
     boolean choice = MenuInput.handleYesNo(view);
 
     if (choice) {
       Transactions.deleteAll();
-      view.appendWithNewline(
-          UIFormatter.successStyle("Transactions deleted."));
+      view.append(
+          UIFormatter.successStyle("Transactions deleted.")+ "\n");
     }
   }
 }

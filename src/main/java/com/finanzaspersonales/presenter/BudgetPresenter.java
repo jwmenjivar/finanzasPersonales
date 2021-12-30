@@ -45,8 +45,11 @@ public class BudgetPresenter extends Presenter {
         deleteBudget.operate();
         return Action.RELOAD;
       }
-      default -> {
+      case "Back" -> {
         return Action.MENU;
+      }
+      default -> {
+        return Action.NONE;
       }
     }
   }

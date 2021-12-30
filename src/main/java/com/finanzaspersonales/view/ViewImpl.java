@@ -8,19 +8,14 @@ package com.finanzaspersonales.view;
  * @since 1.0
  */
 class ViewImpl implements View {
-  public ViewImpl() { }
 
   public void displayContent(String content) {
     clearScreen();
     System.out.println(content);
   }
 
-  public void appendWithoutNewline(String prompt) {
-    System.out.print(prompt);
-  }
-
-  public void appendWithNewline(String content) {
-    System.out.println(content);
+  public void append(String content) {
+    System.out.print(content);
   }
 
   /**

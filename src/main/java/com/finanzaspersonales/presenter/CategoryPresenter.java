@@ -60,8 +60,11 @@ public class CategoryPresenter extends Presenter {
         updateCategory.operate();
         return Action.RELOAD;
       }
-      default -> {
+      case "Back" -> {
         return Action.MENU;
+      }
+      default -> {
+        return Action.NONE;
       }
     }
   }

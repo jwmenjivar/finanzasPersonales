@@ -63,19 +63,19 @@ public class MenuPresenter extends Presenter {
       case "Budget" -> { return Action.BUDGET; }
       case "Reports" -> { return Action.REPORT; }
       case "Help" -> {
-        view.appendWithNewline(
+        view.append(
             UIFormatter.wrapText("This is supposed to be the help."));
-        view.appendWithNewline(
+        view.append(
             UIFormatter.confirmationPromptStyle("Press ENTER to continue")
         );
         SimpleInput.readString();
         return Action.RELOAD;
       }
       case "Exit" -> {
-        view.appendWithNewline(UIFormatter.highlightStyle("Goodbye."));
+        view.append(UIFormatter.highlightStyle("Goodbye."));
         return Action.EXIT;
       }
-      default -> { return Action.EXIT; }
+      default -> { return Action.NONE; }
     }
   }
 

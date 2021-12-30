@@ -214,7 +214,7 @@ public class UIFormatter {
    * @return ANSI String with formatted prompt
    */
   public static String confirmationPromptStyle(@NotNull String message) {
-    return String.format("%s: ",
+    return String.format("%n%s: ",
         Ansi.ansi().fg(Colors.roundColor(0, 0))
             .a(Ansi.Attribute.ITALIC).a(message).reset().toString());
   }

@@ -41,15 +41,15 @@ public abstract class Operation {
    * Displays the title and subtitle in the view.
    */
   protected void startOperation() {
-    view.appendWithoutNewline(UIFormatter.titleStyle(title));
-    view.appendWithoutNewline(UIFormatter.subtitleStyle(subtitle));
+    view.append("\n" + UIFormatter.titleStyle(title));
+    view.append(UIFormatter.subtitleStyle(subtitle));
   }
 
   /**
    * Ends operation with a confirmation prompt.
    */
   protected void endOperation() {
-    view.appendWithoutNewline(
+    view.append(
         UIFormatter.confirmationPromptStyle("[Press ENTER to continue]"));
     SimpleInput.readString();
   }

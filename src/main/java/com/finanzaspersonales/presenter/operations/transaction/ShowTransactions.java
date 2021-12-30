@@ -45,14 +45,14 @@ public class ShowTransactions extends Operation {
   }
 
   private void showSummarized() {
-    view.appendWithoutNewline(UIFormatter.titleStyle("Summarized transactions:"));
-    view.appendWithNewline(
+    view.append("\n" +UIFormatter.titleStyle("Summarized transactions:"));
+    view.append(
         TransactionFormatter.transactionsTable(Transactions.getAll()));
   }
 
   private void showDetailed() {
-    view.appendWithoutNewline(UIFormatter.titleStyle("Detailed transactions:"));
-    view.appendWithNewline(
+    view.append("\n" +UIFormatter.titleStyle("Detailed transactions:"));
+    view.append(
         TransactionFormatter.transactionsDetailed(Transactions.getAll()));
   }
 }

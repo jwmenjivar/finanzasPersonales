@@ -13,25 +13,16 @@ import org.jetbrains.annotations.NotNull;
 public interface View {
   /**
    * Prints the content on screen with a new line.
-   * @param content
    */
   void displayContent(String content);
 
   /**
    * Prints the prompt without a new line.
-   * @param prompt
    */
-  void appendWithoutNewline(String prompt);
-
-  /**
-   * Adds new content to the screen with a new line.
-   * @param content
-   */
-  void appendWithNewline(String content);
+  void append(String prompt);
 
   /**
    * Returns a new MainView implementation.
-   * @return
    */
   @NotNull
   @Contract(" -> new")

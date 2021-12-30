@@ -26,8 +26,12 @@ public abstract class Presenter {
    */
   public Action present() {
     loadView();
-    String menuOption = MenuInput.handleMenu(menuItems, view);
-    return chooseOperation(menuOption);
+    Action action = Action.NONE;
+    while (action == Action.NONE) {
+      String menuOption = MenuInput.handleMenu(menuItems, view);
+      action = chooseOperation(menuOption);
+    }
+    return action;
   }
 
   protected Action chooseOperation(String operation) {

@@ -16,7 +16,7 @@ public class DataInput extends SimpleInput {
    * Validates the amount against an AmountValidator.
    */
   public static double inputAmount(@NotNull View view) {
-    view.appendWithoutNewline(
+    view.append(
         UIFormatter.promptStyle("Enter amount", SimpleInput.NUMBER));
 
     AmountValidator amountValidator = new AmountValidator();
@@ -27,11 +27,11 @@ public class DataInput extends SimpleInput {
 
         if(!amountValidator.validateAmount(total)) {
           total = 0;
-          view.appendWithNewline("\n" +
+          view.append("\n" +
               UIFormatter.errorStyle(amountValidator.getMessages().trim()));
         }
       } catch (Exception e) {
-        view.appendWithNewline("\n" +
+        view.append("\n" +
             UIFormatter.errorStyle(e.getMessage()));
       }
     }
@@ -44,7 +44,7 @@ public class DataInput extends SimpleInput {
    */
   @NotNull
   public static String inputDescription(@NotNull View view) {
-    view.appendWithoutNewline(
+    view.append(
         UIFormatter.promptStyle("Enter description", SimpleInput.TEXT));
     return SimpleInput.readString();
   }
@@ -54,7 +54,7 @@ public class DataInput extends SimpleInput {
    * Validates the date against an DateValidator.
    */
   public static LocalDate inputDate(@NotNull View view) {
-    view.appendWithoutNewline(UIFormatter.subtitleStyle("Choose the date: "));
+    view.append(UIFormatter.subtitleStyle("Choose the date: "));
     MenuItem[] menuItems = new MenuItem[]{new MenuItem("Today"), new MenuItem("Other day")};
 
     String input = MenuInput.processMenu(menuItems, view);
@@ -62,7 +62,7 @@ public class DataInput extends SimpleInput {
     if (input.equals("Today")) {
       return LocalDate.now();
     } else {
-      view.appendWithoutNewline(
+      view.append(
           UIFormatter.subtitleStyle("Input the date:"));
       String date = readDate(view);
       return LocalDate.parse(date);
@@ -78,20 +78,19 @@ public class DataInput extends SimpleInput {
     DateValidator dateValidator = new DateValidator();
     while(!dateValidator.isValid()) {
       try {
-        view.appendWithoutNewline(
+        view.append(
             UIFormatter.promptStyle("Enter the date", SimpleInput.DATE));
         date = SimpleInput.readDate();
 
         if (!dateValidator.validateDate(date)) {
           date = "";
-          view.appendWithNewline("\n" +
-              UIFormatter.errorStyle(dateValidator.getMessages().trim()));
+          view.append(UIFormatter.errorStyle(dateValidator.getMessages().trim()) + "\n");
         }
       } catch (Exception e) {
-        view.appendWithNewline("\n" +
-            UIFormatter.errorStyle(e.getMessage()));
+        view.append(UIFormatter.errorStyle(e.getMessage()) + "\n");
       }
     }
+    view.append("\n");
 
     return date;
   }

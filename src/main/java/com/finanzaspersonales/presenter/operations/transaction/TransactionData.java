@@ -37,7 +37,7 @@ abstract class TransactionData extends Operation {
       categoryOptions.add(new MenuItem(c.getName(), c.getDescription()));
     }
     MenuItem[] menuItems = categoryOptions.toArray(new MenuItem[0]);
-    view.appendWithoutNewline(UIFormatter.subtitleStyle("Choose the category type: "));
+    view.append(UIFormatter.subtitleStyle("Choose the category type: "));
     String input = MenuInput.processMenu(menuItems, view);
 
     return Categories.getByName(input);
@@ -47,10 +47,10 @@ abstract class TransactionData extends Operation {
    * Shows the transaction after applying the operation.
    */
   protected void showResult(Transaction transaction) {
-    view.appendWithNewline(
+    view.append(
         UIFormatter.successStyle(success));
-    view.appendWithNewline("\n" +
-        UIFormatter.highlightStyle("Transaction:"));
-    view.appendWithoutNewline(TransactionFormatter.transactionDetailed(transaction));
+    view.append("\n" +
+        UIFormatter.highlightStyle("Transaction:") + "\n");
+    view.append(TransactionFormatter.transactionDetailed(transaction));
   }
 }

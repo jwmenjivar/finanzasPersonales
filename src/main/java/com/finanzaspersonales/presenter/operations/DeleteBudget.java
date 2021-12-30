@@ -13,13 +13,13 @@ public class DeleteBudget extends Operation {
 
   @Override
   protected void operation() {
-    view.appendWithNewline("\n" +
-        UIFormatter.warningStyle("Are you sure you want to disable the monthly budget?"));
+    view.append("\n" +
+        UIFormatter.warningStyle("Are you sure you want to disable the monthly budget?\n"));
     boolean choice = MenuInput.handleYesNo(view);
 
     if (choice) {
       Budgets.remove();
-      view.appendWithNewline(
+      view.append(
           UIFormatter.successStyle("Budget disabled."));
     }
   }

@@ -45,14 +45,14 @@ public class ShowCategories extends Operation {
   }
 
   private void showSummarized() {
-    view.appendWithoutNewline(UIFormatter.titleStyle("Summarized categories:"));
-    view.appendWithNewline(
+    view.append("\n" +UIFormatter.titleStyle("Summarized categories:"));
+    view.append(
         CategoryFormatter.categoryTable(Categories.getAll()));
   }
 
   private void showDetailed() {
-    view.appendWithoutNewline(UIFormatter.titleStyle("Detailed categories:"));
-    view.appendWithNewline(
+    view.append("\n" +UIFormatter.titleStyle("Detailed categories:"));
+    view.append(
         CategoryFormatter.categoriesDetailed(Categories.getAll()));
   }
 }

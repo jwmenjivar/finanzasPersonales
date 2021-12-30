@@ -45,7 +45,7 @@ public class DateValidator extends Validator {
   private boolean validateDay(int year, int month, int day) {
     if (day == 0) {
       this.messages += "The day must be greater than zero.\n";
-    } else if (YearMonth.of(year, month).isValidDay(day)) {
+    } else if (!YearMonth.of(year, month).isValidDay(day)) {
       this.messages += "Invalid day for the month and year provided.\n";
     } else {
       return true;

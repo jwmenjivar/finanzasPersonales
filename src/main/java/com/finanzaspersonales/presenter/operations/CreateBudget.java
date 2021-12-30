@@ -25,10 +25,10 @@ public class CreateBudget extends Operation {
    * Shows the transaction after applying the operation.
    */
   protected void showResult(Budget budget) {
-    view.appendWithNewline(
+    view.append(
         UIFormatter.successStyle("Budget set."));
-    view.appendWithNewline("\n" +
+    view.append("\n" +
         UIFormatter.highlightStyle("Budget:"));
-    view.appendWithoutNewline(BudgetFormatter.budgetDetailed(budget));
+    view.append("\n" +BudgetFormatter.budgetDetailed(budget));
   }
 }
