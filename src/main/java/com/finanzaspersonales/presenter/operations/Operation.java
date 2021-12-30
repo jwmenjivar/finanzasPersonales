@@ -4,6 +4,9 @@ import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.presenter.input.SimpleInput;
 import com.finanzaspersonales.view.MainView;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 /**
  * Represents a transaction CRUD operation.
  * @author denisse
@@ -28,11 +31,15 @@ public abstract class Operation {
 
   public void operate() {
     startOperation();
-    operation();
+    try {
+      operation();
+    } catch (Exception ex) {
+      System.out.println(ex);
+    }
     endOperation();
   }
 
-  protected void operation() { }
+  protected void operation() throws IOException { }
 
   /**
    * Displays the title and subtitle in the view.

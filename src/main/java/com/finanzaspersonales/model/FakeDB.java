@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.TextStyle;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
@@ -189,9 +190,9 @@ class FakeDB implements Database {
     // calculate the date 20 days ago
     long aDay = TimeUnit.DAYS.toMillis(1);
     Date now = new Date();
-    Date ago = new Date(now.getTime() - aDay * 20);
+    Date ago = new Date(now.getTime() - aDay * 365);
 
-    for (int i = 0; i < 40; i++) {
+    for (int i = 0; i < 200; i++) {
       Transaction t;
       if (this.random.nextInt(2) == 0) {
         t = Transaction.makeIncomeTransaction();
