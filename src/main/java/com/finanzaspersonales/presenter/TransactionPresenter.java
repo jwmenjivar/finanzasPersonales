@@ -17,6 +17,7 @@ public class TransactionPresenter extends Presenter {
   private final UpdateTransaction updateTransaction;
   private final DeleteTransaction deleteTransaction;
   private final ShowTransactions showTransactions;
+  private final ExportOperation exportOperation;
 
   public TransactionPresenter(TransactionView transactionView) {
     this.transactionView = transactionView;
@@ -24,6 +25,7 @@ public class TransactionPresenter extends Presenter {
     updateTransaction = new UpdateTransaction(this.transactionView);
     deleteTransaction = new DeleteTransaction(this.transactionView);
     showTransactions = new ShowTransactions(this.transactionView);
+    exportOperation = new ExportOperation(this.transactionView);
   }
 
   @Override
@@ -49,6 +51,9 @@ public class TransactionPresenter extends Presenter {
             Operation.DELETE,
             "Delete recorded transactions."),
         new MenuItem(
+            "Export",
+            "Export transactions."),
+        new MenuItem(
             "Back",
             "Back to the main menu.")};
     toDisplay += UIFormatter.titleStyle("Transactions menu");
@@ -68,7 +73,7 @@ public class TransactionPresenter extends Presenter {
 
     switch (menuOption) {
       case Operation.CREATE -> {
-        createTransaction.createTransaction();
+        createTransaction.operate();
 
         action.setActionType(Action.ActionType.RELOAD);
         return action;
@@ -87,6 +92,12 @@ public class TransactionPresenter extends Presenter {
       }
       case Operation.DELETE -> {
         deleteTransaction.deleteTransaction();
+
+        action.setActionType(Action.ActionType.RELOAD);
+        return action;
+      }
+      case "Export" -> {
+        exportOperation.operate();
 
         action.setActionType(Action.ActionType.RELOAD);
         return action;
