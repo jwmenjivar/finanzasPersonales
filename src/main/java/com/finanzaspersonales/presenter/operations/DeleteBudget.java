@@ -1,8 +1,6 @@
 package com.finanzaspersonales.presenter.operations;
 
-import com.finanzaspersonales.model.Budget;
 import com.finanzaspersonales.model.Budgets;
-import com.finanzaspersonales.presenter.input.DataInput;
 import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.MainView;

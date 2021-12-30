@@ -113,39 +113,22 @@ public class TransactionFormatter extends DataFormatter {
         Ansi.ansi().bold().fgBrightDefault().a(Ansi.Attribute.UNDERLINE)
             .a(formatInlineText(ID_H + ":", DETAIL_SPACE)).reset().toString(),
         transaction.getUniqueID());
-    formatted += String.format(
-        detailFormat,
-        Ansi.ansi().bold().fgBrightDefault().a(
-            formatInlineText(TYPE_H + ":", DETAIL_SPACE)).reset().toString(),
-        transaction.getType().toString());
-    formatted += String.format(
-        detailFormat,
-        Ansi.ansi().bold().fgBrightDefault().a(
-            formatInlineText(DATE_H + ":", DETAIL_SPACE)).reset().toString(),
-        transaction.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
+    formatted += formatDetail(detailFormat, TYPE_H,
+        transaction.getType().toString(), DETAIL_SPACE);
+    formatted += formatDetail(detailFormat, DATE_H,
+        transaction.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE), DETAIL_SPACE);
 
     // prevent error from null category
     String categoryName = "<No category>";
     if (transaction.getCategory() != null) {
       categoryName = transaction.getCategory().getName();
     }
-    formatted += String.format(
-        detailFormat,
-        Ansi.ansi().bold().fgBrightDefault().a(
-            formatInlineText(CATEGORY_H+ ":", DETAIL_SPACE)).reset().toString(),
-        categoryName);
-
-    formatted += UIFormatter.wrapText(String.format(
-        detailFormat,
-        Ansi.ansi().bold().fgBrightDefault().a(
-            formatInlineText(DESCRIPTION_H+ ":", DETAIL_SPACE)).reset().toString(),
-        transaction.getDescription()));
-    formatted += String.format(
-        detailFormat,
-        Ansi.ansi().bold().fgBrightDefault().a(
-            formatInlineText(AMOUNT_H+ ":", DETAIL_SPACE)).reset().toString(),
-        formatTextByType(
-            AMOUNT_FORMAT.format(transaction.getAmount()), transaction.getType()));
+    formatted += formatDetail(detailFormat, CATEGORY_H, categoryName, DETAIL_SPACE);
+    formatted += formatDetail(detailFormat, DESCRIPTION_H,
+        transaction.getDescription(), DETAIL_SPACE);
+    formatted += formatDetail(detailFormat, AMOUNT_H,
+        formatTextByType(AMOUNT_FORMAT.format(transaction.getAmount()), transaction.getType()),
+        DETAIL_SPACE);
 
     return formatted;
   }

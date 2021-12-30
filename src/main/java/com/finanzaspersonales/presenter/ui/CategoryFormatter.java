@@ -39,21 +39,12 @@ public class CategoryFormatter extends DataFormatter {
         Ansi.ansi().bold().fgBrightDefault().a(Ansi.Attribute.UNDERLINE)
             .a(formatInlineText(ID_H + ":", DETAIL_SPACE)).reset().toString(),
         category.getUniqueID());
-    formatted += String.format(
-        detailFormat,
-        Ansi.ansi().bold().fgBrightDefault().a(
-            formatInlineText(TYPE_H + ":", DETAIL_SPACE)).reset().toString(),
-        formatTextByType(category.getType().name(), category.getType()));
-    formatted += String.format(
-        detailFormat,
-        Ansi.ansi().bold().fgBrightDefault().a(
-            formatInlineText(NAME_H + ":", DETAIL_SPACE)).reset().toString(),
-        category.getName());
-    formatted += UIFormatter.wrapText(String.format(
-        detailFormat,
-        Ansi.ansi().bold().fgBrightDefault().a(
-            formatInlineText(DESCRIPTION_H+ ":", DETAIL_SPACE)).reset().toString(),
-        category.getDescription()));
+    formatted += formatDetail(detailFormat, TYPE_H,
+        formatTextByType(category.getType().name(), category.getType()),
+        DETAIL_SPACE);
+    formatted += formatDetail(detailFormat, NAME_H, category.getName(), DETAIL_SPACE);
+    formatted += formatDetail(detailFormat, DESCRIPTION_H,
+        category.getDescription(), DETAIL_SPACE);
 
     return formatted;
   }
