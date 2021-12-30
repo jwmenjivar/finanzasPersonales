@@ -15,6 +15,8 @@ public abstract class Operation {
   public static final String UPDATE = "Update";
   public static final String SHOW = "Show";
   public static final String DELETE = "Delete";
+  public static final String ENABLE = "Enable";
+  public static final String DISABLE = "Disable";
 
   protected MainView view;
   protected final String title;

@@ -6,6 +6,7 @@ import com.finanzaspersonales.model.Report;
 import com.finanzaspersonales.model.Reports;
 import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.operations.CreateBudget;
+import com.finanzaspersonales.presenter.operations.DeleteBudget;
 import com.finanzaspersonales.presenter.operations.Operation;
 import com.finanzaspersonales.presenter.ui.BudgetFormatter;
 import com.finanzaspersonales.presenter.ui.MenuItem;
@@ -16,10 +17,12 @@ import com.finanzaspersonales.view.MainView;
 public class BudgetPresenter extends Presenter {
   private final BudgetView budgetView;
   private final CreateBudget createBudget;
+  private final DeleteBudget deleteBudget;
 
   public BudgetPresenter(BudgetView budgetView) {
     this.budgetView = budgetView;
     createBudget = new CreateBudget(budgetView);
+    deleteBudget = new DeleteBudget(budgetView);
   }
 
   @Override
@@ -40,8 +43,11 @@ public class BudgetPresenter extends Presenter {
     // MENU
     this.menuItems = new MenuItem[]{
         new MenuItem(
-            Operation.CREATE,
-            "Create monthly budget."),
+            Operation.ENABLE,
+            "Enable monthly budget."),
+        new MenuItem(
+            Operation.DISABLE,
+            "Disable monthly budget."),
         new MenuItem(
             "Back",
             "Back to the main menu.")};
@@ -61,8 +67,13 @@ public class BudgetPresenter extends Presenter {
     Action action = new Action();
 
     switch (menuOption) {
-      case Operation.CREATE -> {
+      case Operation.ENABLE -> {
         createBudget.operate();
+        action.setActionType(Action.ActionType.RELOAD);
+        return action;
+      }
+      case Operation.DISABLE -> {
+        deleteBudget.operate();
         action.setActionType(Action.ActionType.RELOAD);
         return action;
       }

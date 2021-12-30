@@ -2,6 +2,8 @@ package com.finanzaspersonales.model;
 
 import org.jetbrains.annotations.NotNull;
 
+import javax.xml.crypto.Data;
+
 public class Budgets {
 
   private Budgets() { }
@@ -25,5 +27,9 @@ public class Budgets {
 
   public static boolean isBudgetSet() {
     return Database.db().getBudget().getMonthlyTotal() > 0;
+  }
+
+  public static void remove() {
+    Database.db().saveBudget(new Budget(0));
   }
 }
