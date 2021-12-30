@@ -1,6 +1,11 @@
 package com.finanzaspersonales.presenter;
 
 import com.finanzaspersonales.presenter.input.MenuInput;
+import com.finanzaspersonales.presenter.operations.*;
+import com.finanzaspersonales.presenter.operations.category.CreateCategory;
+import com.finanzaspersonales.presenter.operations.category.DeleteCategory;
+import com.finanzaspersonales.presenter.operations.category.ShowCategories;
+import com.finanzaspersonales.presenter.operations.category.UpdateCategory;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.CategoryView;
@@ -8,9 +13,17 @@ import com.finanzaspersonales.view.MainView;
 
 public class CategoryPresenter extends Presenter {
   private final CategoryView categoryView;
+  private final CreateCategory createCategory;
+  private final ShowCategories showCategories;
+  private final DeleteCategory deleteCategory;
+  private final UpdateCategory updateCategory;
 
   public CategoryPresenter(CategoryView categoryView) {
     this.categoryView = categoryView;
+    createCategory = new CreateCategory(this.categoryView);
+    showCategories = new ShowCategories(this.categoryView);
+    deleteCategory = new DeleteCategory(this.categoryView);
+    updateCategory = new UpdateCategory(this.categoryView);
   }
 
   @Override
@@ -23,6 +36,18 @@ public class CategoryPresenter extends Presenter {
 
     // MENU
     this.menuItems = new MenuItem[]{
+        new MenuItem(
+            Operation.CREATE,
+            "Create new category."),
+        new MenuItem(
+            Operation.SHOW,
+            "Show recorded categories."),
+        new MenuItem(
+            Operation.DELETE,
+            "Delete recorded categories."),
+        new MenuItem(
+            Operation.UPDATE,
+            "Update recorded category."),
         new MenuItem(
             "Back",
             "Back to the main menu.")};
@@ -41,18 +66,39 @@ public class CategoryPresenter extends Presenter {
         this.menuItems, this.categoryView);
     Action action = new Action();
 
-    // return to the main view automatically
-    // TODO: show all the categories options
     switch (menuOption) {
-      case "Back":
-        action.actionType = Action.ActionType.NAVIGATION;
-        action.nextView = MainView.getMainView();
-        break;
-      default:
-        action.actionType = Action.ActionType.NONE;
-        break;
-    }
+      case Operation.CREATE -> {
+        createCategory.createCategory();
 
-    return action;
+        action.setActionType(Action.ActionType.RELOAD);
+        return action;
+      }
+      case Operation.SHOW -> {
+        showCategories.showCategories();
+
+        action.setActionType(Action.ActionType.RELOAD);
+        return action;
+      }
+      case Operation.DELETE -> {
+        deleteCategory.deleteCategory();
+
+        action.setActionType(Action.ActionType.RELOAD);
+        return action;
+      }
+      case Operation.UPDATE -> {
+        updateCategory.updateCategories();
+
+        action.setActionType(Action.ActionType.RELOAD);
+        return action;
+      }
+      case "Back" -> {
+        action.setActionType(Action.ActionType.NAVIGATION);
+        action.setNextView(MainView.getMainView());
+        return action;
+      }
+      default -> {
+        return action;
+      }
+    }
   }
 }

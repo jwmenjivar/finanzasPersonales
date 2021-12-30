@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 class FakeDB implements Database {
   private List<Transaction> transactions;
   private List<Category> categories;
+  private Budget budget;
   private Random random;
   private static FakeDB instance = null;
 
@@ -20,17 +21,6 @@ class FakeDB implements Database {
     this.random = new Random();
     populateCategories();
     populateTransactions();
-  }
-
-  @Override
-  public Category[] getAllCategories() {
-    return categories.toArray(new Category[0]);
-  }
-
-  @Override
-  public Category[] getCategoriesByType(Transaction.TransactionType type) {
-    return categories.stream().filter(category ->
-        category.getTransactionType().equals(type)).toArray(Category[]::new);
   }
 
   @Override
@@ -81,6 +71,81 @@ class FakeDB implements Database {
         transaction -> transaction.getUniqueID().equals(id));
   }
 
+  @Override
+  public Category[] getAllCategories() {
+    return categories.toArray(new Category[0]);
+  }
+
+  @Override
+  public Category[] getCategoriesByType(Transaction.TransactionType type) {
+    return categories.stream().filter(category ->
+        category.getType().equals(type)).toArray(Category[]::new);
+  }
+
+  @Override
+  public Category getCategoryByName(String name) {
+    Optional<Category> c = categories.stream().filter(
+        category -> category.getName().equals(name)).findFirst();
+    return c.orElse(null);
+  }
+
+  @Override
+  public void saveCategory(Category category) {
+    categories.add(category);
+  }
+
+  @Override
+  public void updateCategory(Category category) {
+    /* does nothing yet */
+  }
+
+  @Override
+  public void deleteCategory(String name){
+    Optional<Category> c = categories.stream()
+        .filter(category -> category.getName().equals(name)).findFirst();
+
+    c.ifPresent(category -> {
+      categories.remove(category);
+
+      // remove the category from transactions
+      transactions.forEach(transaction -> {
+        if (transaction.getCategory().getUniqueID().equals(category.getUniqueID())) {
+          transaction.setCategory(null);
+        }
+      });
+    });
+  }
+
+  @Override
+  public void deleteAllCategories() {
+    categories.clear();
+
+    // removes all categories from transactions
+    transactions.forEach(transaction -> transaction.setCategory(null));
+  }
+
+  @Override
+  public boolean categoryExists(String name) {
+    return categories.stream().anyMatch(
+        category -> category.getName().equals(name));
+  }
+
+  @Override
+  public boolean categoryHasTransactions(String name) {
+    return transactions.stream().anyMatch(
+        transaction -> transaction.getCategory().getName().equals(name));
+  }
+
+  @Override
+  public void saveBudget(Budget budget) {
+    this.budget = budget;
+  }
+
+  @Override
+  public Budget getBudget() {
+    return this.budget;
+  }
+
   public static FakeDB getInstance() {
     if (instance == null) {
       instance = new FakeDB();
@@ -94,22 +159,22 @@ class FakeDB implements Database {
    * Creates random categories to fake a DB.
    */
   private void populateCategories() {
-    this.categories = Arrays.asList(
-        new Category(Transaction.TransactionType.INCOME, "Salario"),
-        new Category(Transaction.TransactionType.INCOME, "Mesada"),
-        new Category(Transaction.TransactionType.INCOME, "Bonus"),
-        new Category(Transaction.TransactionType.INCOME, "Inversión"),
-        new Category(Transaction.TransactionType.INCOME, "Regalo"),
-        new Category(Transaction.TransactionType.EXPENSE, "Mantenimiento"),
-        new Category(Transaction.TransactionType.EXPENSE, "Electricidad"),
-        new Category(Transaction.TransactionType.EXPENSE, "Ahorro"),
-        new Category(Transaction.TransactionType.EXPENSE, "Préstamos"),
-        new Category(Transaction.TransactionType.EXPENSE, "Internet"),
-        new Category(Transaction.TransactionType.EXPENSE, "Ropa"),
-        new Category(Transaction.TransactionType.EXPENSE, "Gimnasio"),
-        new Category(Transaction.TransactionType.EXPENSE, "Salud"),
-        new Category(Transaction.TransactionType.EXPENSE, "Belleza"),
-        new Category(Transaction.TransactionType.EXPENSE, "Comida"));
+    categories = new ArrayList<>();
+    this.categories.add(new Category(Transaction.TransactionType.INCOME, "Salario", ""));
+    this.categories.add(new Category(Transaction.TransactionType.INCOME, "Mesada", ""));
+    this.categories.add(new Category(Transaction.TransactionType.INCOME, "Bonus", ""));
+    this.categories.add(new Category(Transaction.TransactionType.INCOME, "Inversión", ""));
+    this.categories.add(new Category(Transaction.TransactionType.INCOME, "Regalo", ""));
+    this.categories.add(new Category(Transaction.TransactionType.EXPENSE, "Mantenimiento", ""));
+    this.categories.add(new Category(Transaction.TransactionType.EXPENSE, "Electricidad", ""));
+    this.categories.add(new Category(Transaction.TransactionType.EXPENSE, "Ahorro", ""));
+    this.categories.add(new Category(Transaction.TransactionType.EXPENSE, "Préstamos", ""));
+    this.categories.add(new Category(Transaction.TransactionType.EXPENSE, "Internet", ""));
+    this.categories.add(new Category(Transaction.TransactionType.EXPENSE, "Ropa", ""));
+    this.categories.add(new Category(Transaction.TransactionType.EXPENSE, "Gimnasio", ""));
+    this.categories.add(new Category(Transaction.TransactionType.EXPENSE, "Salud", ""));
+    this.categories.add(new Category(Transaction.TransactionType.EXPENSE, "Belleza", ""));
+    this.categories.add(new Category(Transaction.TransactionType.EXPENSE, "Comida", ""));
   }
 
   /**

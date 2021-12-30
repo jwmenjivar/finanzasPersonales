@@ -1,7 +1,8 @@
-package com.finanzaspersonales.presenter.operations;
+package com.finanzaspersonales.presenter.operations.transaction;
 
-import com.finanzaspersonales.model.Database;
-import com.finanzaspersonales.model.Transaction;
+import com.finanzaspersonales.model.Transactions;
+import com.finanzaspersonales.presenter.input.MenuInput;
+import com.finanzaspersonales.presenter.operations.Operation;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.TransactionFormatter;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
@@ -32,9 +33,9 @@ public class ShowTransactions extends Operation {
    *
    * It performs a DB get operation.
    */
-  public void showAll() {
+  public void showTransaction() {
     startOperation();
-    String input = processMenu(displayOptions);
+    String input = MenuInput.processMenu(displayOptions, view);
 
     if (input.equals("Summarized")) {
       showSummarized();
@@ -48,13 +49,12 @@ public class ShowTransactions extends Operation {
   private void showSummarized() {
     view.appendWithoutNewline(UIFormatter.titleStyle("Summarized transactions:"));
     view.appendWithNewline(
-        TransactionFormatter.transactionsTable(Database.db().getAllTransactions()));
+        TransactionFormatter.transactionsTable(Transactions.getAll()));
   }
 
   private void showDetailed() {
     view.appendWithoutNewline(UIFormatter.titleStyle("Detailed transactions:"));
-
-    Transaction[] transactions = Database.db().getAllTransactions();
-    view.appendWithNewline(TransactionFormatter.transactionsDetailed(transactions));
+    view.appendWithNewline(
+        TransactionFormatter.transactionsDetailed(Transactions.getAll()));
   }
 }

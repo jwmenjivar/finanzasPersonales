@@ -23,7 +23,7 @@ public class SimpleInput {
   private static final Pattern numericPattern = Pattern.compile("-?\\d+(\\.\\d+)?");
   private static final Pattern datePattern = Pattern.compile("\\d{4}-\\d{1,2}-\\d{1,2}");
 
-  private SimpleInput() { }
+  protected SimpleInput() { }
 
   /**
    * Given a list of menu items, asks the user for their input and returns
@@ -115,8 +115,9 @@ public class SimpleInput {
   /**
    * Reads a string.
    */
+  @NotNull
   public static String readString() {
-    return scanner.nextLine();
+    return scanner.nextLine().trim();
   }
 
   /**

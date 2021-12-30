@@ -1,6 +1,9 @@
-package com.finanzaspersonales.presenter.operations;
+package com.finanzaspersonales.presenter.operations.transaction;
 
-import com.finanzaspersonales.model.Database;
+import com.finanzaspersonales.model.Transaction;
+import com.finanzaspersonales.model.Transactions;
+import com.finanzaspersonales.presenter.input.DataInput;
+import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.TransactionFormatter;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
@@ -33,20 +36,20 @@ public class UpdateTransaction extends TransactionData {
    * 2. If it exists, asks for the attribute to edit.
    * 3. Asks for the new value.
    * 4. Updates the transaction.
-   * 5. Ends the operation.
    *
-   * It performs a DB save operation.
+   * It performs a DB update operation.
    */
-  public void update() {
+  public void updateTransaction() {
     startOperation();
 
     view.appendWithoutNewline(
         UIFormatter.promptStyle("Enter ID", SimpleInput.TEXT));
 
     String id = SimpleInput.readString();
-    if (Database.db().transactionExists(id)) {
-      transaction = Database.db().getTransactionByID(id);
-      view.appendWithNewline("\n" + TransactionFormatter.transactionDetailed(transaction));
+    if (Transactions.exists(id)) {
+      Transaction transaction = Transactions.getByID(id);
+      view.appendWithNewline("\n" +
+          TransactionFormatter.transactionDetailed(transaction));
 
       view.appendWithoutNewline(UIFormatter.subtitleStyle("Choose what to edit: "));
       MenuItem[] menuItems = new MenuItem[]{
@@ -56,21 +59,24 @@ public class UpdateTransaction extends TransactionData {
           new MenuItem(TransactionFormatter.DESCRIPTION_H),
           new MenuItem("Back")
       };
-      view.appendWithNewline(UIFormatter.menuStyle(menuItems));
 
-      String input = processMenu(menuItems);
+      String input = MenuInput.processMenu(menuItems, view);
 
       switch (input) {
-        case TransactionFormatter.AMOUNT_H -> assignAmount();
-        case TransactionFormatter.DATE_H -> assignDate();
-        case TransactionFormatter.CATEGORY_H -> chooseCategory();
-        case TransactionFormatter.DESCRIPTION_H -> assignDescription();
+        case TransactionFormatter.AMOUNT_H ->
+            transaction.setAmount(DataInput.inputAmount(view));
+        case TransactionFormatter.DATE_H ->
+            transaction.setDate(DataInput.inputDate(view));
+        case TransactionFormatter.CATEGORY_H ->
+            transaction.setCategory(inputCategory(transaction.getType()));
+        case TransactionFormatter.DESCRIPTION_H ->
+            transaction.setDescription(DataInput.inputDescription(view));
         default -> { /* go back */ }
       }
 
       if (!input.equals("Back")) {
-        Database.db().updateTransaction(transaction);
-        showResult();
+        Transactions.update(transaction);
+        showResult(transaction);
       }
     } else {
       view.appendWithNewline(UIFormatter.errorStyle("Invalid or non existent ID."));

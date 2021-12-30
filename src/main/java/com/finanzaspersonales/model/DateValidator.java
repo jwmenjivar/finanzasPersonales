@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
+import java.time.Year;
+import java.time.YearMonth;
 
 /**
  * Validates a String with a date against the DateTimeFormatter.ISO_LOCAL_DATE.
@@ -15,9 +17,7 @@ import java.time.LocalDate;
  */
 @Getter
 @NoArgsConstructor
-public class DateValidator {
-  private String messages = "";
-  private boolean isValid = false;
+public class DateValidator extends Validator {
 
   /**
    * Validates a string with a date following the DateTimeFormatter.ISO_LOCAL_DATE.
@@ -45,14 +45,8 @@ public class DateValidator {
   private boolean validateDay(int year, int month, int day) {
     if (day == 0) {
       this.messages += "The day must be greater than zero.\n";
-    } else if (day > 31) {
-      this.messages += "The value can not be more than 31.\n";
-    } else if (day > 30 && (month==4 || month==6 || month==9 || month==11)) {
-      this.messages += "The chosen month only has 30 days.\n";
-    } else if (day > 29 && month == 2 && isLeapYear(year)) {
-      this.messages += "February only has 29 days in leap year " + year + ".\n";
-    } else if (day > 28 && month == 2 && !isLeapYear(year)) {
-      this.messages += "February only has 28 days in non-leap year " + year + ".\n";
+    } else if (YearMonth.of(year, month).isValidDay(day)) {
+      this.messages += "Invalid day for the month and year provided.\n";
     } else {
       return true;
     }
@@ -88,34 +82,5 @@ public class DateValidator {
     }
 
     return false;
-  }
-
-  /**
-   * Verifies if a year is leap.
-   */
-  private boolean isLeapYear(int year) {
-    // year to be checked
-    boolean leap = false;
-
-    // if the year is divided by 4
-    if (year % 4 == 0) {
-      // if the year is century
-      if (year % 100 == 0) {
-        // if year is divided by 400
-        // then it is a leap year
-        if (year % 400 == 0) {
-          leap = true;
-        } else {
-          leap = false;
-        }
-      } else {
-        // if the year is not century
-        leap = true;
-      }
-    } else {
-      leap = false;
-    }
-
-    return leap;
   }
 }

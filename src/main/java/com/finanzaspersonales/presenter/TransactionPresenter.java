@@ -2,6 +2,10 @@ package com.finanzaspersonales.presenter;
 
 import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.operations.*;
+import com.finanzaspersonales.presenter.operations.transaction.CreateTransaction;
+import com.finanzaspersonales.presenter.operations.transaction.DeleteTransaction;
+import com.finanzaspersonales.presenter.operations.transaction.ShowTransactions;
+import com.finanzaspersonales.presenter.operations.transaction.UpdateTransaction;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.MainView;
@@ -64,36 +68,32 @@ public class TransactionPresenter extends Presenter {
 
     switch (menuOption) {
       case Operation.CREATE -> {
-        createTransaction.create();
+        createTransaction.createTransaction();
 
-        action.actionType = Action.ActionType.NAVIGATION;
-        action.nextView = this.transactionView;
+        action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case Operation.SHOW -> {
-        showTransactions.showAll();
+        showTransactions.showTransaction();
 
-        action.actionType = Action.ActionType.NAVIGATION;
-        action.nextView = this.transactionView;
+        action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case Operation.UPDATE -> {
-        updateTransaction.update();
+        updateTransaction.updateTransaction();
 
-        action.actionType = Action.ActionType.NAVIGATION;
-        action.nextView = this.transactionView;
+        action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case Operation.DELETE -> {
-        deleteTransaction.delete();
+        deleteTransaction.deleteTransaction();
 
-        action.actionType = Action.ActionType.NAVIGATION;
-        action.nextView = this.transactionView;
+        action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case "Back" -> {
-        action.actionType = Action.ActionType.NAVIGATION;
-        action.nextView = MainView.getMainView();
+        action.setActionType(Action.ActionType.NAVIGATION);
+        action.setNextView(MainView.getMainView());
         return action;
       }
       default -> {

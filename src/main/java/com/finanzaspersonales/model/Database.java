@@ -2,33 +2,25 @@ package com.finanzaspersonales.model;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
 
-public interface Database {
-  /**
-   * Returns an array of all the existing categories.
-   */
-  Category[] getAllCategories();
+interface Database {
 
   /**
-   * Returns an array of transactions by their type.
-   */
-  Category[] getCategoriesByType(Transaction.TransactionType type);
-
-  /**
-   * Returns an array with all the transactions.
+   * Retrieves an array with all the transactions.
    */
   Transaction[] getAllTransactions();
 
   /**
-   * Returns an array of all transactions by date.
+   * Retrieves an array of all transactions by date.
    * Considers the day, month and year, but not the time.
    */
   Transaction[] getTransactionsByDate(LocalDate date);
 
   /**
-   * Returns a transaction by ID if it exists.
+   * Retrieves a transaction by ID if it exists.
    * @param id UUID String
    * @return Transaction with the ID or null
    */
@@ -60,6 +52,64 @@ public interface Database {
    * @param id UUID String
    */
   boolean transactionExists(String id);
+
+  /**
+   * Retrieves an array of all the existing categories.
+   */
+  Category[] getAllCategories();
+
+  /**
+   * Retrieves an array of transactions by their type.
+   */
+  Category[] getCategoriesByType(Transaction.TransactionType type);
+
+  /**
+   * Retrieves a category from the DB by name.
+   */
+  Category getCategoryByName(String name);
+
+  /**
+   * Saves a category to the DB.
+   */
+  void saveCategory(Category category);
+
+  /**
+   * Updates a category to the DB.
+   */
+  void updateCategory(Category category);
+
+  /**
+   * Deletes a category from the DB.
+   */
+  void deleteCategory(String name);
+
+  /**
+   * Deletes all categories from the DB.
+   */
+  void deleteAllCategories();
+
+  /**
+   * Verifies if a category exists.
+   * @param name Unique category name
+   */
+  boolean categoryExists(String name);
+
+  /**
+   * Verifies if there are any transactions created with that category
+   * @param name Existing category name
+   */
+  boolean categoryHasTransactions(String name);
+
+  /**
+   * Retrieves the budget
+   */
+  @Nullable
+  Budget getBudget();
+
+  /**
+   * Saves the budget to the database.
+   */
+  void saveBudget(Budget budget);
 
   /**
    * Returns the database implementation.

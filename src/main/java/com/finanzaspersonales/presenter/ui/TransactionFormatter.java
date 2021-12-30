@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
  * @version 1.0
  * @since 1.0
  */
-public class TransactionFormatter {
+public class TransactionFormatter extends DataFormatter {
   private static final int DATE_SPACE = 10;
   private static final int AMOUNT_SPACE = 12;
   private static final int TYPE_SPACE = 10;
@@ -37,7 +37,6 @@ public class TransactionFormatter {
   /**
    * Formats a transaction into a single line string. Long texts are truncated.
    * Data order: Date > Amount > Type > Category > Description.
-   * @param transaction
    * @return Single line ANSI String with formatted transaction
    */
   public static String transactionInline(@NotNull Transaction transaction) {
@@ -46,11 +45,18 @@ public class TransactionFormatter {
     String formatted = "%s  %s  %s %s %s";
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
 
+    // prevent error from null category
+    String categoryName = "<No category>";
+    if (transaction.getCategory() != null) {
+      categoryName = transaction.getCategory().getName();
+    }
+
     return String.format(formatted,
         formatInlineText(transaction.getDate().format(dateTimeFormatter), DATE_SPACE),
-        formatAmountType(formatInlineAmount(transaction.getAmount()), transaction.getType()),
+        formatTextByType(
+            formatInlineAmount(transaction.getAmount()), transaction.getType()),
         formatInlineText(transaction.getType().toString(), TYPE_SPACE),
-        formatInlineText(transaction.getCategory().getName(), CATEGORY_SPACE),
+        formatInlineText(categoryName, CATEGORY_SPACE),
         formatInlineText(transaction.getDescription(), TEXT_SPACE));
   }
 
@@ -58,7 +64,6 @@ public class TransactionFormatter {
    * Formats a list of transactions into a table. If no transactions are provided,
    * shows a placeholder message.
    * Data order: Date > Amount > Type > Category > Description.
-   * @param transactions
    * @return Multiline ANSI String with a table of transactions
    */
   @NotNull
@@ -98,7 +103,6 @@ public class TransactionFormatter {
 
   /**
    * Formats a transaction into a multiline String with the full data.
-   * @param transaction
    * @return Multiline ANSI String with the transaction details
    */
   @NotNull
@@ -120,11 +124,18 @@ public class TransactionFormatter {
         Ansi.ansi().bold().fgBrightDefault().a(
             formatInlineText(DATE_H + ":", DETAIL_SPACE)).reset().toString(),
         transaction.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
+
+    // prevent error from null category
+    String categoryName = "<No category>";
+    if (transaction.getCategory() != null) {
+      categoryName = transaction.getCategory().getName();
+    }
     formatted += String.format(
         detailFormat,
         Ansi.ansi().bold().fgBrightDefault().a(
             formatInlineText(CATEGORY_H+ ":", DETAIL_SPACE)).reset().toString(),
-        transaction.getCategory().getName());
+        categoryName);
+
     formatted += UIFormatter.wrapText(String.format(
         detailFormat,
         Ansi.ansi().bold().fgBrightDefault().a(
@@ -134,7 +145,8 @@ public class TransactionFormatter {
         detailFormat,
         Ansi.ansi().bold().fgBrightDefault().a(
             formatInlineText(AMOUNT_H+ ":", DETAIL_SPACE)).reset().toString(),
-        formatAmountType(AMOUNT_FORMAT.format(transaction.getAmount()), transaction.getType()));
+        formatTextByType(
+            AMOUNT_FORMAT.format(transaction.getAmount()), transaction.getType()));
 
     return formatted;
   }
@@ -143,8 +155,13 @@ public class TransactionFormatter {
   @Contract(pure = true)
   public static String transactionsDetailed(@NotNull Transaction[] transactions) {
     StringBuilder formatted = new StringBuilder();
-    for (Transaction t : transactions) {
-      formatted.append(TransactionFormatter.transactionDetailed(t));
+
+    if (transactions.length > 0) {
+      for (Transaction t : transactions) {
+        formatted.append(transactionDetailed(t));
+      }
+    } else {
+      formatted.append(NO_TRANSACTIONS).append("\n");
     }
 
     return formatted.toString();
@@ -153,7 +170,6 @@ public class TransactionFormatter {
   /**
    * Formats the amount so that it aligns to the right after the currency
    * symbol if the text doesn't fill the available space.
-   * @param amount
    * @return String with formatted amount
    */
   @NotNull
@@ -167,37 +183,5 @@ public class TransactionFormatter {
     } else {
       return formatInlineText(formatted, AMOUNT_SPACE);
     }
-  }
-
-  /**
-   * Formats the text so that content that would overflow the available text
-   * is truncated.
-   * @param text
-   * @param space Maximum available space for the text [String length]
-   * @return String with the formatted text and a length of size.
-   */
-  @NotNull
-  private static String formatInlineText(@NotNull String text, int space) {
-    if (text.length() < space) {
-      text = UIFormatter.textAlignLeft(text, space - text.length());
-    } else if (text.length() > space) {
-      text = text.substring(0, space - 3);
-      text += "...";
-    }
-
-    return text;
-  }
-
-  /**
-   * Formats an amount with a color depending on the transaction type.
-   * Colors: INCOME -> Green, EXPENSE -> Red
-   * @param amount
-   * @param type
-   * @return ANSI String with formatted amount
-   */
-  private static String formatAmountType(String amount, Transaction.TransactionType type) {
-    return type == Transaction.TransactionType.INCOME ?
-        Ansi.ansi().fgGreen().a(amount).reset().toString() :
-        Ansi.ansi().fgRed().a(amount).reset().toString();
   }
 }

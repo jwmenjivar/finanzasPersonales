@@ -1,6 +1,8 @@
 package com.finanzaspersonales.presenter;
 
 import com.finanzaspersonales.presenter.input.MenuInput;
+import com.finanzaspersonales.presenter.operations.CreateBudget;
+import com.finanzaspersonales.presenter.operations.Operation;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.BudgetView;
@@ -8,9 +10,11 @@ import com.finanzaspersonales.view.MainView;
 
 public class BudgetPresenter extends Presenter {
   private final BudgetView budgetView;
+  private final CreateBudget createBudget;
 
   public BudgetPresenter(BudgetView budgetView) {
     this.budgetView = budgetView;
+    createBudget = new CreateBudget(budgetView);
   }
 
   @Override
@@ -23,6 +27,9 @@ public class BudgetPresenter extends Presenter {
 
     // MENU
     this.menuItems = new MenuItem[]{
+        new MenuItem(
+            Operation.CREATE,
+            "Create budget."),
         new MenuItem(
             "Back",
             "Back to the main menu.")};
@@ -41,16 +48,17 @@ public class BudgetPresenter extends Presenter {
         this.menuItems, this.budgetView);
     Action action = new Action();
 
-    // return to the main view automatically
-    // TODO: show all the budget options
     switch (menuOption) {
-      case "Back":
-        action.actionType = Action.ActionType.NAVIGATION;
-        action.nextView = MainView.getMainView();
-        break;
-      default:
-        action.actionType = Action.ActionType.NONE;
-        break;
+      case Operation.CREATE -> {
+        createBudget.create();
+        action.setActionType(Action.ActionType.RELOAD);
+        return action;
+      }
+      case "Back" -> {
+        action.setActionType(Action.ActionType.NAVIGATION);
+        action.setNextView(MainView.getMainView());
+      }
+      default -> action.setActionType(Action.ActionType.NONE);
     }
 
     return action;

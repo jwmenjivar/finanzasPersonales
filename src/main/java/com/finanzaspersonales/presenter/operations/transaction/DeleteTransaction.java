@@ -1,6 +1,7 @@
-package com.finanzaspersonales.presenter.operations;
+package com.finanzaspersonales.presenter.operations.transaction;
 
-import com.finanzaspersonales.model.Database;
+import com.finanzaspersonales.model.Transactions;
+import com.finanzaspersonales.presenter.operations.Operation;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.presenter.input.SimpleInput;
@@ -28,17 +29,17 @@ public class DeleteTransaction extends Operation {
   }
 
   /**
-   * Operation that creates a new transaction following these steps:
+   * Operation that deletes an existing transaction following these steps:
    * 1. Ask to delete a single transaction or all
    * 2. If single: asks for ID and deletes
    * 3. If all: asks for confirmation and deletes
    *
    * It performs a DB delete operation.
    */
-  public void delete() {
+  public void deleteTransaction() {
     startOperation();
 
-    String input = processMenu(deleteOptions);
+    String input = MenuInput.processMenu(deleteOptions, view);
 
     if (input.equals("Single")) {
       deleteSingleTransaction();
@@ -54,14 +55,14 @@ public class DeleteTransaction extends Operation {
         UIFormatter.promptStyle("Enter ID", SimpleInput.TEXT));
 
     String id = SimpleInput.readString();
-    if (Database.db().transactionExists(id)) {
+    if (Transactions.exists(id)) {
       view.appendWithNewline("\n" +
           UIFormatter.warningStyle("This operation is not reversible. Do you want to continue?"));
 
       boolean choice = MenuInput.handleYesNo(view);
 
       if (choice) {
-        Database.db().deleteTransaction(id);
+        Transactions.delete(id);
         view.appendWithNewline(
             UIFormatter.successStyle("Transaction deleted."));
       }
@@ -79,7 +80,7 @@ public class DeleteTransaction extends Operation {
     boolean choice = MenuInput.handleYesNo(view);
 
     if (choice) {
-      Database.db().deleteAllTransactions();
+      Transactions.deleteAll();
       view.appendWithNewline(
           UIFormatter.successStyle("Transactions deleted."));
     }

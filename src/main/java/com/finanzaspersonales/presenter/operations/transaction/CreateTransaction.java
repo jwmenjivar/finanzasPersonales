@@ -1,10 +1,15 @@
-package com.finanzaspersonales.presenter.operations;
+package com.finanzaspersonales.presenter.operations.transaction;
 
-import com.finanzaspersonales.model.Database;
+import com.finanzaspersonales.model.Category;
 import com.finanzaspersonales.model.Transaction;
+import com.finanzaspersonales.model.Transactions;
+import com.finanzaspersonales.presenter.input.DataInput;
+import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.MainView;
+
+import java.time.LocalDate;
 
 /**
  * Operation to create a new transaction.
@@ -17,10 +22,6 @@ import com.finanzaspersonales.view.MainView;
  * @since 1.0
  */
 public class CreateTransaction extends TransactionData {
-  private final MenuItem[] typeOptions = new MenuItem[] {
-      new MenuItem(Transaction.TransactionType.INCOME.name()),
-      new MenuItem(Transaction.TransactionType.EXPENSE.name())
-  };
 
   public CreateTransaction(MainView view) {
     super(view,
@@ -39,31 +40,35 @@ public class CreateTransaction extends TransactionData {
    *
    * It performs a DB save operation.
    */
-  public void create() {
+  public void createTransaction() {
     startOperation();
 
-    this.transaction = newTransaction();
-    chooseCategory();
-    assignDate();
+    Transaction.TransactionType type = inputType();
+    Category category = inputCategory(type);
+    LocalDate date = DataInput.inputDate(view);
 
     view.appendWithoutNewline(
         UIFormatter.subtitleStyle("Enter transaction amount and description:"));
-    assignAmount();
-    assignDescription();
+    double amount = DataInput.inputAmount(view);
+    String description = DataInput.inputDescription(view);
 
-    showResult();
-
-    Database.db().saveTransaction(this.transaction);
+    Transaction transaction = Transactions.create(type, category, date, amount, description);
+    showResult(transaction);
     endOperation();
   }
 
-  private Transaction newTransaction() {
-    String input = processMenu(typeOptions);
+  private Transaction.TransactionType inputType() {
+    MenuItem[] typeOptions = new MenuItem[] {
+        new MenuItem(Transaction.TransactionType.INCOME.name()),
+        new MenuItem(Transaction.TransactionType.EXPENSE.name())
+    };
+
+    String input = MenuInput.processMenu(typeOptions, view);
 
     if (input.equals(Transaction.TransactionType.INCOME.name())) {
-      return Transaction.makeIncomeTransaction();
+      return Transaction.TransactionType.INCOME;
     } else {
-      return Transaction.makeExpenseTransaction();
+      return Transaction.TransactionType.EXPENSE;
     }
   }
 }

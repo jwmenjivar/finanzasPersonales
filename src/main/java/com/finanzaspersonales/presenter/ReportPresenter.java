@@ -45,11 +45,11 @@ public class ReportPresenter extends Presenter {
     // TODO: show all the reports options
     switch (menuOption) {
       case "Back":
-        action.actionType = Action.ActionType.NAVIGATION;
-        action.nextView = MainView.getMainView();
+        action.setActionType(Action.ActionType.NAVIGATION);
+        action.setNextView(MainView.getMainView());
         break;
       default:
-        action.actionType = Action.ActionType.NONE;
+        action.setActionType(Action.ActionType.NONE);
         break;
     }
 
