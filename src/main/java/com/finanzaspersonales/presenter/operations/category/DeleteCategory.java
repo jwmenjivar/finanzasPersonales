@@ -36,9 +36,8 @@ public class DeleteCategory extends Operation {
    *
    * It performs a DB delete operation.
    */
-  public void deleteCategory() {
-    startOperation();
-
+  @Override
+  protected void operation() {
     String input = MenuInput.processMenu(deleteOptions, view);
 
     if (input.equals("Single")) {
@@ -46,8 +45,6 @@ public class DeleteCategory extends Operation {
     } else {
       deleteAllCategories();
     }
-
-    endOperation();
   }
 
   private void deleteSingleCategory() {

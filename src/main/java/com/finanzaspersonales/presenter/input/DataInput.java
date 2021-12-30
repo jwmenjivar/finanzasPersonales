@@ -54,11 +54,8 @@ public class DataInput extends SimpleInput {
    * Validates the date against an DateValidator.
    */
   public static LocalDate inputDate(@NotNull MainView view) {
-    String prompts = "";
-    prompts += UIFormatter.subtitleStyle("Choose the date: ");
+    view.appendWithoutNewline(UIFormatter.subtitleStyle("Choose the date: "));
     MenuItem[] menuItems = new MenuItem[]{new MenuItem("Today"), new MenuItem("Other day")};
-    prompts += UIFormatter.menuStyle(menuItems);
-    view.appendWithNewline(prompts);
 
     String input = MenuInput.processMenu(menuItems, view);
 

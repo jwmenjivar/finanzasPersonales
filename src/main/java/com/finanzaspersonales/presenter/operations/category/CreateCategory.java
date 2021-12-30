@@ -40,9 +40,8 @@ public class CreateCategory extends CategoryData {
    *
    * It performs a DB save operation.
    */
-  public void createCategory() {
-    startOperation();
-
+  @Override
+  protected void operation() {
     Transaction.TransactionType type = inputTransactionType();
     String name = inputName();
     String description = DataInput.inputDescription(view);
@@ -50,7 +49,6 @@ public class CreateCategory extends CategoryData {
     Category newCategory = Categories.create(type, name, description);
 
     showResult(newCategory);
-    endOperation();
   }
 
   private Transaction.TransactionType inputTransactionType() {

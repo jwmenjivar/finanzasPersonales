@@ -21,6 +21,7 @@ class FakeDB implements Database {
     this.random = new Random();
     populateCategories();
     populateTransactions();
+    this.budget = new Budget(50000);
   }
 
   @Override
@@ -202,7 +203,7 @@ class FakeDB implements Database {
       }
       t.setDate(randomDateBetween(ago, now));
       t.setDescription("Buena descripcion");
-      t.setAmount(this.random.nextDouble() * 10000);
+      t.setAmount(this.random.nextDouble() * 3000);
 
       this.transactions.add(t);
     }

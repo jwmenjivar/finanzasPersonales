@@ -40,9 +40,8 @@ public class UpdateCategory extends CategoryData {
    *
    * It performs a DB update operation.
    */
-  public void updateCategories() {
-    startOperation();
-
+  @Override
+  protected void operation() {
     view.appendWithoutNewline(
         UIFormatter.promptStyle("Enter name", SimpleInput.TEXT));
 
@@ -79,7 +78,5 @@ public class UpdateCategory extends CategoryData {
     } else {
       view.appendWithNewline(UIFormatter.errorStyle("Invalid or non existent ID."));
     }
-
-    endOperation();
   }
 }

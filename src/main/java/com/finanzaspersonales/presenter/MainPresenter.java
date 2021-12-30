@@ -1,7 +1,11 @@
 package com.finanzaspersonales.presenter;
 
+import com.finanzaspersonales.model.Budget;
+import com.finanzaspersonales.model.Budgets;
+import com.finanzaspersonales.model.Reports;
 import com.finanzaspersonales.model.Transactions;
 import com.finanzaspersonales.presenter.input.MenuInput;
+import com.finanzaspersonales.presenter.ui.BudgetFormatter;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.TransactionFormatter;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
@@ -45,6 +49,11 @@ public class MainPresenter extends Presenter {
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
     toDisplay += UIFormatter.addNewLine(UIFormatter.highlightStyle(
         UIFormatter.center("Today is " + simpleDateFormat.format(new Date()))));
+
+    if (Budgets.isBudgetSet()) {
+      toDisplay += UIFormatter.titleStyle("Budget summary");
+      toDisplay += BudgetFormatter.budgetSummary(Budgets.get(), Reports.calculateReport());
+    }
 
     toDisplay += UIFormatter.titleStyle("Today's transactions");
     toDisplay += TransactionFormatter

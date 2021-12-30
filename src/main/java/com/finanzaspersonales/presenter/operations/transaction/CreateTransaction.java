@@ -40,9 +40,8 @@ public class CreateTransaction extends TransactionData {
    *
    * It performs a DB save operation.
    */
-  public void createTransaction() {
-    startOperation();
-
+  @Override
+  protected void operation() {
     Transaction.TransactionType type = inputType();
     Category category = inputCategory(type);
     LocalDate date = DataInput.inputDate(view);
@@ -54,7 +53,6 @@ public class CreateTransaction extends TransactionData {
 
     Transaction transaction = Transactions.create(type, category, date, amount, description);
     showResult(transaction);
-    endOperation();
   }
 
   private Transaction.TransactionType inputType() {

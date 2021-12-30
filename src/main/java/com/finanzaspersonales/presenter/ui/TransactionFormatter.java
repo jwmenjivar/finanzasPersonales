@@ -20,7 +20,7 @@ public class TransactionFormatter extends DataFormatter {
   private static final int AMOUNT_SPACE = 12;
   private static final int TYPE_SPACE = 10;
   private static final int CATEGORY_SPACE = 19;
-  private static final int TEXT_SPACE = 20;
+  private static final int TEXT_SPACE = 19;
   private static final int DETAIL_SPACE = 15;
   private static final int ID_SPACE = 4;
   public static final String DATE_H = "Date";
@@ -30,7 +30,6 @@ public class TransactionFormatter extends DataFormatter {
   public static final String CATEGORY_H = "Category";
   public static final String DESCRIPTION_H = "Description";
   private static final String NO_TRANSACTIONS = "<No transactions>";
-  private static final NumberFormat AMOUNT_FORMAT = NumberFormat.getCurrencyInstance();
 
   private TransactionFormatter() {}
 
@@ -54,7 +53,7 @@ public class TransactionFormatter extends DataFormatter {
     return String.format(formatted,
         formatInlineText(transaction.getDate().format(dateTimeFormatter), DATE_SPACE),
         formatTextByType(
-            formatInlineAmount(transaction.getAmount()), transaction.getType()),
+            formatInlineAmount(transaction.getAmount(), AMOUNT_SPACE), transaction.getType()),
         formatInlineText(transaction.getType().toString(), TYPE_SPACE),
         formatInlineText(categoryName, CATEGORY_SPACE),
         formatInlineText(transaction.getDescription(), TEXT_SPACE));
@@ -165,23 +164,5 @@ public class TransactionFormatter extends DataFormatter {
     }
 
     return formatted.toString();
-  }
-
-  /**
-   * Formats the amount so that it aligns to the right after the currency
-   * symbol if the text doesn't fill the available space.
-   * @return String with formatted amount
-   */
-  @NotNull
-  private static String formatInlineAmount(double amount) {
-    String formatted = AMOUNT_FORMAT.format(amount);
-
-    if (formatted.length() < AMOUNT_SPACE) {
-      return formatted.charAt(0) +
-          " ".repeat(AMOUNT_SPACE - formatted.length() - 1) +
-          formatted.substring(1);
-    } else {
-      return formatInlineText(formatted, AMOUNT_SPACE);
-    }
   }
 }

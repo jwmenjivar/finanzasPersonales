@@ -79,19 +79,19 @@ public class TransactionPresenter extends Presenter {
         return action;
       }
       case Operation.SHOW -> {
-        showTransactions.showTransaction();
+        showTransactions.operate();
 
         action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case Operation.UPDATE -> {
-        updateTransaction.updateTransaction();
+        updateTransaction.operate();
 
         action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case Operation.DELETE -> {
-        deleteTransaction.deleteTransaction();
+        deleteTransaction.operate();
 
         action.setActionType(Action.ActionType.RELOAD);
         return action;

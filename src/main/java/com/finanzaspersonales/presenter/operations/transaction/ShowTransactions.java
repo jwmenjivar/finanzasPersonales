@@ -33,8 +33,8 @@ public class ShowTransactions extends Operation {
    *
    * It performs a DB get operation.
    */
-  public void showTransaction() {
-    startOperation();
+  @Override
+  protected void operation() {
     String input = MenuInput.processMenu(displayOptions, view);
 
     if (input.equals("Summarized")) {
@@ -42,8 +42,6 @@ public class ShowTransactions extends Operation {
     } else {
       showDetailed();
     }
-
-    endOperation();
   }
 
   private void showSummarized() {

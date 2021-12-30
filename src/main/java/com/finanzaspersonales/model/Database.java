@@ -2,7 +2,6 @@ package com.finanzaspersonales.model;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
 
@@ -103,7 +102,6 @@ interface Database {
   /**
    * Retrieves the budget
    */
-  @Nullable
   Budget getBudget();
 
   /**

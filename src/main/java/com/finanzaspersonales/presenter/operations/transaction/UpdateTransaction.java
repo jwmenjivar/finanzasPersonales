@@ -39,9 +39,8 @@ public class UpdateTransaction extends TransactionData {
    *
    * It performs a DB update operation.
    */
-  public void updateTransaction() {
-    startOperation();
-
+  @Override
+  protected void operation() {
     view.appendWithoutNewline(
         UIFormatter.promptStyle("Enter ID", SimpleInput.TEXT));
 
@@ -81,7 +80,5 @@ public class UpdateTransaction extends TransactionData {
     } else {
       view.appendWithNewline(UIFormatter.errorStyle("Invalid or non existent ID."));
     }
-
-    endOperation();
   }
 }

@@ -13,13 +13,12 @@ public class CreateBudget extends Operation {
     super(view, "Setting the budget", "Input the monthly total: ");
   }
 
-  public void create() {
-    startOperation();
+  @Override
+  protected void operation() {
     double amount = DataInput.inputAmount(view);
-    Budget budget = Budgets.create(amount);
+    Budget budget = Budgets.set(amount);
 
     showResult(budget);
-    endOperation();
   }
 
   /**
@@ -30,6 +29,6 @@ public class CreateBudget extends Operation {
         UIFormatter.successStyle("Budget set."));
     view.appendWithNewline("\n" +
         UIFormatter.highlightStyle("Budget:"));
-    view.appendWithoutNewline(BudgetFormatter.detailed(budget));
+    view.appendWithoutNewline(BudgetFormatter.budgetDetailed(budget));
   }
 }

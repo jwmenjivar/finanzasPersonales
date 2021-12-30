@@ -1,6 +1,5 @@
 package com.finanzaspersonales.model;
 
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**

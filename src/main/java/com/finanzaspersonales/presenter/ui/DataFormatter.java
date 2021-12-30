@@ -4,6 +4,8 @@ import com.finanzaspersonales.model.Transaction;
 import org.fusesource.jansi.Ansi;
 import org.jetbrains.annotations.NotNull;
 
+import java.text.NumberFormat;
+
 /**
  * Utility class with shared formatting methods for transaction and
  * category formatters.
@@ -12,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 1.0
  */
 class DataFormatter {
+  protected static final NumberFormat AMOUNT_FORMAT = NumberFormat.getCurrencyInstance();
 
   DataFormatter() { }
 
@@ -24,7 +27,7 @@ class DataFormatter {
   @NotNull
   protected static String formatInlineText(@NotNull String text, int space) {
     if (text.length() < space) {
-      text = UIFormatter.textAlignLeft(text, space - text.length());
+      text = UIFormatter.textAlignLeft(text, space);
     } else if (text.length() > space) {
       text = text.substring(0, space - 3);
       text += "...";
@@ -51,5 +54,26 @@ class DataFormatter {
         Ansi.ansi().bold().fgBrightDefault().a(
             formatInlineText(term+ ":", space)).reset().toString(),
         value));
+  }
+
+  /**
+   * Formats the amount so that it aligns to the right after the currency
+   * symbol if the text doesn't fill the available space.
+   * @return String with formatted amount
+   */
+  @NotNull
+  protected static String formatInlineAmount(double amount, int space) {
+    String formatted = AMOUNT_FORMAT.format(amount);
+    if (amount < 0) {
+      formatted = formatted.substring(1);
+    }
+
+    if (formatted.length() < space) {
+      return formatted.charAt(0) +
+          " ".repeat(space - formatted.length()) +
+          formatted.substring(1);
+    } else {
+      return formatInlineText(formatted, space);
+    }
   }
 }

@@ -36,9 +36,8 @@ public class DeleteTransaction extends Operation {
    *
    * It performs a DB delete operation.
    */
-  public void deleteTransaction() {
-    startOperation();
-
+  @Override
+  protected void operation() {
     String input = MenuInput.processMenu(deleteOptions, view);
 
     if (input.equals("Single")) {
@@ -46,8 +45,6 @@ public class DeleteTransaction extends Operation {
     } else {
       deleteAllTransactions();
     }
-
-    endOperation();
   }
 
   private void deleteSingleTransaction() {

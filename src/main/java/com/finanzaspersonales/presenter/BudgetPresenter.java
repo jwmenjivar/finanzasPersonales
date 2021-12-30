@@ -1,8 +1,13 @@
 package com.finanzaspersonales.presenter;
 
+import com.finanzaspersonales.model.Budget;
+import com.finanzaspersonales.model.Budgets;
+import com.finanzaspersonales.model.Report;
+import com.finanzaspersonales.model.Reports;
 import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.operations.CreateBudget;
 import com.finanzaspersonales.presenter.operations.Operation;
+import com.finanzaspersonales.presenter.ui.BudgetFormatter;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.BudgetView;
@@ -25,11 +30,18 @@ public class BudgetPresenter extends Presenter {
     toDisplay += UIFormatter.headerStyle("Budget");
     toDisplay = UIFormatter.addNewLine(toDisplay);
 
+    if(Budgets.isBudgetSet()) {
+      toDisplay += UIFormatter.titleStyle("Budget report");
+      Budget budget = Budgets.get();
+      Report report = Reports.calculateReport();
+      toDisplay += BudgetFormatter.budgetReport(budget, report);
+    }
+
     // MENU
     this.menuItems = new MenuItem[]{
         new MenuItem(
             Operation.CREATE,
-            "Create budget."),
+            "Create monthly budget."),
         new MenuItem(
             "Back",
             "Back to the main menu.")};
@@ -50,7 +62,7 @@ public class BudgetPresenter extends Presenter {
 
     switch (menuOption) {
       case Operation.CREATE -> {
-        createBudget.create();
+        createBudget.operate();
         action.setActionType(Action.ActionType.RELOAD);
         return action;
       }

@@ -68,25 +68,25 @@ public class CategoryPresenter extends Presenter {
 
     switch (menuOption) {
       case Operation.CREATE -> {
-        createCategory.createCategory();
+        createCategory.operate();
 
         action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case Operation.SHOW -> {
-        showCategories.showCategories();
+        showCategories.operate();
 
         action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case Operation.DELETE -> {
-        deleteCategory.deleteCategory();
+        deleteCategory.operate();
 
         action.setActionType(Action.ActionType.RELOAD);
         return action;
       }
       case Operation.UPDATE -> {
-        updateCategory.updateCategories();
+        updateCategory.operate();
 
         action.setActionType(Action.ActionType.RELOAD);
         return action;

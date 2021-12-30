@@ -46,17 +46,14 @@ public class UIFormatter {
   /**
    * Aligns a text to the left adding empty spaces equal to the offset.
    * @param text String with no ANSI sequence
-   * @param offset Must be less than the MAX_WIDTH
+   * @param space Must be less than the MAX_WIDTH
    * @return Formatted string with preceding spaces
    */
   @NotNull
-  public static String textAlignLeft(@NotNull String text, int offset) {
-    if (offset > 0) {
-      if ((offset + text.length()) > MAX_WIDTH) {
-        offset = MAX_WIDTH - text.length();
-      }
-
-      text += " ".repeat(offset);
+  public static String textAlignLeft(@NotNull String text, int space) {
+    space -= text.length();
+    if (space > 0) {
+      text += " ".repeat(space);
     }
 
     return text;
@@ -65,20 +62,18 @@ public class UIFormatter {
   /**
    * Aligns a text to the right adding empty spaces equal to the offset.
    * @param text String with no ANSI sequence
-   * @param offset Must be less than the MAX_WIDTH
+   * @param space Must be less than the MAX_WIDTH
    * @return Formatted string with leading spaces
    */
   @NotNull
-  public static String textAlignRight(@NotNull String text, int offset) {
-    if (offset > 0) {
-      if ((offset + text.length()) > MAX_WIDTH) {
-        offset = MAX_WIDTH - text.length();
-      }
+  public static String textAlignRight(@NotNull String text, int space) {
+    space -= text.length();
 
-      text = " ".repeat(offset) + text;
+    if (space > 0) {
+      text = " ".repeat(space) + text;
     }
 
-    return addNewLine(text);
+    return wrapText(text);
   }
 
   /**
@@ -88,12 +83,17 @@ public class UIFormatter {
    */
   @NotNull
   public static String wrapText(@NotNull String text) {
-    if (text.length() > MAX_WIDTH) {
+    return wrapText(text, MAX_WIDTH);
+  }
+
+  @NotNull
+  private static String wrapText(@NotNull String text, int space) {
+    if (text.length() > space) {
       StringBuilder temp = new StringBuilder();
       int start = 0;
-      int end = MAX_WIDTH;
+      int end = space;
 
-      while ((text.length() - MAX_WIDTH) > 0) {
+      while ((text.length() - space) > 0) {
         temp.append(text, start, end).append("\n");
         text = text.substring(end);
       }
@@ -250,6 +250,14 @@ public class UIFormatter {
   public static String warningStyle(String message) {
     return Ansi.ansi().fgBrightYellow().bold()
         .a(Ansi.Attribute.ITALIC).a(message).reset().toString();
+  }
+
+  public static String formatWithColor(Ansi.Color color, String text) {
+    return Ansi.ansi().fg(color).a(text).reset().toString();
+  }
+
+  public static int MAX_WIDTH() {
+    return MAX_WIDTH;
   }
 
   /**
