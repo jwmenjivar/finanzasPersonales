@@ -6,13 +6,13 @@ import com.finanzaspersonales.presenter.input.SimpleInput;
 import com.finanzaspersonales.presenter.operations.Operation;
 import com.finanzaspersonales.presenter.ui.CategoryFormatter;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
 
 public class CategoryData extends Operation {
   protected final String success;
   protected Category category;
 
-  protected CategoryData(MainView view, String title, String subtitle, String success) {
+  protected CategoryData(View view, String title, String subtitle, String success) {
     super(view, title, subtitle);
     this.success = success;
   }

@@ -5,11 +5,11 @@ import com.finanzaspersonales.model.Budgets;
 import com.finanzaspersonales.presenter.input.DataInput;
 import com.finanzaspersonales.presenter.ui.BudgetFormatter;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
 
 public class CreateBudget extends Operation {
 
-  public CreateBudget(MainView view) {
+  public CreateBudget(View view) {
     super(view, "Setting the budget", "Input the monthly total: ");
   }
 

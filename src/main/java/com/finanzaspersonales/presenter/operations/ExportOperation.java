@@ -1,13 +1,12 @@
 package com.finanzaspersonales.presenter.operations;
 
 import com.finanzaspersonales.model.Export;
-import com.finanzaspersonales.presenter.input.SimpleInput;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
 
 public class ExportOperation extends Operation {
 
-  public ExportOperation(MainView view) {
+  public ExportOperation(View view) {
     super(view, "Export transactions", "Exporting transactions");
   }
 

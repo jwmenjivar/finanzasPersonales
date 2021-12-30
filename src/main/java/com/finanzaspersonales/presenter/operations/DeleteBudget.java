@@ -3,11 +3,11 @@ package com.finanzaspersonales.presenter.operations;
 import com.finanzaspersonales.model.Budgets;
 import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
 
 public class DeleteBudget extends Operation {
 
-  public DeleteBudget(MainView view) {
+  public DeleteBudget(View view) {
     super(view, "Disable the budget", "Disabling the budget sets the amount to 0: ");
   }
 

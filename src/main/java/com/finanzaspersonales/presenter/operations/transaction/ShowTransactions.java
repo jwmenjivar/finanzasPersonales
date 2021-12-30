@@ -6,7 +6,7 @@ import com.finanzaspersonales.presenter.operations.Operation;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.TransactionFormatter;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
 
 /**
  * Operation to show all the existing transactions.
@@ -22,7 +22,7 @@ public class ShowTransactions extends Operation {
   private final MenuItem[] displayOptions =
       new MenuItem[] { new MenuItem("Summarized"), new MenuItem("Detailed") };
 
-  public ShowTransactions(MainView view) {
+  public ShowTransactions(View view) {
     super(view, "Showing transactions", "View format: ");
   }
 

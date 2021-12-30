@@ -8,7 +8,7 @@ import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.TransactionFormatter;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.presenter.input.SimpleInput;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
 
 /**
  * Operation to update an attribute of an existing transaction.
@@ -23,7 +23,7 @@ import com.finanzaspersonales.view.MainView;
  */
 public class UpdateTransaction extends TransactionData {
 
-  public UpdateTransaction(MainView view) {
+  public UpdateTransaction(View view) {
     super(view,
         "Updating a transaction",
         "Enter an existing ID: ",

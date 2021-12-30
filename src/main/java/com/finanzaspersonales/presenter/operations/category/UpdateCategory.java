@@ -8,7 +8,7 @@ import com.finanzaspersonales.presenter.input.SimpleInput;
 import com.finanzaspersonales.presenter.ui.CategoryFormatter;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
 
 /**
  * Operation to update an attribute of an existing category.
@@ -23,7 +23,7 @@ import com.finanzaspersonales.view.MainView;
  */
 public class UpdateCategory extends CategoryData {
 
-  public UpdateCategory(MainView view) {
+  public UpdateCategory(View view) {
     super(view,
         "Updating a Category",
         "Enter an existing name: ",

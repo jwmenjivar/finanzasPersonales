@@ -4,7 +4,7 @@ import com.finanzaspersonales.model.AmountValidator;
 import com.finanzaspersonales.model.DateValidator;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
@@ -15,7 +15,7 @@ public class DataInput extends SimpleInput {
    * Executes steps to ask for a transaction amount.
    * Validates the amount against an AmountValidator.
    */
-  public static double inputAmount(@NotNull MainView view) {
+  public static double inputAmount(@NotNull View view) {
     view.appendWithoutNewline(
         UIFormatter.promptStyle("Enter amount", SimpleInput.NUMBER));
 
@@ -43,7 +43,7 @@ public class DataInput extends SimpleInput {
    * Executes steps to ask for a transaction description.
    */
   @NotNull
-  public static String inputDescription(@NotNull MainView view) {
+  public static String inputDescription(@NotNull View view) {
     view.appendWithoutNewline(
         UIFormatter.promptStyle("Enter description", SimpleInput.TEXT));
     return SimpleInput.readString();
@@ -53,7 +53,7 @@ public class DataInput extends SimpleInput {
    * Executes steps to ask for a transaction date.
    * Validates the date against an DateValidator.
    */
-  public static LocalDate inputDate(@NotNull MainView view) {
+  public static LocalDate inputDate(@NotNull View view) {
     view.appendWithoutNewline(UIFormatter.subtitleStyle("Choose the date: "));
     MenuItem[] menuItems = new MenuItem[]{new MenuItem("Today"), new MenuItem("Other day")};
 
@@ -72,7 +72,7 @@ public class DataInput extends SimpleInput {
   /**
    * Reads a date with the DateTimeFormatter.ISO_LOCAL_DATE format.
    */
-  private static String readDate(MainView view) {
+  private static String readDate(View view) {
     String date = "";
 
     DateValidator dateValidator = new DateValidator();

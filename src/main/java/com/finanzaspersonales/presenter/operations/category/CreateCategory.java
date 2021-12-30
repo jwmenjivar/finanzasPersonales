@@ -6,7 +6,7 @@ import com.finanzaspersonales.model.Transaction;
 import com.finanzaspersonales.presenter.input.DataInput;
 import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.ui.MenuItem;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
 
 /**
  * Operation to create a new category.
@@ -24,7 +24,7 @@ public class CreateCategory extends CategoryData {
       new MenuItem(Transaction.TransactionType.EXPENSE.name())
   };
 
-  public CreateCategory(MainView view) {
+  public CreateCategory(View view) {
     super(view,
         "Creating Category",
         "Choose the category type:",

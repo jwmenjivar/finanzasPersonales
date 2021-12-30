@@ -6,7 +6,7 @@ import com.finanzaspersonales.presenter.operations.Operation;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.TransactionFormatter;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
 abstract class TransactionData extends Operation {
   protected final String success;
 
-  TransactionData(MainView view, String title, String subtitle, String success) {
+  TransactionData(View view, String title, String subtitle, String success) {
     super(view, title, subtitle);
     this.success = success;
   }

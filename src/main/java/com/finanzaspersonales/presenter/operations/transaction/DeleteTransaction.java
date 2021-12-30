@@ -6,7 +6,7 @@ import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.presenter.input.SimpleInput;
 import com.finanzaspersonales.presenter.input.MenuInput;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
 
 /**
  * Operation to delete an existing transaction.
@@ -24,7 +24,7 @@ public class DeleteTransaction extends Operation {
   private final MenuItem[] deleteOptions =
       new MenuItem[] { new MenuItem("Single"), new MenuItem("All") };
 
-  public DeleteTransaction(MainView view) {
+  public DeleteTransaction(View view) {
     super(view, "Deleting transactions", "Choose what to delete: ");
   }
 

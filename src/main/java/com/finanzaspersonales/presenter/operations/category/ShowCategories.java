@@ -6,7 +6,7 @@ import com.finanzaspersonales.presenter.operations.Operation;
 import com.finanzaspersonales.presenter.ui.CategoryFormatter;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
 
 /**
  * Operation to show all the existing categories.
@@ -22,7 +22,7 @@ public class ShowCategories extends Operation {
   private final MenuItem[] displayOptions =
       new MenuItem[] { new MenuItem("Summarized"), new MenuItem("Detailed") };
 
-  public ShowCategories(MainView view) {
+  public ShowCategories(View view) {
     super(view, "Showing categories", "View format: ");
   }
 

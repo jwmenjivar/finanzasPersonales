@@ -2,7 +2,7 @@ package com.finanzaspersonales.presenter.operations;
 
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.presenter.input.SimpleInput;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
 
 /**
  * Represents a transaction CRUD operation.
@@ -17,12 +17,13 @@ public abstract class Operation {
   public static final String DELETE = "Delete";
   public static final String ENABLE = "Enable";
   public static final String DISABLE = "Disable";
+  public static final String EXPORT = "Export";
 
-  protected MainView view;
+  protected View view;
   protected final String title;
   protected final String subtitle;
 
-  protected Operation(MainView view, String title, String subtitle) {
+  protected Operation(View view, String title, String subtitle) {
     this.view = view;
     this.title = title;
     this.subtitle = subtitle;

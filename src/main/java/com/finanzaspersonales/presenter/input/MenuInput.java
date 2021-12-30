@@ -2,7 +2,7 @@ package com.finanzaspersonales.presenter.input;
 
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -15,7 +15,7 @@ public class MenuInput extends SimpleInput {
   /**
    * Displays a menu and handles the input.
    */
-  public static String processMenu(@NotNull MenuItem[] menuItems, @NotNull MainView view) {
+  public static String processMenu(@NotNull MenuItem[] menuItems, @NotNull View view) {
     view.appendWithNewline(UIFormatter.menuStyle(menuItems));
 
     String input = "";
@@ -31,7 +31,7 @@ public class MenuInput extends SimpleInput {
    * @param view Presenter view
    * @return True equals yes
    */
-  public static boolean handleYesNo(@NotNull MainView view) {
+  public static boolean handleYesNo(@NotNull View view) {
     String choice = "";
     while (choice.isEmpty()) {
       try {
@@ -52,7 +52,7 @@ public class MenuInput extends SimpleInput {
    * @param view Presenter view
    * @return Menu item name
    */
-  public static String handleMenu(@NotNull MenuItem[] menuItems, @NotNull MainView view) {
+  public static String handleMenu(@NotNull MenuItem[] menuItems, @NotNull View view) {
     String item = "";
 
     try {

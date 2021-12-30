@@ -1,6 +1,5 @@
 package com.finanzaspersonales.view;
 
-import com.finanzaspersonales.presenter.Presenter;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,12 +10,7 @@ import org.jetbrains.annotations.NotNull;
  * @version 1.0
  * @since 1.0
  */
-public interface MainView {
-  /**
-   * Loads the view from the Presenter.
-   */
-  void initialize();
-
+public interface View {
   /**
    * Prints the content on screen with a new line.
    * @param content
@@ -36,18 +30,12 @@ public interface MainView {
   void appendWithNewline(String content);
 
   /**
-   * Returns the view presenter.
-   * @return
-   */
-  Presenter getPresenter();
-
-  /**
    * Returns a new MainView implementation.
    * @return
    */
   @NotNull
   @Contract(" -> new")
-  static MainView getMainView() {
-    return new MainViewImpl();
+  static View getView() {
+    return new ViewImpl();
   }
 }
