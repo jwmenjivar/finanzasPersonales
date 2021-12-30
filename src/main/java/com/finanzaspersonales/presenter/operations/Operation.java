@@ -26,6 +26,14 @@ public abstract class Operation {
     this.subtitle = subtitle;
   }
 
+  public void operate() {
+    startOperation();
+    operation();
+    endOperation();
+  }
+
+  protected void operation() { }
+
   /**
    * Displays the title and subtitle in the view.
    */
