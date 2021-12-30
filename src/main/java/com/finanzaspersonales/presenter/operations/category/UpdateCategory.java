@@ -42,14 +42,15 @@ public class UpdateCategory extends CategoryData {
    */
   @Override
   protected void operation() {
-    view.appendWithoutNewline(
+    view.append(
         UIFormatter.promptStyle("Enter name", SimpleInput.TEXT));
 
     String name = SimpleInput.readString();
     if (Categories.exists(name)) {
-      view.appendWithNewline("\n" + CategoryFormatter.categoryDetailed(category));
+      Category category = Categories.getByName(name);
+      view.append("\n" + CategoryFormatter.categoryDetailed(category));
 
-      view.appendWithoutNewline(UIFormatter.subtitleStyle("Choose what to edit: "));
+      view.append(UIFormatter.subtitleStyle("\n" + "Choose what to edit: "));
       MenuItem[] menuItems = new MenuItem[]{
           new MenuItem(CategoryFormatter.NAME_H),
           new MenuItem(CategoryFormatter.DESCRIPTION_H),
@@ -59,8 +60,6 @@ public class UpdateCategory extends CategoryData {
       String input = MenuInput.processMenu(menuItems, view);
 
       if (!input.equals("Back")) {
-        Category category = Categories.getByName(name);
-
         switch (input) {
           case CategoryFormatter.NAME_H -> {
             category.setName(inputName());
@@ -76,7 +75,7 @@ public class UpdateCategory extends CategoryData {
       }
 
     } else {
-      view.appendWithNewline(UIFormatter.errorStyle("Invalid or non existent ID."));
+      view.append(UIFormatter.errorStyle("Invalid or non existent ID."));
     }
   }
 }
