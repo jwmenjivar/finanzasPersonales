@@ -3,6 +3,7 @@ package com.finanzaspersonales.model;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 
 import java.io.FileNotFoundException;
@@ -35,6 +36,7 @@ public class Export {
 
 
     HSSFSheet sheet         = workbook.createSheet("Transactions");
+
     // Font to head
     HSSFFont fontHead = workbook.createFont();
     fontHead.setFontHeightInPoints((short)12);
@@ -52,9 +54,12 @@ public class Export {
     //
     HSSFRow row = sheet.createRow(0);
     for (int i = 0 ; i < columns.size() ; i++){
+      sheet.setColumnWidth(i,4500);
       HSSFCell cell = row.createCell(i);
       cell.setCellValue(columns.get(i));
       cell.setCellStyle(style);
+      CellStyle cellStyle = cell.getCellStyle();
+      cellStyle.setAlignment(HorizontalAlignment.CENTER);
     }
 
     //    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
@@ -77,20 +82,22 @@ public class Export {
       String nameMonth = Month.of(month).getDisplayName(TextStyle.FULL, Locale.getDefault());
       Transaction[] monthly = Arrays.stream(transactions).filter(transaction -> transaction.getDate().getMonth().getValue() == month).toArray(Transaction[]::new);
 
-      HSSFSheet sheetMonthly         = workbook.createSheet("Month_"+nameMonth);
+      HSSFSheet sheetMonthly         = workbook.createSheet("T-"+nameMonth);
       HSSFRow rowTitle = sheetMonthly.createRow(0);
       HSSFCell cellTitle = rowTitle.createCell(0);
-      cellTitle.setCellValue(nameMonth.toUpperCase());
+      cellTitle.setCellValue("TRANSACTIONS - "+nameMonth.toUpperCase());
 
       HSSFRow rowHead = sheetMonthly.createRow(1);
-      for (int i = 0 ; i < columns.size() ; i++){
+      for (int i = 0 ; i < columns.size() ; i++) {
+        sheetMonthly.setColumnWidth(i,4500);
         HSSFCell cellMonthly = rowHead.createCell(i);
         cellMonthly.setCellValue(columns.get(i));
         cellMonthly.setCellStyle(style);
+        CellStyle cellStyle = cellMonthly.getCellStyle();
+        cellStyle.setAlignment(HorizontalAlignment.CENTER);
       }
 
       for (int j=0; j< monthly.length;j++) {
-
         HSSFRow rowsMonthly = sheetMonthly.createRow(j+2);
         date = monthly[j].getDate().toString();
         valueAmount = currencyFormatter.format(monthly[j].getAmount());
@@ -114,6 +121,7 @@ public class Export {
     //    for (int i = 0; i < transactions.length; i++) {
     //      System.out.println(transactions[i].getCategory().getName());
     //    }
+
     // end
   }
 
