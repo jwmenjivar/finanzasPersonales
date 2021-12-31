@@ -40,6 +40,7 @@ public abstract class Presenter {
 
   /**
    * Creates all the ui elements, formats it and displays it in the view.
+   * Calls the View.initialize method to print the presenter's main menu.
    */
   protected void loadView() {}
 }

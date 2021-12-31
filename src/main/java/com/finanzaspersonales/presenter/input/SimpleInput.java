@@ -19,9 +19,10 @@ public class SimpleInput {
   public static final String NUMBER = "[number]";
   public static final String DATE = "[yyyy-mm-dd]";
   public static final String TEXT = "[text]";
+  public static final String YES_NO = "Y/N";
   private static final Scanner scanner = new Scanner(System.in);
   private static final Pattern numericPattern = Pattern.compile("-?\\d+(\\.\\d+)?");
-  private static final Pattern datePattern = Pattern.compile("\\d{4}-\\d{1,2}-\\d{1,2}");
+  private static final Pattern datePattern = Pattern.compile("\\d{4}-\\d{1,2}-\\d{2}");
 
   protected SimpleInput() { }
 

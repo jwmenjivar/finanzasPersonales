@@ -33,7 +33,7 @@ public class BudgetFormatter extends DataFormatter {
 
   @NotNull
   public static String budgetReport(@NotNull Budget budget, @NotNull Report report) {
-    int screenWidth = UIFormatter.MAX_WIDTH();
+    int screenWidth = UIFormatter.maxWidth();
     int columnSpace = screenWidth / 4;
 
     String budgetH = UIFormatter.textAlignLeft("Budget".toUpperCase(), columnSpace);
@@ -68,7 +68,7 @@ public class BudgetFormatter extends DataFormatter {
     table += reportLine(format, dailyH, dailyTotal, report.getDayExpenses(),
         budget.getDailyTotal() - report.getDayExpenses(), columnSpace);
 
-    return UIFormatter.addNewLine(table);
+    return table + "\n";
   }
 
   @NotNull

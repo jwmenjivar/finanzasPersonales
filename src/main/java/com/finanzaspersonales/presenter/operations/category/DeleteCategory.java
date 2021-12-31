@@ -48,41 +48,36 @@ public class DeleteCategory extends Operation {
   }
 
   private void deleteSingleCategory() {
-    view.append(
-        UIFormatter.promptStyle("Enter category name", SimpleInput.TEXT));
+    view.prompt("Enter category name", SimpleInput.TEXT);
 
     String name = SimpleInput.readString();
     if (Categories.exists(name)) {
-      String warning = "\n";
+      String warning = "";
       if (Categories.hasTransactions(name)) {
         warning += "This category has transactions associated with it.";
       }
-      warning += "\nThis operation is not reversible. Do you want to continue?\n";
-      view.append(UIFormatter.warningStyle(warning));
+      warning += "\nThis operation is not reversible. Do you want to continue?";
+      view.warning(warning);
       boolean choice = MenuInput.handleYesNo(view);
 
       if (choice) {
         Categories.delete(name);
-        view.append(
-            UIFormatter.successStyle("Category deleted."));
+        view.success("Category deleted.");
       }
     } else {
-      view.append(UIFormatter.errorStyle("Invalid or non existent ID."));
+      view.error("Invalid or non existent ID.");
     }
   }
 
   private void deleteAllCategories() {
-    view.append(
-        UIFormatter.warningStyle("All the recorded categories will be deleted.\n"));
-    view.append(
-        UIFormatter.warningStyle("This operation is not reversible. Do you want to continue?\n"));
+    view.warning("All the recorded categories will be deleted.\n" +
+        "This operation is not reversible. Do you want to continue?");
 
     boolean choice = MenuInput.handleYesNo(view);
 
     if (choice) {
       Categories.deleteAll();
-      view.append(
-          UIFormatter.successStyle("Categories deleted."));
+      view.success("Categories deleted.");
     }
   }
 }

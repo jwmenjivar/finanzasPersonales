@@ -25,8 +25,7 @@ public class CreateBudget extends Operation {
    * Shows the transaction after applying the operation.
    */
   protected void showResult(Budget budget) {
-    view.append(
-        UIFormatter.successStyle("Budget set."));
+    view.success("Budget set.");
     view.append("\n" +
         UIFormatter.highlightStyle("Budget:"));
     view.append("\n" +BudgetFormatter.budgetDetailed(budget));

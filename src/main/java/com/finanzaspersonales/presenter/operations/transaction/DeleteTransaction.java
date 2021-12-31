@@ -53,33 +53,28 @@ public class DeleteTransaction extends Operation {
 
     String id = SimpleInput.readString();
     if (Transactions.exists(id)) {
-      view.append("\n" +
-          UIFormatter.warningStyle("This operation is not reversible. Do you want to continue?")+ "\n");
+      view.warning("This operation is not reversible. Do you want to continue?");
 
       boolean choice = MenuInput.handleYesNo(view);
 
       if (choice) {
         Transactions.delete(id);
-        view.append(
-            UIFormatter.successStyle("Transaction deleted.")+ "\n");
+        view.success("Transaction deleted.");
       }
     } else {
-      view.append(UIFormatter.errorStyle("Invalid or non existent ID.")+ "\n");
+      view.error("Invalid or non existent ID.");
     }
   }
 
   private void deleteAllTransactions() {
-    view.append(
-        UIFormatter.warningStyle("All the recorded transactions will be deleted.") + "\n");
-    view.append(
-        UIFormatter.warningStyle("This operation is not reversible. Do you want to continue?")+ "\n");
+    view.warning("All the recorded transactions will be deleted.\n"+
+        "This operation is not reversible. Do you want to continue?");
 
     boolean choice = MenuInput.handleYesNo(view);
 
     if (choice) {
       Transactions.deleteAll();
-      view.append(
-          UIFormatter.successStyle("Transactions deleted.")+ "\n");
+      view.success("Transactions deleted.");
     }
   }
 }

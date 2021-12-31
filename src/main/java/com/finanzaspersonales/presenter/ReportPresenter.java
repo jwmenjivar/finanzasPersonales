@@ -23,19 +23,11 @@ public class ReportPresenter extends Presenter {
 
   @Override
   protected void loadView() {
-    String toDisplay = "";
-
-    // HEADER
-    toDisplay += UIFormatter.headerStyle("Reports");
-    toDisplay = UIFormatter.addNewLine(toDisplay);
-
-    // MENU
-    toDisplay += UIFormatter.titleStyle("Reports menu");
-    toDisplay +=
-        UIFormatter.subtitleStyle(
-            "Write the number or name of the menu option to navigate to that screen.");
-    toDisplay += UIFormatter.menuStyle(menuItems);
-
-    this.view.displayContent(toDisplay);
+    view.initialize(
+        "Reports",
+        "",
+        "Reports menu",
+        "Write the number or name of the menu option to navigate to that screen.",
+        UIFormatter.menuStyle(menuItems));
   }
 }

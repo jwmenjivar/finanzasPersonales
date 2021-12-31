@@ -16,6 +16,6 @@ public class ExportOperation extends Operation {
 //    String fileName = SimpleInput.readString();
 
     Export.exportAllTransactions();
-    view.append(UIFormatter.successStyle("Exported transactions."));
+    view.success("Exported transactions.");
   }
 }

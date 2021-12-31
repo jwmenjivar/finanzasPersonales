@@ -80,19 +80,11 @@ public class TransactionPresenter extends Presenter {
 
   @Override
   protected void loadView() {
-    String toDisplay = "";
-
-    // HEADER
-    toDisplay += UIFormatter.headerStyle("Transactions");
-    toDisplay = UIFormatter.addNewLine(toDisplay);
-
-    // MENU
-    toDisplay += UIFormatter.titleStyle("Transactions menu");
-    toDisplay +=
-        UIFormatter.subtitleStyle(
-            "Write the number or name of the menu option to navigate to that screen.");
-    toDisplay += UIFormatter.menuStyle(menuItems);
-
-    this.view.displayContent(toDisplay);
+    view.initialize(
+        "Transactions",
+        "",
+        "Transactions menu",
+        "Write the number or name of the menu option to navigate to that screen.",
+        UIFormatter.menuStyle(menuItems));
   }
 }

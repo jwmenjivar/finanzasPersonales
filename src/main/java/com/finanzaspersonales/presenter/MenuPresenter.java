@@ -3,7 +3,6 @@ package com.finanzaspersonales.presenter;
 import com.finanzaspersonales.model.Budgets;
 import com.finanzaspersonales.model.Reports;
 import com.finanzaspersonales.model.Transactions;
-import com.finanzaspersonales.presenter.input.SimpleInput;
 import com.finanzaspersonales.presenter.ui.BudgetFormatter;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.TransactionFormatter;
@@ -65,10 +64,7 @@ public class MenuPresenter extends Presenter {
       case "Help" -> {
         view.append(
             UIFormatter.wrapText("This is supposed to be the help."));
-        view.append(
-            UIFormatter.confirmationPromptStyle("Press ENTER to continue")
-        );
-        SimpleInput.readString();
+        view.pressContinue();
         return Action.RELOAD;
       }
       case "Exit" -> {
@@ -81,37 +77,27 @@ public class MenuPresenter extends Presenter {
 
   @Override
   protected void loadView() {
-    String toDisplay = "";
-
-    /* HEADER */
-    toDisplay += UIFormatter.headerStyle("My Finance App");
-    toDisplay = UIFormatter.addNewLine(toDisplay);
 
     /* CONTENT */
+    String content = "";
     String pattern = "E dd, MMM yyyy";
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-    toDisplay += UIFormatter.addNewLine(UIFormatter.highlightStyle(
-        UIFormatter.center("Today is " + simpleDateFormat.format(new Date()))));
+    content += UIFormatter.highlightStyle(
+        UIFormatter.center("Today is " + simpleDateFormat.format(new Date()))) + "\n";
 
     if (Budgets.isBudgetSet()) {
-      toDisplay += UIFormatter.titleStyle("Budget summary");
-      toDisplay += BudgetFormatter.budgetSummary(Budgets.get(), Reports.calculateReport());
+      content += UIFormatter.titleStyle("Budget summary");
+      content += BudgetFormatter.budgetSummary(Budgets.get(), Reports.calculateReport());
     }
 
-    toDisplay += UIFormatter.titleStyle("Today's transactions");
-    toDisplay += TransactionFormatter
-        .transactionsTable(Transactions.getToday());
-    toDisplay = UIFormatter.addNewLine(toDisplay);
+    content += UIFormatter.titleStyle("Today's transactions");
+    content += TransactionFormatter.transactionsTable(Transactions.getToday()) + "\n";
 
-    /* MENU */
-    // MAYBE: Load the items from a file
-    toDisplay += UIFormatter.titleStyle("Main menu");
-    toDisplay +=
-        UIFormatter.subtitleStyle(
-            "Write the number or name of the menu option to navigate to that screen.");
-    toDisplay += UIFormatter.menuStyle(menuItems);
-
-    /* DISPLAY VIEW */
-    view.displayContent(toDisplay);
+    view.initialize(
+        "My Finance App",
+        content,
+        "Main menu",
+        "Write the number or name of the menu option to navigate to that screen.",
+        UIFormatter.menuStyle(menuItems));
   }
 }

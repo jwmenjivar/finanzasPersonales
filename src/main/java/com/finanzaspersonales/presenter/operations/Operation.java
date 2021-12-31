@@ -32,7 +32,7 @@ public abstract class Operation {
   public void operate() {
     startOperation();
     operation();
-    endOperation();
+    view.pressContinue();
   }
 
   protected void operation() { }
@@ -41,16 +41,7 @@ public abstract class Operation {
    * Displays the title and subtitle in the view.
    */
   protected void startOperation() {
-    view.append("\n" + UIFormatter.titleStyle(title));
+    view.append(UIFormatter.titleStyle(title));
     view.append(UIFormatter.subtitleStyle(subtitle));
-  }
-
-  /**
-   * Ends operation with a confirmation prompt.
-   */
-  protected void endOperation() {
-    view.append(
-        UIFormatter.confirmationPromptStyle("[Press ENTER to continue]"));
-    SimpleInput.readString();
   }
 }

@@ -56,26 +56,20 @@ public class BudgetPresenter extends Presenter {
 
   @Override
   public void loadView() {
-    String toDisplay = "";
-
-    // HEADER
-    toDisplay += UIFormatter.headerStyle("Budget");
-    toDisplay = UIFormatter.addNewLine(toDisplay);
-
+    // CONTENT
+    String content = "";
     if(Budgets.isBudgetSet()) {
-      toDisplay += UIFormatter.titleStyle("Budget report");
       Budget budget = Budgets.get();
       Report report = Reports.calculateReport();
-      toDisplay += BudgetFormatter.budgetReport(budget, report);
+      content += UIFormatter.titleStyle("Budget report");
+      content += BudgetFormatter.budgetReport(budget, report);
     }
 
-    // MENU
-    toDisplay += UIFormatter.titleStyle("Budget menu");
-    toDisplay +=
-        UIFormatter.subtitleStyle(
-            "Write the number or name of the menu option to navigate to that screen.");
-    toDisplay += UIFormatter.menuStyle(menuItems);
-
-    this.view.displayContent(toDisplay);
+    view.initialize(
+        "Budget",
+        content,
+        "Budget menu",
+        "Write the number or name of the menu option to navigate to that screen.",
+        UIFormatter.menuStyle(menuItems));
   }
 }

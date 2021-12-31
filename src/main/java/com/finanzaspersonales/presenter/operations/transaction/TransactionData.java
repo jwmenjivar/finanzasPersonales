@@ -47,8 +47,7 @@ abstract class TransactionData extends Operation {
    * Shows the transaction after applying the operation.
    */
   protected void showResult(Transaction transaction) {
-    view.append(
-        UIFormatter.successStyle(success));
+    view.success(success);
     view.append("\n" +
         UIFormatter.highlightStyle("Transaction:") + "\n");
     view.append(TransactionFormatter.transactionDetailed(transaction));

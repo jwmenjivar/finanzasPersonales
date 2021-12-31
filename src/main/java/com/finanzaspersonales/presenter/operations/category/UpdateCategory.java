@@ -42,10 +42,9 @@ public class UpdateCategory extends CategoryData {
    */
   @Override
   protected void operation() {
-    view.append(
-        UIFormatter.promptStyle("Enter name", SimpleInput.TEXT));
-
+    view.prompt("Enter name", SimpleInput.TEXT);
     String name = SimpleInput.readString();
+
     if (Categories.exists(name)) {
       Category category = Categories.getByName(name);
       view.append("\n" + CategoryFormatter.categoryDetailed(category));
@@ -75,7 +74,7 @@ public class UpdateCategory extends CategoryData {
       }
 
     } else {
-      view.append(UIFormatter.errorStyle("Invalid or non existent ID."));
+      view.error("Invalid or non existent ID.");
     }
   }
 }

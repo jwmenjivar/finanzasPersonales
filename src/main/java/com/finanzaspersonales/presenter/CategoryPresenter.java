@@ -71,19 +71,11 @@ public class CategoryPresenter extends Presenter {
 
   @Override
   protected void loadView() {
-    String toDisplay = "";
-
-    // HEADER
-    toDisplay += UIFormatter.headerStyle("Categories");
-    toDisplay = UIFormatter.addNewLine(toDisplay);
-
-    // MENU
-    toDisplay += UIFormatter.titleStyle("Categories menu");
-    toDisplay +=
-        UIFormatter.subtitleStyle(
-            "Write the number or name of the menu option to navigate to that screen.");
-    toDisplay += UIFormatter.menuStyle(menuItems);
-
-    this.view.displayContent(toDisplay);
+    view.initialize(
+        "Categories",
+        "",
+        "Categories menu",
+        "Write the number or name of the menu option to navigate to that screen.",
+        UIFormatter.menuStyle(menuItems));
   }
 }

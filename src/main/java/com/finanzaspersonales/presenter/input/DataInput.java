@@ -16,23 +16,19 @@ public class DataInput extends SimpleInput {
    * Validates the amount against an AmountValidator.
    */
   public static double inputAmount(@NotNull View view) {
-    view.append(
-        UIFormatter.promptStyle("Enter amount", SimpleInput.NUMBER));
-
     AmountValidator amountValidator = new AmountValidator();
     double total = 0;
     while(!amountValidator.isValid()) {
       try {
+        view.prompt("Enter amount", SimpleInput.NUMBER);
         total = SimpleInput.readDouble();
 
         if(!amountValidator.validateAmount(total)) {
           total = 0;
-          view.append("\n" +
-              UIFormatter.errorStyle(amountValidator.getMessages().trim()));
+          view.error(amountValidator.getMessages());
         }
       } catch (Exception e) {
-        view.append("\n" +
-            UIFormatter.errorStyle(e.getMessage()));
+        view.error(e.getMessage());
       }
     }
 
@@ -44,8 +40,7 @@ public class DataInput extends SimpleInput {
    */
   @NotNull
   public static String inputDescription(@NotNull View view) {
-    view.append(
-        UIFormatter.promptStyle("Enter description", SimpleInput.TEXT));
+    view.prompt("Enter description", SimpleInput.NUMBER);
     return SimpleInput.readString();
   }
 
@@ -78,16 +73,15 @@ public class DataInput extends SimpleInput {
     DateValidator dateValidator = new DateValidator();
     while(!dateValidator.isValid()) {
       try {
-        view.append(
-            UIFormatter.promptStyle("Enter the date", SimpleInput.DATE));
+        view.prompt("Enter date", SimpleInput.DATE);
         date = SimpleInput.readDate();
 
         if (!dateValidator.validateDate(date)) {
           date = "";
-          view.append(UIFormatter.errorStyle(dateValidator.getMessages().trim()) + "\n");
+          view.error(dateValidator.getMessages());
         }
       } catch (Exception e) {
-        view.append(UIFormatter.errorStyle(e.getMessage()) + "\n");
+        view.error(e.getMessage());
       }
     }
     view.append("\n");

@@ -35,10 +35,10 @@ public class MenuInput extends SimpleInput {
     String choice = "";
     while (choice.isEmpty()) {
       try {
-        view.append(UIFormatter.promptStyle("Enter choice", "Y/N"));
+        view.prompt("Enter choice", SimpleInput.YES_NO);
         choice = readYesOrNo();
       } catch (InputMismatchException e) {
-        view.append(UIFormatter.errorStyle(e.getMessage()));
+        view.error(e.getMessage());
         choice = "";
       }
     }
@@ -56,12 +56,11 @@ public class MenuInput extends SimpleInput {
     String item = "";
 
     try {
-      view.append(
-          UIFormatter.promptStyle("Enter option", SimpleInput.OPTIONS));
+      view.prompt("Enter option", SimpleInput.OPTIONS);
       item = readMenuOption(menuItems);
-      view.append(UIFormatter.addNewLine("You have chosen: " + item) + "\n");
-    } catch (InputMismatchException exception) {
-      view.append(UIFormatter.addNewLine(UIFormatter.errorStyle(exception.getMessage())));
+      view.append("You have chosen: " + item + "\n\n");
+    } catch (InputMismatchException e) {
+      view.error(e.getMessage());
     }
 
     return item;

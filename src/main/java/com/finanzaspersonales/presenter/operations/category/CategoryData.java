@@ -19,19 +19,17 @@ public class CategoryData extends Operation {
   protected String inputName() {
     view.append(
         UIFormatter.subtitleStyle("Enter a unique category name:"));
-    view.append(
-        UIFormatter.promptStyle("Enter name", SimpleInput.TEXT));
 
     NameValidator categoryValidator = new NameValidator();
     String name = "";
     while (!categoryValidator.isValid()) {
+      view.prompt("Enter name", SimpleInput.TEXT);
       name = SimpleInput.readString();
       categoryValidator.validateName(name);
 
       if (!categoryValidator.isValid()) {
         name = "";
-        view.append("\n" +
-            UIFormatter.errorStyle(categoryValidator.getMessages().trim()));
+        view.error(categoryValidator.getMessages().trim());
       }
     }
 
@@ -39,8 +37,7 @@ public class CategoryData extends Operation {
   }
 
   protected void showResult(Category category) {
-    view.append(
-        UIFormatter.successStyle(success) + "\n");
+    view.append(success);
     view.append("\n" +
         UIFormatter.highlightStyle("Category:")+ "\n");
     view.append(CategoryFormatter.categoryDetailed(category));
