@@ -16,10 +16,16 @@ public class ExportOperation extends Operation {
 
   @Override
   protected void operation() throws IOException {
-//    view.appendWithoutNewline(UIFormatter.promptStyle("Enter file name:", SimpleInput.TEXT));
-//    String fileName = SimpleInput.readString();
+    view.appendWithNewline(
+        UIFormatter.warningStyle("The file will be exported to " + System.getProperty("user.dir")));
+    view.appendWithoutNewline(UIFormatter.promptStyle("Enter file name:", SimpleInput.TEXT));
+    String fileName = SimpleInput.readString();
 
-    Export.exportAllTransactions();
-    view.appendWithNewline(UIFormatter.successStyle("Exported transactions."));
+    try {
+      Export.exportAllTransactions(fileName);
+      view.appendWithNewline(UIFormatter.successStyle("Exported transactions."));
+    } catch (IOException e) {
+      view.appendWithoutNewline(UIFormatter.errorStyle(e.getMessage()));
+    }
   }
 }
