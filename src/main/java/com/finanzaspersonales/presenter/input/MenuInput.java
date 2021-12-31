@@ -2,7 +2,7 @@ package com.finanzaspersonales.presenter.input;
 
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -15,8 +15,8 @@ public class MenuInput extends SimpleInput {
   /**
    * Displays a menu and handles the input.
    */
-  public static String processMenu(@NotNull MenuItem[] menuItems, @NotNull MainView view) {
-    view.appendWithNewline(UIFormatter.menuStyle(menuItems));
+  public static String processMenu(@NotNull MenuItem[] menuItems, @NotNull View view) {
+    view.append(UIFormatter.menuStyle(menuItems) + "\n");
 
     String input = "";
     while (input.isEmpty()) {
@@ -31,14 +31,14 @@ public class MenuInput extends SimpleInput {
    * @param view Presenter view
    * @return True equals yes
    */
-  public static boolean handleYesNo(@NotNull MainView view) {
+  public static boolean handleYesNo(@NotNull View view) {
     String choice = "";
     while (choice.isEmpty()) {
       try {
-        view.appendWithoutNewline(UIFormatter.promptStyle("Enter choice", "Y/N"));
+        view.prompt("Enter choice", SimpleInput.YES_NO);
         choice = readYesOrNo();
       } catch (InputMismatchException e) {
-        view.appendWithNewline(UIFormatter.errorStyle(e.getMessage()));
+        view.error(e.getMessage());
         choice = "";
       }
     }
@@ -52,17 +52,15 @@ public class MenuInput extends SimpleInput {
    * @param view Presenter view
    * @return Menu item name
    */
-  public static String handleMenu(@NotNull MenuItem[] menuItems, @NotNull MainView view) {
+  public static String handleMenu(@NotNull MenuItem[] menuItems, @NotNull View view) {
     String item = "";
 
     try {
-      view.appendWithoutNewline(
-          UIFormatter.promptStyle("Enter option", SimpleInput.OPTIONS));
+      view.prompt("Enter option", SimpleInput.OPTIONS);
       item = readMenuOption(menuItems);
-      view.appendWithNewline(UIFormatter.addNewLine("You have chosen: " + item));
-    } catch (InputMismatchException exception) {
-      view.appendWithNewline("\n" +
-          UIFormatter.errorStyle(exception.getMessage()));
+      view.append("You have chosen: " + item + "\n\n");
+    } catch (InputMismatchException e) {
+      view.error(e.getMessage());
     }
 
     return item;

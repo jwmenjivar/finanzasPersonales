@@ -3,7 +3,6 @@ package com.finanzaspersonales.presenter.ui;
 import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.Ansi.Color;
 import org.fusesource.jansi.io.Colors;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -91,11 +90,10 @@ public class UIFormatter {
     if (text.length() > space) {
       StringBuilder temp = new StringBuilder();
       int start = 0;
-      int end = space;
 
       while ((text.length() - space) > 0) {
-        temp.append(text, start, end).append("\n");
-        text = text.substring(end);
+        temp.append(text, start, space).append("\n");
+        text = text.substring(space);
       }
 
       text = temp + text;
@@ -152,8 +150,8 @@ public class UIFormatter {
   @NotNull
   public static String headerStyle(@NotNull String header) {
     String output = center(header, MAX_WIDTH);
-    return addNewLine(Ansi.ansi().fg(Colors.roundColor(0, 0)).bg(Color.MAGENTA)
-        .bold().a(output.toUpperCase()).reset().toString());
+    return Ansi.ansi().fg(Colors.roundColor(0, 0)).bg(Color.MAGENTA)
+        .bold().a(output.toUpperCase()).reset().toString() + "\n";
   }
 
   /**
@@ -164,8 +162,8 @@ public class UIFormatter {
    */
   @NotNull
   public static String titleStyle(@NotNull String title) {
-    return addNewLine(Ansi.ansi().bold().fgBrightCyan()
-        .a("== " + title.toUpperCase()).reset().toString());
+    return Ansi.ansi().bold().fgBrightCyan()
+        .a("== " + title.toUpperCase()).reset().toString() + "\n";
   }
 
   /**
@@ -176,7 +174,7 @@ public class UIFormatter {
    */
   @NotNull
   public static String subtitleStyle(String title) {
-    return addNewLine(Ansi.ansi().bold().a(title).reset().toString());
+    return Ansi.ansi().bold().a(title).reset().toString() + "\n";
   }
 
   /**
@@ -214,7 +212,7 @@ public class UIFormatter {
    * @return ANSI String with formatted prompt
    */
   public static String confirmationPromptStyle(@NotNull String message) {
-    return String.format("%s: ",
+    return String.format("%n%s: ",
         Ansi.ansi().fg(Colors.roundColor(0, 0))
             .a(Ansi.Attribute.ITALIC).a(message).reset().toString());
   }
@@ -256,17 +254,7 @@ public class UIFormatter {
     return Ansi.ansi().fg(color).a(text).reset().toString();
   }
 
-  public static int MAX_WIDTH() {
+  public static int maxWidth() {
     return MAX_WIDTH;
-  }
-
-  /**
-   * Adds a new line to the end of a String.
-   * @return String with a new line at the end
-   */
-  @NotNull
-  @Contract(pure = true)
-  public static String addNewLine(String text) {
-    return text + "\n";
   }
 }

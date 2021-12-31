@@ -6,7 +6,7 @@ import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.presenter.input.SimpleInput;
 import com.finanzaspersonales.presenter.input.MenuInput;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
 
 /**
  * Operation to delete an existing transaction.
@@ -24,7 +24,7 @@ public class DeleteTransaction extends Operation {
   private final MenuItem[] deleteOptions =
       new MenuItem[] { new MenuItem("Single"), new MenuItem("All") };
 
-  public DeleteTransaction(MainView view) {
+  public DeleteTransaction(View view) {
     super(view, "Deleting transactions", "Choose what to delete: ");
   }
 
@@ -48,38 +48,33 @@ public class DeleteTransaction extends Operation {
   }
 
   private void deleteSingleTransaction() {
-    view.appendWithoutNewline(
+    view.append(
         UIFormatter.promptStyle("Enter ID", SimpleInput.TEXT));
 
     String id = SimpleInput.readString();
     if (Transactions.exists(id)) {
-      view.appendWithNewline("\n" +
-          UIFormatter.warningStyle("This operation is not reversible. Do you want to continue?"));
+      view.warning("This operation is not reversible. Do you want to continue?");
 
       boolean choice = MenuInput.handleYesNo(view);
 
       if (choice) {
         Transactions.delete(id);
-        view.appendWithNewline(
-            UIFormatter.successStyle("Transaction deleted."));
+        view.success("Transaction deleted.");
       }
     } else {
-      view.appendWithNewline(UIFormatter.errorStyle("Invalid or non existent ID."));
+      view.error("Invalid or non existent ID.");
     }
   }
 
   private void deleteAllTransactions() {
-    view.appendWithNewline(
-        UIFormatter.warningStyle("All the recorded transactions will be deleted."));
-    view.appendWithNewline(
-        UIFormatter.warningStyle("This operation is not reversible. Do you want to continue?"));
+    view.warning("All the recorded transactions will be deleted.\n"+
+        "This operation is not reversible. Do you want to continue?");
 
     boolean choice = MenuInput.handleYesNo(view);
 
     if (choice) {
       Transactions.deleteAll();
-      view.appendWithNewline(
-          UIFormatter.successStyle("Transactions deleted."));
+      view.success("Transactions deleted.");
     }
   }
 }

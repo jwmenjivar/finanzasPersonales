@@ -33,7 +33,7 @@ public class BudgetFormatter extends DataFormatter {
 
   @NotNull
   public static String budgetReport(@NotNull Budget budget, @NotNull Report report) {
-    int screenWidth = UIFormatter.MAX_WIDTH();
+    int screenWidth = UIFormatter.maxWidth();
     int columnSpace = screenWidth / 4;
 
     String budgetH = UIFormatter.textAlignLeft("Budget".toUpperCase(), columnSpace);
@@ -68,35 +68,23 @@ public class BudgetFormatter extends DataFormatter {
     table += reportLine(format, dailyH, dailyTotal, report.getDayExpenses(),
         budget.getDailyTotal() - report.getDayExpenses(), columnSpace);
 
-    return UIFormatter.addNewLine(table);
+    return table + "\n";
   }
 
   @NotNull
   public static String budgetDetailed(@NotNull Budget budget) {
     String formatted = "";
     String detailFormat = "%s %s\n";
-    formatted += String.format(
-        detailFormat,
-        Ansi.ansi().bold().fgBrightDefault()
-            .a(formatInlineText(YEARLY + ":", DETAIL_SPACE)).reset().toString(),
-        AMOUNT_FORMAT.format(budget.getYearlyTotal()));
-    formatted += String.format(
-        detailFormat,
-        Ansi.ansi().bold().fgBrightDefault()
-            .a(formatInlineText(MONTHLY + ":", DETAIL_SPACE)).reset().toString(),
+    formatted += formatDetail(detailFormat, YEARLY,
+        AMOUNT_FORMAT.format(budget.getYearlyTotal()), DETAIL_SPACE);
+    formatted += formatDetail(detailFormat, MONTHLY,
         Ansi.ansi().a(Ansi.Attribute.ITALIC).fgBrightMagenta()
-            .a(AMOUNT_FORMAT.format(budget.getMonthlyTotal())).reset().toString());
-
-    formatted += String.format(
-        detailFormat,
-        Ansi.ansi().bold().fgBrightDefault()
-            .a(formatInlineText(WEEKLY + ":", DETAIL_SPACE)).reset().toString(),
-        AMOUNT_FORMAT.format(budget.getWeeklyTotal()));
-    formatted += String.format(
-        detailFormat,
-        Ansi.ansi().bold().fgBrightDefault()
-            .a(formatInlineText(DAILY + ":", DETAIL_SPACE)).reset().toString(),
-        AMOUNT_FORMAT.format(budget.getDailyTotal()));
+            .a(AMOUNT_FORMAT.format(budget.getMonthlyTotal())).reset().toString(),
+        DETAIL_SPACE);
+    formatted += formatDetail(detailFormat, WEEKLY,
+        AMOUNT_FORMAT.format(budget.getWeeklyTotal()), DETAIL_SPACE);
+    formatted += formatDetail(detailFormat, DAILY,
+        AMOUNT_FORMAT.format(budget.getDailyTotal()), DETAIL_SPACE);
 
     return formatted;
   }

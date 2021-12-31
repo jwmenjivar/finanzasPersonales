@@ -24,6 +24,7 @@ public class DateValidator extends Validator {
    * @param date String date [yyyy-mm-dd]
    */
   public boolean validateDate(@NotNull String date) {
+    this.messages = "";
     String[] parts = date.split("-");
     int year = Integer.parseInt(parts[0]);
     int month = Integer.parseInt(parts[1]);
@@ -44,9 +45,9 @@ public class DateValidator extends Validator {
    */
   private boolean validateDay(int year, int month, int day) {
     if (day == 0) {
-      this.messages += "The day must be greater than zero.\n";
-    } else if (YearMonth.of(year, month).isValidDay(day)) {
-      this.messages += "Invalid day for the month and year provided.\n";
+      this.messages += "The day must be greater than zero.";
+    } else if (!YearMonth.of(year, month).isValidDay(day)) {
+      this.messages += "Invalid day for the month and year provided.";
     } else {
       return true;
     }
@@ -59,9 +60,9 @@ public class DateValidator extends Validator {
    */
   private boolean validateMonth(int month) {
     if (month == 0) {
-      this.messages += "The month must be greater than zero.\n";
+      this.messages += "The month must be greater than zero.";
     } else if (month > 12) {
-      this.messages += "The month must be between 1 and 12.\n";
+      this.messages += "The month must be between 1 and 12.";
     } else {
       return true;
     }
@@ -74,9 +75,9 @@ public class DateValidator extends Validator {
    */
   private boolean validateYear(int year) {
     if (year < 2000) {
-      this.messages += "The minimum year is 2000.\n";
+      this.messages += "The minimum year is 2000.";
     } else if (year > LocalDate.now().getYear()){
-      this.messages += "The maximum year is the current year.\n";
+      this.messages += "The maximum year is the current year.";
     } else {
       return true;
     }

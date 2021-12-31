@@ -8,7 +8,7 @@ import com.finanzaspersonales.presenter.input.SimpleInput;
 import com.finanzaspersonales.presenter.ui.CategoryFormatter;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
 
 /**
  * Operation to update an attribute of an existing category.
@@ -23,7 +23,7 @@ import com.finanzaspersonales.view.MainView;
  */
 public class UpdateCategory extends CategoryData {
 
-  public UpdateCategory(MainView view) {
+  public UpdateCategory(View view) {
     super(view,
         "Updating a Category",
         "Enter an existing name: ",
@@ -42,14 +42,14 @@ public class UpdateCategory extends CategoryData {
    */
   @Override
   protected void operation() {
-    view.appendWithoutNewline(
-        UIFormatter.promptStyle("Enter name", SimpleInput.TEXT));
-
+    view.prompt("Enter name", SimpleInput.TEXT);
     String name = SimpleInput.readString();
-    if (Categories.exists(name)) {
-      view.appendWithNewline("\n" + CategoryFormatter.categoryDetailed(category));
 
-      view.appendWithoutNewline(UIFormatter.subtitleStyle("Choose what to edit: "));
+    if (Categories.exists(name)) {
+      Category category = Categories.getByName(name);
+      view.append("\n" + CategoryFormatter.categoryDetailed(category));
+
+      view.append(UIFormatter.subtitleStyle("\n" + "Choose what to edit: "));
       MenuItem[] menuItems = new MenuItem[]{
           new MenuItem(CategoryFormatter.NAME_H),
           new MenuItem(CategoryFormatter.DESCRIPTION_H),
@@ -59,8 +59,6 @@ public class UpdateCategory extends CategoryData {
       String input = MenuInput.processMenu(menuItems, view);
 
       if (!input.equals("Back")) {
-        Category category = Categories.getByName(name);
-
         switch (input) {
           case CategoryFormatter.NAME_H -> {
             category.setName(inputName());
@@ -76,7 +74,7 @@ public class UpdateCategory extends CategoryData {
       }
 
     } else {
-      view.appendWithNewline(UIFormatter.errorStyle("Invalid or non existent ID."));
+      view.error("Invalid or non existent ID.");
     }
   }
 }

@@ -7,7 +7,7 @@ import com.finanzaspersonales.presenter.input.DataInput;
 import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
 
 import java.time.LocalDate;
 
@@ -23,7 +23,7 @@ import java.time.LocalDate;
  */
 public class CreateTransaction extends TransactionData {
 
-  public CreateTransaction(MainView view) {
+  public CreateTransaction(View view) {
     super(view,
         "Creating a new transaction",
         "Choose the transaction type: ",
@@ -46,7 +46,7 @@ public class CreateTransaction extends TransactionData {
     Category category = inputCategory(type);
     LocalDate date = DataInput.inputDate(view);
 
-    view.appendWithoutNewline(
+    view.append(
         UIFormatter.subtitleStyle("Enter transaction amount and description:"));
     double amount = DataInput.inputAmount(view);
     String description = DataInput.inputDescription(view);

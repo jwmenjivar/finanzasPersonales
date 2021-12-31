@@ -16,10 +16,11 @@ public class AmountValidator extends Validator {
    * Validates if a double amount is correct for a transaction.
    */
   public boolean validateAmount(double amount) {
+    this.messages = "";
     this.isValid = amount > 0;
 
     if (!this.isValid) {
-      this.messages += "The value cannot be zero.\n";
+      this.messages = "The value cannot be zero.";
     }
 
     return this.isValid;

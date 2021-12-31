@@ -1,6 +1,5 @@
 package com.finanzaspersonales.presenter;
 
-import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.operations.*;
 import com.finanzaspersonales.presenter.operations.transaction.CreateTransaction;
 import com.finanzaspersonales.presenter.operations.transaction.DeleteTransaction;
@@ -8,36 +7,25 @@ import com.finanzaspersonales.presenter.operations.transaction.ShowTransactions;
 import com.finanzaspersonales.presenter.operations.transaction.UpdateTransaction;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
-import com.finanzaspersonales.view.MainView;
-import com.finanzaspersonales.view.TransactionView;
+import com.finanzaspersonales.view.View;
+import org.jetbrains.annotations.NotNull;
 
 public class TransactionPresenter extends Presenter {
-  private final TransactionView transactionView;
   private final CreateTransaction createTransaction;
   private final UpdateTransaction updateTransaction;
   private final DeleteTransaction deleteTransaction;
   private final ShowTransactions showTransactions;
   private final ExportOperation exportOperation;
 
-  public TransactionPresenter(TransactionView transactionView) {
-    this.transactionView = transactionView;
-    createTransaction = new CreateTransaction(this.transactionView);
-    updateTransaction = new UpdateTransaction(this.transactionView);
-    deleteTransaction = new DeleteTransaction(this.transactionView);
-    showTransactions = new ShowTransactions(this.transactionView);
-    exportOperation = new ExportOperation(this.transactionView);
-  }
+  public TransactionPresenter(View view) {
+    super(view);
+    createTransaction = new CreateTransaction(this.view);
+    updateTransaction = new UpdateTransaction(this.view);
+    deleteTransaction = new DeleteTransaction(this.view);
+    showTransactions = new ShowTransactions(this.view);
+    exportOperation = new ExportOperation(this.view);
 
-  @Override
-  public void loadView() {
-    String toDisplay = "";
-
-    // HEADER
-    toDisplay += UIFormatter.headerStyle("Transactions");
-    toDisplay = UIFormatter.addNewLine(toDisplay);
-
-    // MENU
-    this.menuItems = new MenuItem[]{
+    menuItems = new MenuItem[]{
         new MenuItem(
             Operation.CREATE,
             "Create a new transaction."),
@@ -51,65 +39,52 @@ public class TransactionPresenter extends Presenter {
             Operation.DELETE,
             "Delete recorded transactions."),
         new MenuItem(
-            "Export",
+            Operation.EXPORT,
             "Export transactions."),
         new MenuItem(
             "Back",
             "Back to the main menu.")};
-    toDisplay += UIFormatter.titleStyle("Transactions menu");
-    toDisplay +=
-        UIFormatter.subtitleStyle(
-            "Write the number or name of the menu option to navigate to that screen.");
-    toDisplay += UIFormatter.menuStyle(menuItems);
-
-    this.transactionView.displayContent(toDisplay);
   }
 
   @Override
-  public Action chooseOperation() {
-    String menuOption = MenuInput.handleMenu(
-        this.menuItems, this.transactionView);
-    Action action = new Action();
-
-    switch (menuOption) {
+  protected Action chooseOperation(@NotNull String operation) {
+    switch (operation) {
       case Operation.CREATE -> {
         createTransaction.operate();
-
-        action.setActionType(Action.ActionType.RELOAD);
-        return action;
+        return Action.RELOAD;
       }
       case Operation.SHOW -> {
         showTransactions.operate();
-
-        action.setActionType(Action.ActionType.RELOAD);
-        return action;
+        return Action.RELOAD;
       }
       case Operation.UPDATE -> {
         updateTransaction.operate();
-
-        action.setActionType(Action.ActionType.RELOAD);
-        return action;
+        return Action.RELOAD;
       }
       case Operation.DELETE -> {
         deleteTransaction.operate();
-
-        action.setActionType(Action.ActionType.RELOAD);
-        return action;
+        return Action.RELOAD;
       }
-      case "Export" -> {
+      case Operation.EXPORT -> {
         exportOperation.operate();
-
-        action.setActionType(Action.ActionType.RELOAD);
-        return action;
+        return Action.RELOAD;
       }
       case "Back" -> {
-        action.setActionType(Action.ActionType.NAVIGATION);
-        action.setNextView(MainView.getMainView());
-        return action;
+        return Action.MENU;
       }
       default -> {
-        return action;
+        return Action.NONE;
       }
     }
+  }
+
+  @Override
+  protected void loadView() {
+    view.initialize(
+        "Transactions",
+        "",
+        "Transactions menu",
+        "Write the number or name of the menu option to navigate to that screen.",
+        UIFormatter.menuStyle(menuItems));
   }
 }

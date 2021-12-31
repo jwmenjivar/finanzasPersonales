@@ -4,7 +4,7 @@ import com.finanzaspersonales.model.AmountValidator;
 import com.finanzaspersonales.model.DateValidator;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
@@ -15,24 +15,20 @@ public class DataInput extends SimpleInput {
    * Executes steps to ask for a transaction amount.
    * Validates the amount against an AmountValidator.
    */
-  public static double inputAmount(@NotNull MainView view) {
-    view.appendWithoutNewline(
-        UIFormatter.promptStyle("Enter amount", SimpleInput.NUMBER));
-
+  public static double inputAmount(@NotNull View view) {
     AmountValidator amountValidator = new AmountValidator();
     double total = 0;
     while(!amountValidator.isValid()) {
       try {
+        view.prompt("Enter amount", SimpleInput.NUMBER);
         total = SimpleInput.readDouble();
 
         if(!amountValidator.validateAmount(total)) {
           total = 0;
-          view.appendWithNewline("\n" +
-              UIFormatter.errorStyle(amountValidator.getMessages().trim()));
+          view.error(amountValidator.getMessages());
         }
       } catch (Exception e) {
-        view.appendWithNewline("\n" +
-            UIFormatter.errorStyle(e.getMessage()));
+        view.error(e.getMessage());
       }
     }
 
@@ -43,9 +39,8 @@ public class DataInput extends SimpleInput {
    * Executes steps to ask for a transaction description.
    */
   @NotNull
-  public static String inputDescription(@NotNull MainView view) {
-    view.appendWithoutNewline(
-        UIFormatter.promptStyle("Enter description", SimpleInput.TEXT));
+  public static String inputDescription(@NotNull View view) {
+    view.prompt("Enter description", SimpleInput.NUMBER);
     return SimpleInput.readString();
   }
 
@@ -53,8 +48,8 @@ public class DataInput extends SimpleInput {
    * Executes steps to ask for a transaction date.
    * Validates the date against an DateValidator.
    */
-  public static LocalDate inputDate(@NotNull MainView view) {
-    view.appendWithoutNewline(UIFormatter.subtitleStyle("Choose the date: "));
+  public static LocalDate inputDate(@NotNull View view) {
+    view.append(UIFormatter.subtitleStyle("Choose the date: "));
     MenuItem[] menuItems = new MenuItem[]{new MenuItem("Today"), new MenuItem("Other day")};
 
     String input = MenuInput.processMenu(menuItems, view);
@@ -62,7 +57,7 @@ public class DataInput extends SimpleInput {
     if (input.equals("Today")) {
       return LocalDate.now();
     } else {
-      view.appendWithoutNewline(
+      view.append(
           UIFormatter.subtitleStyle("Input the date:"));
       String date = readDate(view);
       return LocalDate.parse(date);
@@ -72,26 +67,24 @@ public class DataInput extends SimpleInput {
   /**
    * Reads a date with the DateTimeFormatter.ISO_LOCAL_DATE format.
    */
-  private static String readDate(MainView view) {
+  private static String readDate(View view) {
     String date = "";
 
     DateValidator dateValidator = new DateValidator();
     while(!dateValidator.isValid()) {
       try {
-        view.appendWithoutNewline(
-            UIFormatter.promptStyle("Enter the date", SimpleInput.DATE));
+        view.prompt("Enter date", SimpleInput.DATE);
         date = SimpleInput.readDate();
 
         if (!dateValidator.validateDate(date)) {
           date = "";
-          view.appendWithNewline("\n" +
-              UIFormatter.errorStyle(dateValidator.getMessages().trim()));
+          view.error(dateValidator.getMessages());
         }
       } catch (Exception e) {
-        view.appendWithNewline("\n" +
-            UIFormatter.errorStyle(e.getMessage()));
+        view.error(e.getMessage());
       }
     }
+    view.append("\n");
 
     return date;
   }

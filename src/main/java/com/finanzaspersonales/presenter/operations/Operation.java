@@ -2,7 +2,7 @@ package com.finanzaspersonales.presenter.operations;
 
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.presenter.input.SimpleInput;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
 
 import java.io.IOException;
 
@@ -19,12 +19,13 @@ public abstract class Operation {
   public static final String DELETE = "Delete";
   public static final String ENABLE = "Enable";
   public static final String DISABLE = "Disable";
+  public static final String EXPORT = "Export";
 
-  protected MainView view;
+  protected View view;
   protected final String title;
   protected final String subtitle;
 
-  protected Operation(MainView view, String title, String subtitle) {
+  protected Operation(View view, String title, String subtitle) {
     this.view = view;
     this.title = title;
     this.subtitle = subtitle;
@@ -32,30 +33,17 @@ public abstract class Operation {
 
   public void operate() {
     startOperation();
-    try {
-      operation();
-    } catch (Exception ex) {
-      System.out.println(ex);
-    }
-    endOperation();
+    operation();
+    view.pressContinue();
   }
 
-  protected void operation() throws IOException { }
+  protected void operation() { }
 
   /**
    * Displays the title and subtitle in the view.
    */
   protected void startOperation() {
-    view.appendWithoutNewline(UIFormatter.titleStyle(title));
-    view.appendWithoutNewline(UIFormatter.subtitleStyle(subtitle));
-  }
-
-  /**
-   * Ends operation with a confirmation prompt.
-   */
-  protected void endOperation() {
-    view.appendWithoutNewline(
-        UIFormatter.confirmationPromptStyle("[Press ENTER to continue]"));
-    SimpleInput.readString();
+    view.append(UIFormatter.titleStyle(title));
+    view.append(UIFormatter.subtitleStyle(subtitle));
   }
 }

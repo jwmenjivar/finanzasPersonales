@@ -8,7 +8,7 @@ import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.TransactionFormatter;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.presenter.input.SimpleInput;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
 
 /**
  * Operation to update an attribute of an existing transaction.
@@ -23,7 +23,7 @@ import com.finanzaspersonales.view.MainView;
  */
 public class UpdateTransaction extends TransactionData {
 
-  public UpdateTransaction(MainView view) {
+  public UpdateTransaction(View view) {
     super(view,
         "Updating a transaction",
         "Enter an existing ID: ",
@@ -41,16 +41,14 @@ public class UpdateTransaction extends TransactionData {
    */
   @Override
   protected void operation() {
-    view.appendWithoutNewline(
-        UIFormatter.promptStyle("Enter ID", SimpleInput.TEXT));
+    String print = UIFormatter.promptStyle("Enter ID", SimpleInput.TEXT);
 
     String id = SimpleInput.readString();
     if (Transactions.exists(id)) {
       Transaction transaction = Transactions.getByID(id);
-      view.appendWithNewline("\n" +
-          TransactionFormatter.transactionDetailed(transaction));
+      print += "\n" + TransactionFormatter.transactionDetailed(transaction);
 
-      view.appendWithoutNewline(UIFormatter.subtitleStyle("Choose what to edit: "));
+      print += UIFormatter.subtitleStyle("Choose what to edit: ");
       MenuItem[] menuItems = new MenuItem[]{
           new MenuItem(TransactionFormatter.AMOUNT_H),
           new MenuItem(TransactionFormatter.DATE_H),
@@ -59,6 +57,7 @@ public class UpdateTransaction extends TransactionData {
           new MenuItem("Back")
       };
 
+      view.append(print);
       String input = MenuInput.processMenu(menuItems, view);
 
       switch (input) {
@@ -78,7 +77,7 @@ public class UpdateTransaction extends TransactionData {
         showResult(transaction);
       }
     } else {
-      view.appendWithNewline(UIFormatter.errorStyle("Invalid or non existent ID."));
+      view.error("Invalid or non existent ID.");
     }
   }
 }

@@ -36,21 +36,21 @@ public class Categories {
   }
 
   public static boolean exists(@NotNull String name) {
-    if (!name.isEmpty())
+    if (name.isEmpty())
       return false;
 
     return Database.db().categoryExists(name);
   }
 
   public static boolean hasTransactions(@NotNull String name) {
-    if (!name.isEmpty())
+    if (name.isEmpty())
       return false;
 
     return Database.db().categoryHasTransactions(name);
   }
 
   public static void delete(@NotNull String name) {
-    if (!name.isEmpty()) {
+    if (name.isEmpty()) {
       Database.db().deleteCategory(name);
     }
   }

@@ -6,7 +6,7 @@ import com.finanzaspersonales.presenter.operations.Operation;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.TransactionFormatter;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
 abstract class TransactionData extends Operation {
   protected final String success;
 
-  TransactionData(MainView view, String title, String subtitle, String success) {
+  TransactionData(View view, String title, String subtitle, String success) {
     super(view, title, subtitle);
     this.success = success;
   }
@@ -37,7 +37,7 @@ abstract class TransactionData extends Operation {
       categoryOptions.add(new MenuItem(c.getName(), c.getDescription()));
     }
     MenuItem[] menuItems = categoryOptions.toArray(new MenuItem[0]);
-    view.appendWithoutNewline(UIFormatter.subtitleStyle("Choose the category type: "));
+    view.append(UIFormatter.subtitleStyle("Choose the category type: "));
     String input = MenuInput.processMenu(menuItems, view);
 
     return Categories.getByName(input);
@@ -47,10 +47,9 @@ abstract class TransactionData extends Operation {
    * Shows the transaction after applying the operation.
    */
   protected void showResult(Transaction transaction) {
-    view.appendWithNewline(
-        UIFormatter.successStyle(success));
-    view.appendWithNewline("\n" +
-        UIFormatter.highlightStyle("Transaction:"));
-    view.appendWithoutNewline(TransactionFormatter.transactionDetailed(transaction));
+    view.success(success);
+    view.append("\n" +
+        UIFormatter.highlightStyle("Transaction:") + "\n");
+    view.append(TransactionFormatter.transactionDetailed(transaction));
   }
 }

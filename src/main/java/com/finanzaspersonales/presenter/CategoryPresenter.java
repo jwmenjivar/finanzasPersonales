@@ -1,6 +1,5 @@
 package com.finanzaspersonales.presenter;
 
-import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.operations.*;
 import com.finanzaspersonales.presenter.operations.category.CreateCategory;
 import com.finanzaspersonales.presenter.operations.category.DeleteCategory;
@@ -8,34 +7,23 @@ import com.finanzaspersonales.presenter.operations.category.ShowCategories;
 import com.finanzaspersonales.presenter.operations.category.UpdateCategory;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
-import com.finanzaspersonales.view.CategoryView;
-import com.finanzaspersonales.view.MainView;
+import com.finanzaspersonales.view.View;
+import org.jetbrains.annotations.NotNull;
 
 public class CategoryPresenter extends Presenter {
-  private final CategoryView categoryView;
   private final CreateCategory createCategory;
   private final ShowCategories showCategories;
   private final DeleteCategory deleteCategory;
   private final UpdateCategory updateCategory;
 
-  public CategoryPresenter(CategoryView categoryView) {
-    this.categoryView = categoryView;
-    createCategory = new CreateCategory(this.categoryView);
-    showCategories = new ShowCategories(this.categoryView);
-    deleteCategory = new DeleteCategory(this.categoryView);
-    updateCategory = new UpdateCategory(this.categoryView);
-  }
+  public CategoryPresenter(View view) {
+    super(view);
+    createCategory = new CreateCategory(this.view);
+    showCategories = new ShowCategories(this.view);
+    deleteCategory = new DeleteCategory(this.view);
+    updateCategory = new UpdateCategory(this.view);
 
-  @Override
-  public void loadView() {
-    String toDisplay = "";
-
-    // HEADER
-    toDisplay += UIFormatter.headerStyle("Categories");
-    toDisplay = UIFormatter.addNewLine(toDisplay);
-
-    // MENU
-    this.menuItems = new MenuItem[]{
+    menuItems = new MenuItem[]{
         new MenuItem(
             Operation.CREATE,
             "Create new category."),
@@ -51,54 +39,43 @@ public class CategoryPresenter extends Presenter {
         new MenuItem(
             "Back",
             "Back to the main menu.")};
-    toDisplay += UIFormatter.titleStyle("Categories menu");
-    toDisplay +=
-        UIFormatter.subtitleStyle(
-            "Write the number or name of the menu option to navigate to that screen.");
-    toDisplay += UIFormatter.menuStyle(menuItems);
-
-    this.categoryView.displayContent(toDisplay);
   }
 
   @Override
-  public Action chooseOperation() {
-    String menuOption = MenuInput.handleMenu(
-        this.menuItems, this.categoryView);
-    Action action = new Action();
-
-    switch (menuOption) {
+  protected Action chooseOperation(@NotNull String operation) {
+    switch (operation) {
       case Operation.CREATE -> {
         createCategory.operate();
-
-        action.setActionType(Action.ActionType.RELOAD);
-        return action;
+        return Action.RELOAD;
       }
       case Operation.SHOW -> {
         showCategories.operate();
-
-        action.setActionType(Action.ActionType.RELOAD);
-        return action;
+        return Action.RELOAD;
       }
       case Operation.DELETE -> {
         deleteCategory.operate();
-
-        action.setActionType(Action.ActionType.RELOAD);
-        return action;
+        return Action.RELOAD;
       }
       case Operation.UPDATE -> {
         updateCategory.operate();
-
-        action.setActionType(Action.ActionType.RELOAD);
-        return action;
+        return Action.RELOAD;
       }
       case "Back" -> {
-        action.setActionType(Action.ActionType.NAVIGATION);
-        action.setNextView(MainView.getMainView());
-        return action;
+        return Action.MENU;
       }
       default -> {
-        return action;
+        return Action.NONE;
       }
     }
+  }
+
+  @Override
+  protected void loadView() {
+    view.initialize(
+        "Categories",
+        "",
+        "Categories menu",
+        "Write the number or name of the menu option to navigate to that screen.",
+        UIFormatter.menuStyle(menuItems));
   }
 }
