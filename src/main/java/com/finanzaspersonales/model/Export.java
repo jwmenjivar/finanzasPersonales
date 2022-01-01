@@ -119,8 +119,17 @@ public class Export {
       System.setProperty("log4j.configurationFile", "./path_to_the_log4j2_config_file/log4j2.xml");
       OutputStream out = new FileOutputStream(System.getProperty("user.dir") + "/" + filename);
       workbook.write(out);
+      //  test de envio de correo
+      Mail send = new Mail();
+      send.sendExportFile(System.getProperty("user.dir") + "/" + filename);
+
     } catch (IOException e) {
       throw new IOException("Error exporting the transactions.\n" + e.getMessage());
     }
+    //  end
   }
+
+
+
+
 }
