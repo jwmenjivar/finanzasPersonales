@@ -37,7 +37,8 @@ public class Reports {
         .filter(transaction -> inSameCalendarWeek(transaction.getDate(), LocalDate.now()))
         .mapToDouble(Transaction::getAmount).sum());
     report.setDayExpenses(Arrays.stream(expenses)
-        .filter(transaction -> transaction.getDate().getDayOfMonth() == LocalDate.now().getDayOfMonth())
+        .filter(transaction -> transaction.getDate().getDayOfMonth() == LocalDate.now()
+                .getDayOfMonth())
         .mapToDouble(Transaction::getAmount).sum());
 
     report.setMonthIncome(Arrays.stream(income)
@@ -47,13 +48,15 @@ public class Reports {
         .filter(transaction -> inSameCalendarWeek(transaction.getDate(), LocalDate.now()))
         .mapToDouble(Transaction::getAmount).sum());
     report.setDayIncome(Arrays.stream(income)
-        .filter(transaction -> transaction.getDate().getDayOfMonth() == LocalDate.now().getDayOfMonth())
+        .filter(transaction -> transaction.getDate().getDayOfMonth() == LocalDate.now()
+                .getDayOfMonth())
         .mapToDouble(Transaction::getAmount).sum());
 
     return report;
   }
 
-  private static boolean inSameCalendarWeek(@NotNull LocalDate firstDate, @NotNull LocalDate secondDate) {
+  private static boolean inSameCalendarWeek(@NotNull LocalDate firstDate,
+                                            @NotNull LocalDate secondDate) {
     // get a reference to the system of calendar weeks in your default locale
     WeekFields weekFields = WeekFields.of(Locale.getDefault());
     // find out the calendar week for each of the dates
