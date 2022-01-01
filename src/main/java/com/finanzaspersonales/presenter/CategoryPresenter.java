@@ -43,30 +43,26 @@ public class CategoryPresenter extends Presenter {
 
   @Override
   protected Action chooseOperation(@NotNull String operation) {
-    switch (operation) {
+    return switch (operation) {
       case Operation.CREATE -> {
         createCategory.operate();
-        return Action.RELOAD;
+        yield Action.RELOAD;
       }
       case Operation.SHOW -> {
         showCategories.operate();
-        return Action.RELOAD;
+        yield Action.RELOAD;
       }
       case Operation.DELETE -> {
         deleteCategory.operate();
-        return Action.RELOAD;
+        yield Action.RELOAD;
       }
       case Operation.UPDATE -> {
         updateCategory.operate();
-        return Action.RELOAD;
+        yield Action.RELOAD;
       }
-      case "Back" -> {
-        return Action.MENU;
-      }
-      default -> {
-        return Action.NONE;
-      }
-    }
+      case "Back" -> Action.MENU;
+      default -> Action.NONE;
+    };
   }
 
   @Override

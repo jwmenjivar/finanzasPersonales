@@ -56,23 +56,23 @@ public class MenuPresenter extends Presenter {
    */
   @Override
   protected Action chooseOperation(@NotNull String operation) {
-    switch (operation) {
-      case "Transactions" -> { return Action.TRANSACTION; }
-      case "Categories" -> { return Action.CATEGORY; }
-      case "Budget" -> { return Action.BUDGET; }
-      case "Reports" -> { return Action.REPORT; }
+    return switch (operation) {
+      case "Transactions" -> Action.TRANSACTION;
+      case "Categories" -> Action.CATEGORY;
+      case "Budget" -> Action.BUDGET;
+      case "Reports" -> Action.REPORT;
       case "Help" -> {
         view.append(
             UIFormatter.wrapText("This is supposed to be the help."));
         view.pressContinue();
-        return Action.RELOAD;
+        yield Action.RELOAD;
       }
       case "Exit" -> {
         view.append(UIFormatter.highlightStyle("Goodbye."));
-        return Action.EXIT;
+        yield Action.EXIT;
       }
-      default -> { return Action.NONE; }
-    }
+      default -> Action.NONE;
+    };
   }
 
   @Override

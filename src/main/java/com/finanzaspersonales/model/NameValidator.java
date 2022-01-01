@@ -17,7 +17,7 @@ public class NameValidator extends Validator {
   /**
    * Verifies if the name is not null, empty, or already exists.
    */
-  public boolean validateName(String name) {
+  public void validateName(String name) {
     this.messages = "";
     isValid = false;
     if (name == null) {
@@ -29,7 +29,6 @@ public class NameValidator extends Validator {
     } else {
       isValid = true;
     }
-    return isValid;
   }
 }
 

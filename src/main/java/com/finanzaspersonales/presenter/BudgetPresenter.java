@@ -36,22 +36,18 @@ public class BudgetPresenter extends Presenter {
 
   @Override
   protected Action chooseOperation(@NotNull String operation) {
-    switch (operation) {
+    return switch (operation) {
       case Operation.ENABLE -> {
         createBudget.operate();
-        return Action.RELOAD;
+        yield Action.RELOAD;
       }
       case Operation.DISABLE -> {
         deleteBudget.operate();
-        return Action.RELOAD;
+        yield Action.RELOAD;
       }
-      case "Back" -> {
-        return Action.MENU;
-      }
-      default -> {
-        return Action.NONE;
-      }
-    }
+      case "Back" -> Action.MENU;
+      default -> Action.NONE;
+    };
   }
 
   @Override

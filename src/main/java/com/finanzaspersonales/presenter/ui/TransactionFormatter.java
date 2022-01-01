@@ -5,7 +5,6 @@ import org.fusesource.jansi.Ansi;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import java.text.NumberFormat;
 import java.time.format.DateTimeFormatter;
 
 /**

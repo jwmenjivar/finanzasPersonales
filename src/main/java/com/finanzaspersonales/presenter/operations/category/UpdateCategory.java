@@ -60,12 +60,9 @@ public class UpdateCategory extends CategoryData {
 
       if (!input.equals("Back")) {
         switch (input) {
-          case CategoryFormatter.NAME_H -> {
-            category.setName(inputName());
-          }
-          case CategoryFormatter.DESCRIPTION_H -> {
-            category.setDescription(DataInput.inputDescription(view));
-          }
+          case CategoryFormatter.NAME_H -> category.setName(inputName());
+          case CategoryFormatter.DESCRIPTION_H ->
+              category.setDescription(DataInput.inputDescription(view));
           default -> { /* go back */ }
         }
 

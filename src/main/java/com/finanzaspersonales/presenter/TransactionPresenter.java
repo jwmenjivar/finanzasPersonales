@@ -48,34 +48,30 @@ public class TransactionPresenter extends Presenter {
 
   @Override
   protected Action chooseOperation(@NotNull String operation) {
-    switch (operation) {
+    return switch (operation) {
       case Operation.CREATE -> {
         createTransaction.operate();
-        return Action.RELOAD;
+        yield Action.RELOAD;
       }
       case Operation.SHOW -> {
         showTransactions.operate();
-        return Action.RELOAD;
+        yield Action.RELOAD;
       }
       case Operation.UPDATE -> {
         updateTransaction.operate();
-        return Action.RELOAD;
+        yield Action.RELOAD;
       }
       case Operation.DELETE -> {
         deleteTransaction.operate();
-        return Action.RELOAD;
+        yield Action.RELOAD;
       }
       case Operation.EXPORT -> {
         exportOperation.operate();
-        return Action.RELOAD;
+        yield Action.RELOAD;
       }
-      case "Back" -> {
-        return Action.MENU;
-      }
-      default -> {
-        return Action.NONE;
-      }
-    }
+      case "Back" -> Action.MENU;
+      default -> Action.NONE;
+    };
   }
 
   @Override

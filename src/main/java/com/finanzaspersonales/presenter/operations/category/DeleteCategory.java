@@ -5,7 +5,6 @@ import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.input.SimpleInput;
 import com.finanzaspersonales.presenter.operations.Operation;
 import com.finanzaspersonales.presenter.ui.MenuItem;
-import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.View;
 
 /**

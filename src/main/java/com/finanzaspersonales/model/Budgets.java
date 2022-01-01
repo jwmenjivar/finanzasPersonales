@@ -2,8 +2,6 @@ package com.finanzaspersonales.model;
 
 import org.jetbrains.annotations.NotNull;
 
-import javax.xml.crypto.Data;
-
 public class Budgets {
 
   private Budgets() { }

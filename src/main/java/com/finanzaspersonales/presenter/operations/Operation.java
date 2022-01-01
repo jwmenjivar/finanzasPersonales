@@ -1,10 +1,7 @@
 package com.finanzaspersonales.presenter.operations;
 
 import com.finanzaspersonales.presenter.ui.UIFormatter;
-import com.finanzaspersonales.presenter.input.SimpleInput;
 import com.finanzaspersonales.view.View;
-
-import java.io.IOException;
 
 /**
  * Represents a transaction CRUD operation.

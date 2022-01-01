@@ -9,6 +9,8 @@ import java.util.Locale;
 
 public class Reports {
 
+  private Reports() { }
+
   @NotNull
   public static Report calculateReport() {
     Report report = new Report();
