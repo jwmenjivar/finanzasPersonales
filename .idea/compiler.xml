@@ -3,9 +3,21 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
+<<<<<<< HEAD
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="finanzaspersonales" target="17" />
+=======
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="finzaspersonales" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="finzaspersonales" target="17" />
+>>>>>>> email
     </bytecodeTargetLevel>
   </component>
 </project>

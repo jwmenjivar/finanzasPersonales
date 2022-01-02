@@ -27,10 +27,7 @@ public class Export {
     String valueAmount;
 
     try (HSSFWorkbook workbook = new HSSFWorkbook()) {
-      filename = filename.isEmpty() ? "Export " + LocalDate.now() : filename;
-      filename += ".xls";
       HSSFSheet sheet = workbook.createSheet(filename);
-
       // Font to head
       HSSFFont fontHead = workbook.createFont();
       fontHead.setFontHeightInPoints((short) 12);
@@ -122,5 +119,6 @@ public class Export {
     } catch (IOException e) {
       throw new IOException("Error exporting the transactions.\n" + e.getMessage());
     }
+    //  end
   }
 }
