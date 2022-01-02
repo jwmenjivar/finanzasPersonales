@@ -24,17 +24,11 @@ public class Mail {
     private String from;
     private String pass;
 
-    public void sendExportFile(String pathFile) {
+    public void sendExportFile(String pathFile, String to) {
         //  start
-        Scanner sc = new Scanner(System.in);
-
         String[] dataMail = getDataEmail();
         from = dataMail[0];
         pass = dataMail[1];
-
-        System.out.println("Enter email.: ");
-        String to = sc.nextLine();
-
         String subject = "Transactions sent";
         String sMmessage = "File with exported transactions\n";
 
@@ -52,7 +46,7 @@ public class Mail {
             }
         });
 
-        session.setDebug(true);
+        session.setDebug(false);
 
         try {
 
@@ -73,20 +67,14 @@ public class Mail {
             multipart.addBodyPart(messageBodyPart);
 
             message.setContent(multipart);
-
-            System.out.println("Sending mail...");
-
             Transport.send(message);
-
-            System.out.println("Message sent");
-
         } catch (MessagingException | IOException mex) {
             mex.printStackTrace();
         }
         //  end
     }
 
-    public static String[] getDataEmail() {
+    private static String[] getDataEmail() {
         //  start
         String[] dataMail = {"",""};
         JSONParser jsonParser = new JSONParser();
