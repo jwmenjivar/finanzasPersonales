@@ -19,8 +19,8 @@ public class Category {
   @NotNull private String name;
   private String description = "";
 
-  protected Category(@NotNull Transaction.TransactionType type,
-                     @NotNull String name, String description) {
+  Category(@NotNull Transaction.TransactionType type, @NotNull String name,
+           String description) {
     this.type = type;
     this.name = name;
     this.description = description;

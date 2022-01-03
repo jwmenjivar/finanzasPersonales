@@ -73,6 +73,12 @@ class FakeDB implements Database {
   }
 
   @Override
+  public long countTransactionsByCategory(String name) {
+    return transactions.stream().filter(
+            transaction -> transaction.getCategory().getName().equals(name)).count();
+  }
+
+  @Override
   public Category[] getAllCategories() {
     return categories.toArray(new Category[0]);
   }
@@ -129,12 +135,6 @@ class FakeDB implements Database {
   public boolean categoryExists(String name) {
     return categories.stream().anyMatch(
         category -> category.getName().equals(name));
-  }
-
-  @Override
-  public boolean categoryHasTransactions(String name) {
-    return transactions.stream().anyMatch(
-        transaction -> transaction.getCategory().getName().equals(name));
   }
 
   @Override

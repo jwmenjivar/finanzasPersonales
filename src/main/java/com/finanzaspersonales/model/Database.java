@@ -53,6 +53,11 @@ interface Database {
   boolean transactionExists(String id);
 
   /**
+   * @return Amount of transactions associated to the Category.
+   */
+  long countTransactionsByCategory(String name);
+
+  /**
    * Retrieves an array of all the existing categories.
    */
   Category[] getAllCategories();
@@ -92,12 +97,6 @@ interface Database {
    * @param name Unique category name
    */
   boolean categoryExists(String name);
-
-  /**
-   * Verifies if there are any transactions created with that category
-   * @param name Existing category name
-   */
-  boolean categoryHasTransactions(String name);
 
   /**
    * Retrieves the budget
