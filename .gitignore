@@ -78,4 +78,5 @@ fabric.properties
 
 *.xls
 
+# Ignore the file with the app email info
 src/main/resources/src_email.json
