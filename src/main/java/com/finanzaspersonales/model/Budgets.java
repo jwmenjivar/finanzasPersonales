@@ -2,32 +2,41 @@ package com.finanzaspersonales.model;
 
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Performs all the budget Database interactions.
+ * @author denisse
+ * @version 1.0
+ * @since 1.0
+ */
 public class Budgets {
+  private static final Budget budget = Database.db().getBudget();
 
   private Budgets() { }
 
+  /**
+   * Enables the budget using the given amount.
+   * @return Budget instance.
+   */
   @NotNull
-  public static Budget set(double monthlyAmount) {
-    Budget budget;
-    if (isBudgetSet()) {
-      budget = get();
-      budget.setMonthlyTotal(monthlyAmount);
-    } else {
-      budget = new Budget(monthlyAmount);
-      Database.db().saveBudget(budget);
-    }
+  public static Budget enable(double monthlyAmount) {
+    budget.setMonthlyTotal(monthlyAmount);
+    Database.db().setBudget(budget);
+    return get();
+  }
+
+  /**
+   * @return Budget instance.
+   */
+  @NotNull
+  public static Budget get() {
     return budget;
   }
 
-  public static Budget get() {
-    return Database.db().getBudget();
-  }
-
-  public static boolean isBudgetSet() {
-    return Database.db().getBudget().getMonthlyTotal() > 0;
-  }
-
-  public static void remove() {
-    Database.db().saveBudget(new Budget(0));
+  /**
+   * Disables the current budget by setting the monthly value to zero.
+   */
+  public static void disable() {
+    budget.setMonthlyTotal(0);
+    Database.db().setBudget(budget);
   }
 }

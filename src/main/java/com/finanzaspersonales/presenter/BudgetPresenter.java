@@ -54,8 +54,8 @@ public class BudgetPresenter extends Presenter {
   public void loadView() {
     // CONTENT
     String content = "";
-    if(Budgets.isBudgetSet()) {
-      Budget budget = Budgets.get();
+    Budget budget = Budgets.get();
+    if(budget.isEnabled()) {
       Report report = Reports.calculateReport();
       content += UIFormatter.titleStyle("Budget report");
       content += BudgetFormatter.budgetReport(budget, report);

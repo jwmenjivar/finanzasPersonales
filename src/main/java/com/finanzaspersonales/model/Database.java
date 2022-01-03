@@ -107,7 +107,7 @@ interface Database {
   /**
    * Saves the budget to the database.
    */
-  void saveBudget(Budget budget);
+  void setBudget(Budget budget);
 
   /**
    * Returns the database implementation.

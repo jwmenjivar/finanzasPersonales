@@ -138,7 +138,7 @@ class FakeDB implements Database {
   }
 
   @Override
-  public void saveBudget(Budget budget) {
+  public void setBudget(Budget budget) {
     this.budget = budget;
   }
 

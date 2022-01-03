@@ -16,7 +16,7 @@ public class DeleteBudget extends Operation {
     boolean choice = MenuInput.handleYesNo(view);
 
     if (choice) {
-      Budgets.remove();
+      Budgets.disable();
       view.success("Budget disabled.");
     }
   }

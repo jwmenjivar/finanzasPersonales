@@ -1,5 +1,6 @@
 package com.finanzaspersonales.presenter;
 
+import com.finanzaspersonales.model.Budget;
 import com.finanzaspersonales.model.Budgets;
 import com.finanzaspersonales.model.Reports;
 import com.finanzaspersonales.model.Transactions;
@@ -85,9 +86,10 @@ public class MenuPresenter extends Presenter {
     content += UIFormatter.highlightStyle(
         UIFormatter.center("Today is " + simpleDateFormat.format(new Date()))) + "\n";
 
-    if (Budgets.isBudgetSet()) {
+    Budget budget = Budgets.get();
+    if (budget.isEnabled()) {
       content += UIFormatter.titleStyle("Budget summary");
-      content += BudgetFormatter.budgetSummary(Budgets.get(), Reports.calculateReport());
+      content += BudgetFormatter.budgetSummary(budget, Reports.calculateReport());
     }
 
     content += UIFormatter.titleStyle("Today's transactions");

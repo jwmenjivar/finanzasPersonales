@@ -16,7 +16,7 @@ public class CreateBudget extends Operation {
   @Override
   protected void operation() {
     double amount = DataInput.inputAmount(view);
-    Budget budget = Budgets.set(amount);
+    Budget budget = Budgets.enable(amount);
 
     showResult(budget);
   }
