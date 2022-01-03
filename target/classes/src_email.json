@@ -1,8 +1,6 @@
-[
-  {
-    "data": {
-      "email": "finanzaspersonaleskodigo@gmail.com",
-      "password": "finanzaspersonales"
-    }
+{
+  "data": {
+    "email": "finanzaspersonaleskodigo@gmail.com",
+    "password": "finanzaspersonales"
   }
-]
+}
