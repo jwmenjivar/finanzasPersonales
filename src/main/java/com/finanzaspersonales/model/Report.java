@@ -2,6 +2,13 @@ package com.finanzaspersonales.model;
 
 import lombok.Data;
 
+/**
+ * Represents a report with the current year, current month, current week,
+ * and current day expense and income totals.
+ * @author denisse
+ * @version 1.0
+ * @since 1.0
+ */
 @Data
 public class Report {
   private double yearExpenses;

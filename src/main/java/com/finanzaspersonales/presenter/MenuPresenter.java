@@ -1,9 +1,6 @@
 package com.finanzaspersonales.presenter;
 
-import com.finanzaspersonales.model.Budget;
-import com.finanzaspersonales.model.Budgets;
-import com.finanzaspersonales.model.Reports;
-import com.finanzaspersonales.model.Transactions;
+import com.finanzaspersonales.model.*;
 import com.finanzaspersonales.presenter.ui.BudgetFormatter;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.TransactionFormatter;
@@ -12,6 +9,7 @@ import com.finanzaspersonales.view.View;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -89,7 +87,8 @@ public class MenuPresenter extends Presenter {
     Budget budget = Budgets.get();
     if (budget.isEnabled()) {
       content += UIFormatter.titleStyle("Budget summary");
-      content += BudgetFormatter.budgetSummary(budget, Reports.calculateReport());
+      Report report = Reports.calculateYearReport(LocalDate.now().getYear());
+      content += BudgetFormatter.budgetSummary(budget, report);
     }
 
     content += UIFormatter.titleStyle("Today's transactions");

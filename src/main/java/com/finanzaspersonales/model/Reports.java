@@ -7,17 +7,27 @@ import java.time.temporal.WeekFields;
 import java.util.Arrays;
 import java.util.Locale;
 
+/**
+ * Generates a report.
+ * @author denisse
+ * @version 1.0
+ * @since 1.0
+ */
 public class Reports {
 
   private Reports() { }
 
+  /**
+   * Calculates the expenses and income for the given year, and the total the current month,
+   * the current week, and the current day.
+   * @return Report instance with the calculated values.
+   */
   @NotNull
-  public static Report calculateReport() {
+  public static Report calculateYearReport(int year) {
     Report report = new Report();
 
-    int thisYear = LocalDate.now().getYear();
     Transaction[] yearTransactions = Arrays.stream(Database.db().getAllTransactions())
-        .filter(transaction -> transaction.getDate().getYear() == thisYear)
+        .filter(transaction -> transaction.getDate().getYear() == year)
         .toArray(Transaction[]::new);
     Transaction[] expenses = Arrays.stream(yearTransactions)
         .filter(transaction -> transaction.getType() == Transaction.TransactionType.EXPENSE)
@@ -26,12 +36,9 @@ public class Reports {
         .filter(transaction -> transaction.getType() == Transaction.TransactionType.INCOME)
         .toArray(Transaction[]::new);
 
-    // get the total amount expended and earned
+    // get the total amount expended in the current year, month, week and day
     report.setYearExpenses(Arrays.stream(expenses)
         .mapToDouble(Transaction::getAmount).sum());
-    report.setYearIncome(Arrays.stream(income)
-        .mapToDouble(Transaction::getAmount).sum());
-
     report.setMonthExpenses(Arrays.stream(expenses)
         .filter(transaction -> transaction.getDate().getMonth() == LocalDate.now().getMonth())
         .mapToDouble(Transaction::getAmount).sum());
@@ -43,6 +50,9 @@ public class Reports {
                 .getDayOfMonth())
         .mapToDouble(Transaction::getAmount).sum());
 
+    // get the total amount earned in the current year, month, week and day
+    report.setYearIncome(Arrays.stream(income)
+        .mapToDouble(Transaction::getAmount).sum());
     report.setMonthIncome(Arrays.stream(income)
         .filter(transaction -> transaction.getDate().getMonth() == LocalDate.now().getMonth())
         .mapToDouble(Transaction::getAmount).sum());

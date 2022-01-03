@@ -13,6 +13,8 @@ import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.View;
 import org.jetbrains.annotations.NotNull;
 
+import java.time.LocalDate;
+
 public class BudgetPresenter extends Presenter {
   private final CreateBudget createBudget;
   private final DeleteBudget deleteBudget;
@@ -56,7 +58,7 @@ public class BudgetPresenter extends Presenter {
     String content = "";
     Budget budget = Budgets.get();
     if(budget.isEnabled()) {
-      Report report = Reports.calculateReport();
+      Report report = Reports.calculateYearReport(LocalDate.now().getYear());
       content += UIFormatter.titleStyle("Budget report");
       content += BudgetFormatter.budgetReport(budget, report);
     }
