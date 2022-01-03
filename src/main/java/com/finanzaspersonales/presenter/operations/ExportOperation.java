@@ -25,7 +25,7 @@ public class ExportOperation extends Operation {
     fileName += ".xls";
 
     try {
-      Export.exportAllTransactions(fileName);
+      Export.exportTransactionsByYear(fileName, LocalDate.now().getYear());
       view.success("Exported transactions");
 
       view.append(UIFormatter.highlightStyle("Send export as email?")+"\n");

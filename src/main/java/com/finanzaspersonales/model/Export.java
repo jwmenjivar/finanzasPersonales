@@ -10,17 +10,28 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.NumberFormat;
+import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.TextStyle;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Exports transactions to files.
+ * @author mario
+ * @version 1.0
+ * @since 1.0
+ */
 public class Export {
 
   private Export() { }
 
-  public static void exportAllTransactions(String filename) throws IOException {
+  /**
+   * Exports all the transactions into an Excel file.
+   * @param filename Name of the exported file.
+   */
+  public static void exportTransactionsByYear(String filename, int year) throws IOException {
     // start
     String date;
     String valueAmount;
@@ -56,7 +67,9 @@ public class Export {
       }
 
       // Access the database to get all the transactions
-      Transaction[] transactions = Transactions.getAll();
+      Transaction[] transactions = Arrays.stream(Transactions.getAll())
+          .filter(transaction -> transaction.getDate().getYear() == year)
+          .toArray(Transaction[]::new);
 
       // Write all the transactions row by row
       Locale locale = new Locale("en", "US");
