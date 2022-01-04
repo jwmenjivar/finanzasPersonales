@@ -8,6 +8,7 @@ import com.finanzaspersonales.view.View;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
+import java.util.InputMismatchException;
 
 public class DataInput extends SimpleInput {
 
@@ -62,6 +63,21 @@ public class DataInput extends SimpleInput {
       String date = readDate(view);
       return LocalDate.parse(date);
     }
+  }
+
+  public static int inputYear(@NotNull View view) {
+    view.append(
+        UIFormatter.subtitleStyle("Input the year number:"));
+    view.prompt("Enter year", SimpleInput.DATE_YEAR);
+
+    int year;
+    try {
+      year = SimpleInput.readYear();
+    } catch (InputMismatchException e) {
+      view.error("Invalid year. Setting to current year.");
+      year = LocalDate.now().getYear();
+    }
+    return year;
   }
 
   /**

@@ -3,6 +3,7 @@ package com.finanzaspersonales.presenter.operations;
 import com.finanzaspersonales.model.Export;
 import com.finanzaspersonales.model.Mail;
 import com.finanzaspersonales.model.Transactions;
+import com.finanzaspersonales.presenter.input.DataInput;
 import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.input.SimpleInput;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
@@ -10,6 +11,7 @@ import com.finanzaspersonales.view.View;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.InputMismatchException;
 
 public class ExportOperation extends Operation {
 
@@ -21,9 +23,7 @@ public class ExportOperation extends Operation {
   protected void operation() {
     view.warning("The file will be exported to " + System.getProperty("user.dir"));
 
-    view.append(UIFormatter.highlightStyle("Insert the year to export:"));
-    view.prompt("Enter year to export", SimpleInput.NUMBER);
-    int year = SimpleInput.readInteger();
+    int year = DataInput.inputYear(view);
 
     if (Transactions.yearHasTransactions(year)) {
       view.append(UIFormatter.highlightStyle("Default name 'Export [yyyy-mm-dd]':"));

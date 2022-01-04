@@ -18,11 +18,13 @@ public class SimpleInput {
   public static final String OPTIONS = "[integer/name]";
   public static final String NUMBER = "[number]";
   public static final String DATE = "[yyyy-mm-dd]";
+  public static final String DATE_YEAR = "[yyyy]";
   public static final String TEXT = "[text]";
   public static final String YES_NO = "Y/N";
   private static final Scanner scanner = new Scanner(System.in);
   private static final Pattern numericPattern = Pattern.compile("-?\\d+(\\.\\d+)?");
   private static final Pattern datePattern = Pattern.compile("\\d{4}-\\d{1,2}-\\d{2}");
+  private static final Pattern yearPattern = Pattern.compile("\\d{4}");
 
   protected SimpleInput() { }
 
@@ -114,6 +116,20 @@ public class SimpleInput {
   }
 
   /**
+   * Reads a year that follows the [yyyy] format
+   * @return String with [yyyy]
+   */
+  public static int readYear() throws InputMismatchException {
+    String in = scanner.nextLine();
+
+    if (isYear(in)) {
+      return Integer.parseInt(in);
+    }
+
+    throw new InputMismatchException("Invalid date. Valid format [yyyy-mm-dd]");
+  }
+
+  /**
    * Reads a string.
    */
   @NotNull
@@ -140,5 +156,12 @@ public class SimpleInput {
       return false;
     }
     return datePattern.matcher(strDate).matches();
+  }
+
+  private static boolean isYear(String strYear) {
+    if (strYear == null) {
+      return false;
+    }
+    return yearPattern.matcher(strYear).matches();
   }
 }
