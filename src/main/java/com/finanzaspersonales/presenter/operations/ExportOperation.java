@@ -51,8 +51,7 @@ public class ExportOperation extends Operation {
         boolean choice = MenuInput.handleYesNo(view);
 
         if (choice) {
-          view.prompt("Enter email: ", SimpleInput.TEXT);
-          String to = SimpleInput.readString();
+          String to = DataInput.inputEmail(view);
 
           view.append(UIFormatter.highlightStyle("Sending email..."));
           Mail send = new Mail();

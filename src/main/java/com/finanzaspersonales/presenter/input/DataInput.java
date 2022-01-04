@@ -83,6 +83,20 @@ public class DataInput extends SimpleInput {
     return year;
   }
 
+  public static String inputEmail(@NotNull View view) {
+    String to = null;
+    while (to == null) {
+      view.prompt("Enter email: ", SimpleInput.TEXT);
+      try {
+        to = readEmail();
+      } catch (InputMismatchException e) {
+        view.error(e.getMessage());
+      }
+    }
+
+    return to;
+  }
+
   /**
    * Reads a date with the DateTimeFormatter.ISO_LOCAL_DATE format.
    */

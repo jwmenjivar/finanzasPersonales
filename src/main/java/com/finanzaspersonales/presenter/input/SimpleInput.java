@@ -25,6 +25,9 @@ public class SimpleInput {
   private static final Pattern numericPattern = Pattern.compile("-?\\d+(\\.\\d+)?");
   private static final Pattern datePattern = Pattern.compile("\\d{4}-\\d{1,2}-\\d{2}");
   private static final Pattern yearPattern = Pattern.compile("\\d{4}");
+  // from https://www.baeldung.com/java-email-validation-regex
+  private static final Pattern emailPattern = Pattern.compile("^(?=.{1,64}@)[A-Za-z0-9_-]"+
+      "+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
 
   protected SimpleInput() { }
 
@@ -39,24 +42,22 @@ public class SimpleInput {
    */
   @NotNull
   @Contract(pure = true)
-  public static String readMenuOption(@NotNull MenuItem[] options) throws InputMismatchException {
-    String in = scanner.nextLine();
+  static String readMenuOption(@NotNull MenuItem[] options) throws InputMismatchException {
+    String in = readString();
 
-    if (in != null) {
-      if (isNumeric(in)) {
-        int number = Integer.parseInt(in);
-        // number is between 1 and options.size() inclusive
-        boolean withinRange = 0 < number && number <= options.length;
-        if (withinRange) {
-          return options[number - 1].getItem();
-        }
-      } else {
-        for (MenuItem item : options) {
-          // ignoring the case, the name has to match exactly
-          // MAYBE: match the first letter only for quicker navigation
-          if (item.getItem().equalsIgnoreCase(in.toLowerCase())) {
-            return item.getItem();
-          }
+    if (isNumeric(in)) {
+      int number = Integer.parseInt(in);
+      // number is between 1 and options.size() inclusive
+      boolean withinRange = 0 < number && number <= options.length;
+      if (withinRange) {
+        return options[number - 1].getItem();
+      }
+    } else {
+      for (MenuItem item : options) {
+        // ignoring the case, the name has to match exactly
+        // MAYBE: match the first letter only for quicker navigation
+        if (item.getItem().equalsIgnoreCase(in.toLowerCase())) {
+          return item.getItem();
         }
       }
     }
@@ -65,8 +66,8 @@ public class SimpleInput {
   }
 
   @NotNull
-  public static String readYesOrNo() throws InputMismatchException {
-    String in = scanner.nextLine();
+  static String readYesOrNo() throws InputMismatchException {
+    String in = readString();
 
     if (in.equals("Y") || in.equals("y") || in.equals("N") || in.equals("n")) {
       return in;
@@ -78,8 +79,8 @@ public class SimpleInput {
   /**
    * Reads a double.
    */
-  public static double readDouble() throws InputMismatchException {
-    String in = scanner.nextLine();
+  static double readDouble() throws InputMismatchException {
+    String in = readString();
 
     if (isNumeric(in)) {
       return Double.parseDouble(in);
@@ -91,8 +92,8 @@ public class SimpleInput {
   /**
    * Reads an integer.
    */
-  public static int readInteger() throws InputMismatchException {
-    String in = scanner.nextLine();
+  static int readInteger() throws InputMismatchException {
+    String in = readString();
 
     if (isNumeric(in)) {
       return Integer.parseInt(in);
@@ -105,28 +106,39 @@ public class SimpleInput {
    * Reads a date that follows the DateTimeFormatter.ISO_LOCAL_DATE
    * @return String with DateTimeFormatter.ISO_LOCAL_DATE date
    */
-  public static String readDate() throws InputMismatchException {
-    String in = scanner.nextLine();
+  @NotNull
+  static String readDate() throws InputMismatchException {
+    String in = readString();
 
-    if (isDate(in)) {
+    if (datePattern.matcher(in).matches()) {
       return in;
     }
 
-    throw new InputMismatchException("Invalid date. Valid format [yyyy-mm-dd]");
+    throw new InputMismatchException("Invalid date. Valid format [yyyy-mm-dd].");
   }
 
   /**
    * Reads a year that follows the [yyyy] format
    * @return String with [yyyy]
    */
-  public static int readYear() throws InputMismatchException {
-    String in = scanner.nextLine();
+  static int readYear() throws InputMismatchException {
+    String in = readString();
 
-    if (isYear(in)) {
+    if (yearPattern.matcher(in).matches()) {
       return Integer.parseInt(in);
     }
 
-    throw new InputMismatchException("Invalid date. Valid format [yyyy-mm-dd]");
+    throw new InputMismatchException("Invalid date. Valid format: [yyyy-mm-dd].");
+  }
+
+  @NotNull
+  static String readEmail() throws InputMismatchException {
+    String in = readString();
+    if (emailPattern.matcher(in.trim()).matches()) {
+      return in;
+    }
+
+    throw new InputMismatchException("Invalid email. Valid format: name@domain.");
   }
 
   /**
@@ -146,22 +158,5 @@ public class SimpleInput {
       return false;
     }
     return numericPattern.matcher(strNum).matches();
-  }
-
-  /**
-   * Verifies if a string is a valid date.
-   */
-  private static boolean isDate(String strDate) {
-    if (strDate == null) {
-      return false;
-    }
-    return datePattern.matcher(strDate).matches();
-  }
-
-  private static boolean isYear(String strYear) {
-    if (strYear == null) {
-      return false;
-    }
-    return yearPattern.matcher(strYear).matches();
   }
 }
