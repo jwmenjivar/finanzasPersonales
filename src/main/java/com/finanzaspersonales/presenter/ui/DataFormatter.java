@@ -13,7 +13,7 @@ import java.text.NumberFormat;
  * @version 1.0
  * @since 1.0
  */
-class DataFormatter {
+abstract class DataFormatter {
   protected static final NumberFormat AMOUNT_FORMAT = NumberFormat.getCurrencyInstance();
 
   DataFormatter() { }
