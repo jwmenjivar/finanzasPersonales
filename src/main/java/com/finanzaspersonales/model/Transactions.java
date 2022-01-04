@@ -4,6 +4,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.stream.IntStream;
 
 /**
  * Performs all the transactions DB operations.
@@ -89,5 +91,20 @@ public class Transactions {
     Transaction[] transactions = getAll();
     return Arrays.stream(transactions)
         .anyMatch(transaction -> transaction.getDate().getYear() == year);
+  }
+
+  @NotNull
+  public static HashMap<Integer, Long> getYearsWithTransactionsCount() {
+    Transaction[] transactions = getAll();
+    int[] years = Arrays.stream(transactions)
+        .mapToInt(transaction -> transaction.getDate().getYear()).distinct().toArray();
+
+    HashMap<Integer, Long> yearsWithTransactionsCount = new HashMap<>();
+    for (int year : years) {
+      long count = Arrays.stream(transactions)
+          .filter(transaction -> transaction.getDate().getYear() == year).count();
+      yearsWithTransactionsCount.put(year, count);
+    }
+    return yearsWithTransactionsCount;
   }
 }

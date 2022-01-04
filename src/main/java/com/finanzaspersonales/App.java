@@ -1,5 +1,6 @@
 package com.finanzaspersonales;
 
+import com.finanzaspersonales.model.Transactions;
 import com.finanzaspersonales.presenter.*;
 import com.finanzaspersonales.presenter.operations.*;
 import com.finanzaspersonales.presenter.operations.category.CreateCategory;

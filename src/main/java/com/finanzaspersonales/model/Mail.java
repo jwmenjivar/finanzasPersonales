@@ -78,7 +78,7 @@ public class Mail {
         //  end
     }
 
-    private static String[] getDataEmail() {
+    private String[] getDataEmail() {
         //  start
         String[] dataMail = {"",""};
         JSONParser jsonParser = new JSONParser();

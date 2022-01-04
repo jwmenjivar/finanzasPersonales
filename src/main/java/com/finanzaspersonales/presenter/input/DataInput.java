@@ -65,6 +65,9 @@ public class DataInput extends SimpleInput {
     }
   }
 
+  /**
+   * Executes steps to ask for a year with the format [yyyy].
+   */
   public static int inputYear(@NotNull View view) {
     view.append(
         UIFormatter.subtitleStyle("Input the year number:"));
