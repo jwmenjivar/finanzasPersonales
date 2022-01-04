@@ -30,7 +30,7 @@ abstract class TransactionData extends Operation {
    * Performs a DB get category operation.
    */
   protected Category inputCategory(Transaction.TransactionType type) {
-    Category[] categories = Categories.getByType(type);
+    Category[] categories = Categories.getAllByType(type);
 
     List<MenuItem> categoryOptions = new ArrayList<>();
     for (Category c : categories) {
@@ -49,7 +49,7 @@ abstract class TransactionData extends Operation {
   protected void showResult(Transaction transaction) {
     view.success(success);
     view.append("\n" +
-        UIFormatter.highlightStyle("Transaction:") + "\n");
+        UIFormatter.highlightStyle("Transaction:"));
     view.append(TransactionFormatter.transactionDetailed(transaction));
   }
 }

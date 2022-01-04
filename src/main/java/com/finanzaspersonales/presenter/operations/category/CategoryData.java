@@ -39,7 +39,7 @@ public class CategoryData extends Operation {
   protected void showResult(Category category) {
     view.append(success);
     view.append("\n" +
-        UIFormatter.highlightStyle("Category:")+ "\n");
+        UIFormatter.highlightStyle("Category:"));
     view.append(CategoryFormatter.categoryDetailed(category));
   }
 }

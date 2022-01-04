@@ -31,7 +31,7 @@ public class MenuPresenter extends Presenter {
     String pattern = "E dd, MMM yyyy";
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
     content += UIFormatter.highlightStyle(
-        UIFormatter.center("Today is " + simpleDateFormat.format(new Date()))) + "\n";
+        UIFormatter.center("Today is " + simpleDateFormat.format(new Date())));
 
     Budget budget = Budgets.get();
     if (budget.isEnabled()) {

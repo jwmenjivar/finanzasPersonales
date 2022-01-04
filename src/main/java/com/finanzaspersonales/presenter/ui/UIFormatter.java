@@ -182,7 +182,7 @@ public class UIFormatter {
   @NotNull
   public static String highlightStyle(String text) {
     return Ansi.ansi().fg(Colors.roundColor(0, 0))
-        .a(text).reset().toString();
+        .a(text).reset().toString() + "\n";
   }
 
   /**
