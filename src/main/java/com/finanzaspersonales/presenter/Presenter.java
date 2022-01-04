@@ -1,8 +1,15 @@
 package com.finanzaspersonales.presenter;
 
 import com.finanzaspersonales.presenter.input.MenuInput;
+import com.finanzaspersonales.presenter.operations.Operational;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.view.View;
+import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Acts upon the model and the view.
@@ -13,29 +20,47 @@ import com.finanzaspersonales.view.View;
  * @since 1.0
  */
 public abstract class Presenter {
+  @Getter private final String name;
   protected final View view;
-  protected MenuItem[] menuItems;
+  protected List<MenuItem> menuItems;
+  protected HashMap<String, Operational> operations;
 
-  protected Presenter(View view) {
+  protected Presenter(View view, String name) {
     this.view = view;
+    this.name = name;
+    operations = new HashMap<>();
+    menuItems = new ArrayList<>();
   }
 
   /**
    * Asks for the user input, validates it, and returns an appropriate action.
    * @return Tells the app what to do next.
    */
-  public Action present() {
+  public String present() {
     loadView();
-    Action action = Action.NONE;
-    while (action == Action.NONE) {
-      String menuOption = MenuInput.handleMenu(menuItems, view);
-      action = chooseOperation(menuOption);
+    String to = "";
+    while (to.isEmpty()) {
+      String menuOption = MenuInput.handleMenu(menuItems.toArray(MenuItem[]::new), view);
+      to = chooseOperation(menuOption);
     }
-    return action;
+    return to;
   }
 
-  protected Action chooseOperation(String operation) {
-    return Action.RELOAD;
+  public void addOperational(@NotNull String name, @NotNull Operational operation,
+                             String description) {
+    operations.put(name, operation);
+    menuItems.add(new MenuItem(name, description));
+  }
+
+  protected String chooseOperation(@NotNull String operation) {
+    String action;
+    try {
+      action = operations.get(operation).operate();
+    } catch (IllegalArgumentException e) {
+      action = "MENU";
+    }
+
+    return action;
   }
 
   /**

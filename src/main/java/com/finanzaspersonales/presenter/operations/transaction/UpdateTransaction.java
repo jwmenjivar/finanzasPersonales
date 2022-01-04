@@ -41,12 +41,12 @@ public class UpdateTransaction extends TransactionData {
    */
   @Override
   protected void operation() {
-    String print = UIFormatter.promptStyle("Enter ID", SimpleInput.TEXT);
-
+    view.prompt("Enter ID", SimpleInput.TEXT);
     String id = SimpleInput.readString();
+
     if (Transactions.exists(id)) {
       Transaction transaction = Transactions.getByID(id);
-      print += "\n" + TransactionFormatter.transactionDetailed(transaction);
+      String print = "\n" + TransactionFormatter.transactionDetailed(transaction);
 
       print += UIFormatter.subtitleStyle("Choose what to edit: ");
       MenuItem[] menuItems = new MenuItem[]{

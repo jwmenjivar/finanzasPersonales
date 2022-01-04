@@ -6,7 +6,6 @@ import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.TransactionFormatter;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.View;
-import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -21,62 +20,12 @@ import java.util.Date;
  */
 public class MenuPresenter extends Presenter {
 
-  /**
-   * Creates a MainPresenter with its designated view
-   */
-  public MenuPresenter(View view) {
-    super(view);
-    menuItems = new MenuItem[]{
-        new MenuItem(
-            "Transactions",
-            "Create, update, search, and delete transactions."),
-        new MenuItem(
-            "Categories",
-            "Create, update, and delete categories."),
-        new MenuItem(
-            "Budget",
-            "Set monthly and category budgets."),
-        new MenuItem(
-            "Reports",
-            "Create monthly, yearly, and category reports to export or email."),
-        new MenuItem(
-            "Help",
-            "User manual."),
-        new MenuItem(
-            "Exit",
-            "Close application."
-        )};
-  }
-
-  /**
-   * Asks the user to choose a menu option and returns an appropriate
-   * action to the application.
-   * @return Action for the app to handle
-   */
-  @Override
-  protected Action chooseOperation(@NotNull String operation) {
-    return switch (operation) {
-      case "Transactions" -> Action.TRANSACTION;
-      case "Categories" -> Action.CATEGORY;
-      case "Budget" -> Action.BUDGET;
-      case "Reports" -> Action.REPORT;
-      case "Help" -> {
-        view.append(
-            UIFormatter.wrapText("This is supposed to be the help."));
-        view.pressContinue();
-        yield Action.RELOAD;
-      }
-      case "Exit" -> {
-        view.append(UIFormatter.highlightStyle("Goodbye."));
-        yield Action.EXIT;
-      }
-      default -> Action.NONE;
-    };
+  public MenuPresenter(View view, String name) {
+    super(view, name);
   }
 
   @Override
   protected void loadView() {
-
     /* CONTENT */
     String content = "";
     String pattern = "E dd, MMM yyyy";
@@ -99,6 +48,6 @@ public class MenuPresenter extends Presenter {
         content,
         "Main menu",
         "Write the number or name of the menu option to navigate to that screen.",
-        UIFormatter.menuStyle(menuItems));
+        UIFormatter.menuStyle(menuItems.toArray(MenuItem[]::new)));
   }
 }

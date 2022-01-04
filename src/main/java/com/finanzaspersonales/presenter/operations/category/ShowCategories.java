@@ -2,7 +2,7 @@ package com.finanzaspersonales.presenter.operations.category;
 
 import com.finanzaspersonales.model.Categories;
 import com.finanzaspersonales.presenter.input.MenuInput;
-import com.finanzaspersonales.presenter.operations.Operation;
+import com.finanzaspersonales.presenter.operations.Procedure;
 import com.finanzaspersonales.presenter.ui.CategoryFormatter;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
@@ -18,7 +18,7 @@ import com.finanzaspersonales.view.View;
  * @version 1.0
  * @since 1.0
  */
-public class ShowCategories extends Operation {
+public class ShowCategories extends Procedure {
   private final MenuItem[] displayOptions =
       new MenuItem[] { new MenuItem("Summarized"), new MenuItem("Detailed") };
 

@@ -4,52 +4,17 @@ import com.finanzaspersonales.model.Budget;
 import com.finanzaspersonales.model.Budgets;
 import com.finanzaspersonales.model.Report;
 import com.finanzaspersonales.model.Reports;
-import com.finanzaspersonales.presenter.operations.CreateBudget;
-import com.finanzaspersonales.presenter.operations.DeleteBudget;
-import com.finanzaspersonales.presenter.operations.Operation;
 import com.finanzaspersonales.presenter.ui.BudgetFormatter;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.View;
-import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 
 public class BudgetPresenter extends Presenter {
-  private final CreateBudget createBudget;
-  private final DeleteBudget deleteBudget;
 
-  public BudgetPresenter(View view) {
-    super(view);
-    createBudget = new CreateBudget(view);
-    deleteBudget = new DeleteBudget(view);
-
-    menuItems = new MenuItem[]{
-        new MenuItem(
-            Operation.ENABLE,
-            "Enable monthly budget."),
-        new MenuItem(
-            Operation.DISABLE,
-            "Disable monthly budget."),
-        new MenuItem(
-            "Back",
-            "Back to the main menu.")};
-  }
-
-  @Override
-  protected Action chooseOperation(@NotNull String operation) {
-    return switch (operation) {
-      case Operation.ENABLE -> {
-        createBudget.operate();
-        yield Action.RELOAD;
-      }
-      case Operation.DISABLE -> {
-        deleteBudget.operate();
-        yield Action.RELOAD;
-      }
-      case "Back" -> Action.MENU;
-      default -> Action.NONE;
-    };
+  public BudgetPresenter(View view, String name) {
+    super(view, name);
   }
 
   @Override
@@ -68,6 +33,6 @@ public class BudgetPresenter extends Presenter {
         content,
         "Budget menu",
         "Write the number or name of the menu option to navigate to that screen.",
-        UIFormatter.menuStyle(menuItems));
+        UIFormatter.menuStyle(menuItems.toArray(MenuItem[]::new)));
   }
 }

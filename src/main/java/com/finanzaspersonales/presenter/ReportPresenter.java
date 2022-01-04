@@ -6,19 +6,8 @@ import com.finanzaspersonales.view.View;
 
 public class ReportPresenter extends Presenter {
 
-  public ReportPresenter(View view) {
-    super(view);
-    menuItems = new MenuItem[]{
-        new MenuItem(
-            "Back",
-            "Back to the main menu.")};
-  }
-
-  @Override
-  protected Action chooseOperation(String operation) {
-    // return to the main view automatically
-    // TODO: show all the reports options
-    return Action.MENU;
+  public ReportPresenter(View view, String name) {
+    super(view, name);
   }
 
   @Override
@@ -28,6 +17,6 @@ public class ReportPresenter extends Presenter {
         "",
         "Reports menu",
         "Write the number or name of the menu option to navigate to that screen.",
-        UIFormatter.menuStyle(menuItems));
+        UIFormatter.menuStyle(menuItems.toArray(MenuItem[]::new)));
   }
 }

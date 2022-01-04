@@ -3,7 +3,7 @@ package com.finanzaspersonales.presenter.operations.category;
 import com.finanzaspersonales.model.Categories;
 import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.input.SimpleInput;
-import com.finanzaspersonales.presenter.operations.Operation;
+import com.finanzaspersonales.presenter.operations.Procedure;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.view.View;
 
@@ -19,7 +19,7 @@ import com.finanzaspersonales.view.View;
  * @version 1.0
  * @since 1.0
  */
-public class DeleteCategory extends Operation {
+public class DeleteCategory extends Procedure {
   private final MenuItem[] deleteOptions =
       new MenuItem[] { new MenuItem("Single"), new MenuItem("All") };
 
