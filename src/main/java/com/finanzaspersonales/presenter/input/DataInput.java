@@ -76,7 +76,7 @@ public class DataInput extends SimpleInput {
         view.prompt("Enter date", SimpleInput.DATE);
         date = SimpleInput.readDate();
 
-        if (!dateValidator.validate(date)) {
+          if (!dateValidator.validate(date)) {
           date = "";
           view.error(dateValidator.getMessages());
         }

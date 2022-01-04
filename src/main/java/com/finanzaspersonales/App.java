@@ -127,13 +127,13 @@ public class App
 
     public void run() {
         // runs the menu presenter
-        String applicationAction = "";
+        Action applicationAction = new Action(ActionType.NONE);
 
-        while (!applicationAction.equals("EXIT")) {
+        while (!applicationAction.getType().equals(ActionType.EXIT)) {
             applicationAction = presenter.present();
 
-            if (!applicationAction.equals("RELOAD")) {
-                presenter = presenterHashMap.get(applicationAction);
+            if (!applicationAction.getType().equals(ActionType.RELOAD)) {
+                presenter = presenterHashMap.get(applicationAction.getNavigateTo());
             }
         }
 

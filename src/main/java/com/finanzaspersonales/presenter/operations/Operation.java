@@ -1,5 +1,7 @@
 package com.finanzaspersonales.presenter.operations;
 
+import com.finanzaspersonales.Action;
+import com.finanzaspersonales.ActionType;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.View;
 
@@ -20,12 +22,12 @@ public abstract class Operation implements Operational {
     this.subtitle = subtitle;
   }
 
-  public String operate() {
+  public Action operate() {
     startOperation();
     operation();
     view.pressContinue();
 
-    return "RELOAD";
+    return new Action(ActionType.RELOAD);
   }
 
   protected void operation() { }

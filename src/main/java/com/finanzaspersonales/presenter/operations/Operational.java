@@ -1,5 +1,7 @@
 package com.finanzaspersonales.presenter.operations;
 
+import com.finanzaspersonales.Action;
+
 public interface Operational {
-  String operate();
+  Action operate();
 }

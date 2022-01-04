@@ -1,15 +1,16 @@
 package com.finanzaspersonales.presenter.operations;
 
+import com.finanzaspersonales.Action;
+import com.finanzaspersonales.ActionType;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
-public class Navigation implements Operational {
-  private final String presenterName;
-
-  public Navigation(String presenterName) {
-    this.presenterName = presenterName;
-  }
+public record Navigation(String presenterName) implements Operational {
 
   @Override
-  public String operate() {
-    return presenterName;
+  @NotNull
+  @Contract(" -> new")
+  public Action operate() {
+    return new Action(ActionType.NAVIGATE, presenterName);
   }
 }

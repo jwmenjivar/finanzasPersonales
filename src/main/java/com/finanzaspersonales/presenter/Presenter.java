@@ -1,5 +1,7 @@
 package com.finanzaspersonales.presenter;
 
+import com.finanzaspersonales.Action;
+import com.finanzaspersonales.ActionType;
 import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.operations.Operational;
 import com.finanzaspersonales.presenter.ui.MenuItem;
@@ -36,14 +38,14 @@ public abstract class Presenter {
    * Asks for the user input, validates it, and returns an appropriate action.
    * @return Tells the app what to do next.
    */
-  public String present() {
+  public Action present() {
     loadView();
-    String to = "";
-    while (to.isEmpty()) {
+    Action action = new Action(ActionType.NONE);
+    while (action.getType() == ActionType.NONE) {
       String menuOption = MenuInput.handleMenu(menuItems.toArray(MenuItem[]::new), view);
-      to = chooseOperation(menuOption);
+      action = runOperation(menuOption);
     }
-    return to;
+    return action;
   }
 
   public void addOperational(@NotNull String name, @NotNull Operational operation,
@@ -52,12 +54,12 @@ public abstract class Presenter {
     menuItems.add(new MenuItem(name, description));
   }
 
-  protected String chooseOperation(@NotNull String operation) {
-    String action;
+  protected Action runOperation(@NotNull String operation) {
+    Action action;
     try {
       action = operations.get(operation).operate();
     } catch (IllegalArgumentException e) {
-      action = "MENU";
+      action = new Action(ActionType.NAVIGATE, "MENU");
     }
 
     return action;
