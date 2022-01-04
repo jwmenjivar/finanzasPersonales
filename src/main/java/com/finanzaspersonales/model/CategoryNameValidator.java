@@ -12,12 +12,12 @@ import lombok.NoArgsConstructor;
  */
 @Getter
 @NoArgsConstructor
-public class NameValidator extends Validator {
+public final class CategoryNameValidator extends Validator {
 
   /**
    * Verifies if the name is not null, empty, or already exists.
    */
-  public void validateName(String name) {
+  public void validate(String name) {
     this.messages = "";
     isValid = false;
     if (name == null) {

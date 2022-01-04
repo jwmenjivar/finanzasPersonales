@@ -16,13 +16,13 @@ import java.time.YearMonth;
  */
 @Getter
 @NoArgsConstructor
-public class DateValidator extends Validator {
+public final class DateValidator extends Validator {
 
   /**
    * Validates a string with a date following the DateTimeFormatter.ISO_LOCAL_DATE.
    * @param date String date [yyyy-mm-dd]
    */
-  public boolean validateDate(@NotNull String date) {
+  public boolean validate(@NotNull String date) {
     this.messages = "";
     String[] parts = date.split("-");
     int year = Integer.parseInt(parts[0]);

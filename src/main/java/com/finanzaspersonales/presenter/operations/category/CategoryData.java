@@ -1,7 +1,7 @@
 package com.finanzaspersonales.presenter.operations.category;
 
 import com.finanzaspersonales.model.Category;
-import com.finanzaspersonales.model.NameValidator;
+import com.finanzaspersonales.model.CategoryNameValidator;
 import com.finanzaspersonales.presenter.input.SimpleInput;
 import com.finanzaspersonales.presenter.operations.Operation;
 import com.finanzaspersonales.presenter.ui.CategoryFormatter;
@@ -20,12 +20,12 @@ public class CategoryData extends Operation {
     view.append(
         UIFormatter.subtitleStyle("Enter a unique category name:"));
 
-    NameValidator categoryValidator = new NameValidator();
+    CategoryNameValidator categoryValidator = new CategoryNameValidator();
     String name = "";
     while (!categoryValidator.isValid()) {
       view.prompt("Enter name", SimpleInput.TEXT);
       name = SimpleInput.readString();
-      categoryValidator.validateName(name);
+      categoryValidator.validate(name);
 
       if (!categoryValidator.isValid()) {
         name = "";

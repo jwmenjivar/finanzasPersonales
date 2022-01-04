@@ -10,12 +10,13 @@ import lombok.NoArgsConstructor;
  * @since 1.0
  */
 @NoArgsConstructor
-public class AmountValidator extends Validator {
+public final class TransactionAmountValidator extends Validator {
 
   /**
    * Validates if a double amount is correct for a transaction.
+   * @return Returns true if the amount is greater than zero.
    */
-  public boolean validateAmount(double amount) {
+  public boolean validate(double amount) {
     this.messages = "";
     this.isValid = amount > 0;
 
