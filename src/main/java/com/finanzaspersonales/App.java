@@ -45,6 +45,7 @@ public class App
         UpdateTransaction updateTransaction = new UpdateTransaction(application.getView());
         DeleteTransaction deleteTransaction = new DeleteTransaction(application.getView());
         ShowTransactions showTransactions = new ShowTransactions(application.getView());
+        ExportOperation exportOperation = new ExportOperation(application.getView());
         Presenter transactionPresenter =
             new TransactionPresenter(application.getView(), "Transactions");
         transactionPresenter.addOperational(
@@ -55,6 +56,8 @@ public class App
             OperationName.SHOW.getName(), showTransactions, "Show transactions.");
         transactionPresenter.addOperational(
             OperationName.DELETE.getName(), deleteTransaction, "Delete existing transaction.");
+        transactionPresenter.addOperational(
+            OperationName.EXPORT.getName(), exportOperation, "Export existing transaction.");
         transactionPresenter.addOperational(
             OperationName.BACK.getName(), mainMenu, toMainMenu);
 
