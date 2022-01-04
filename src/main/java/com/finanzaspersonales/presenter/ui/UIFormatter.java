@@ -82,18 +82,14 @@ public class UIFormatter {
    */
   @NotNull
   public static String wrapText(@NotNull String text) {
-    return wrapText(text, MAX_WIDTH);
-  }
 
-  @NotNull
-  private static String wrapText(@NotNull String text, int space) {
-    if (text.length() > space) {
+    if (text.length() > MAX_WIDTH) {
       StringBuilder temp = new StringBuilder();
       int start = 0;
 
-      while ((text.length() - space) > 0) {
-        temp.append(text, start, space).append("\n");
-        text = text.substring(space);
+      while ((text.length() - MAX_WIDTH) > 0) {
+        temp.append(text, start, MAX_WIDTH).append("\n");
+        text = text.substring(MAX_WIDTH);
       }
 
       text = temp + text;
