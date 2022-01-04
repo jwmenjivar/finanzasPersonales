@@ -48,7 +48,7 @@ public class Categories {
   /**
    * @return All the categories of the provided type.
    */
-  public static Category[] getByType(@NotNull Transaction.TransactionType type) {
+  public static Category[] getAllByType(@NotNull Transaction.TransactionType type) {
     return Database.db().getCategoriesByType(type);
   }
 

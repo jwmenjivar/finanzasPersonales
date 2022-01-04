@@ -3,6 +3,7 @@ package com.finanzaspersonales.model;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 /**
  * Performs all the transactions DB operations.
@@ -82,5 +83,11 @@ public class Transactions {
    */
   public static void deleteAll() {
     Database.db().deleteAllTransactions();
+  }
+
+  public static boolean yearHasTransactions(int year) {
+    Transaction[] transactions = getAll();
+    return Arrays.stream(transactions)
+        .anyMatch(transaction -> transaction.getDate().getYear() == year);
   }
 }
