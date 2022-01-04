@@ -9,12 +9,12 @@ import com.finanzaspersonales.view.View;
  * @version 1.0
  * @since 1.0
  */
-public abstract class Procedure implements Operational {
+public abstract class Operation implements Operational {
   protected View view;
   protected final String title;
   protected final String subtitle;
 
-  protected Procedure(View view, String title, String subtitle) {
+  protected Operation(View view, String title, String subtitle) {
     this.view = view;
     this.title = title;
     this.subtitle = subtitle;

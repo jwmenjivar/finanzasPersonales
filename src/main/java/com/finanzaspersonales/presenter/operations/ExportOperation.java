@@ -10,7 +10,7 @@ import com.finanzaspersonales.view.View;
 import java.io.IOException;
 import java.time.LocalDate;
 
-public class ExportOperation extends Procedure {
+public class ExportOperation extends Operation {
 
   public ExportOperation(View view) {
     super(view, "Export transactions", "Exporting transactions");
