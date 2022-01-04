@@ -38,38 +38,39 @@ public class App
 
         // Get an instance of the view
         application.setView(View.getView());
-        Presenter menuPresenter = new MenuPresenter(application.getView(), "Menu");
-        Navigation mainMenu = new Navigation(menuPresenter.getName());
 
-        CreateTransaction createTransaction = new CreateTransaction(application.getView());
-        UpdateTransaction updateTransaction = new UpdateTransaction(application.getView());
-        DeleteTransaction deleteTransaction = new DeleteTransaction(application.getView());
-        ShowTransactions showTransactions = new ShowTransactions(application.getView());
-        ExportOperation exportOperation = new ExportOperation(application.getView());
+        /* Create TransactionPresenter with all its operations */
         Presenter transactionPresenter =
             new TransactionPresenter(application.getView(), "Transactions");
+        CreateTransaction createTransaction = new CreateTransaction(application.getView());
         transactionPresenter.addOperational(
             OperationName.CREATE.getName(), createTransaction, "Create a new transaction.");
+        UpdateTransaction updateTransaction = new UpdateTransaction(application.getView());
         transactionPresenter.addOperational(
             OperationName.UPDATE.getName(), updateTransaction, "Update an existing transaction.");
+        ShowTransactions showTransactions = new ShowTransactions(application.getView());
         transactionPresenter.addOperational(
             OperationName.SHOW.getName(), showTransactions, "Show transactions.");
+        DeleteTransaction deleteTransaction = new DeleteTransaction(application.getView());
         transactionPresenter.addOperational(
             OperationName.DELETE.getName(), deleteTransaction, "Delete existing transaction.");
-        transactionPresenter.addOperational(
-            OperationName.EXPORT.getName(), exportOperation, "Export existing transaction.");
+
+        // Instantiate the menu presenter to add the back navigation operation
+        Presenter menuPresenter = new MenuPresenter(application.getView(), "Menu");
+        Navigation mainMenu = new Navigation(menuPresenter.getName());
         transactionPresenter.addOperational(
             OperationName.BACK.getName(), mainMenu, toMainMenu);
 
-        CreateCategory createCategory = new CreateCategory(application.getView());
+        /* Create CategoryPresenter with all its operations */
         UpdateCategory updateCategory = new UpdateCategory(application.getView());
-        DeleteCategory deleteCategory = new DeleteCategory(application.getView());
-        ShowCategories showCategories = new ShowCategories(application.getView());
-        Presenter categoryPresenter = new CategoryPresenter(application.getView(), "Category");
+        Presenter categoryPresenter = new CategoryPresenter(application.getView(), "Categories");
+        CreateCategory createCategory = new CreateCategory(application.getView());
         categoryPresenter.addOperational(
             OperationName.CREATE.getName(), createCategory, "Create a new category.");
+        DeleteCategory deleteCategory = new DeleteCategory(application.getView());
         categoryPresenter.addOperational(
             OperationName.UPDATE.getName(), updateCategory, "Update an existing category.");
+        ShowCategories showCategories = new ShowCategories(application.getView());
         categoryPresenter.addOperational(
             OperationName.SHOW.getName(), showCategories, "Show categories.");
         categoryPresenter.addOperational(
@@ -77,28 +78,31 @@ public class App
         categoryPresenter.addOperational(
             OperationName.BACK.getName(), mainMenu, toMainMenu);
 
-        CreateBudget createBudget = new CreateBudget(application.getView());
-        DeleteBudget deleteBudget = new DeleteBudget(application.getView());
+        /* Create BudgetPresenter with all its operations */
         Presenter budgetPresenter = new BudgetPresenter(application.getView(), "Budget");
+        CreateBudget createBudget = new CreateBudget(application.getView());
         budgetPresenter.addOperational(
             OperationName.CREATE.getName(), createBudget, "Create a monthly budget.");
+        DeleteBudget deleteBudget = new DeleteBudget(application.getView());
         budgetPresenter.addOperational(
             OperationName.DELETE.getName(), deleteBudget, "Disable the monthly budget.");
         budgetPresenter.addOperational(
             OperationName.BACK.getName(), mainMenu, toMainMenu);
 
-        // Create all the presenters and inject them the view
+        /* Create MenuPresenter with all its operations */
         Navigation navigateTransactions = new Navigation(transactionPresenter.getName());
-        Navigation navigateCategories = new Navigation(categoryPresenter.getName());
-        Navigation navigateBudget = new Navigation(budgetPresenter.getName());
-        ExitApp exit = new ExitApp(application.getView());
-
         menuPresenter.addOperational(
             transactionPresenter.getName(), navigateTransactions, "Transaction operations.");
+        Navigation navigateCategories = new Navigation(categoryPresenter.getName());
         menuPresenter.addOperational(
             categoryPresenter.getName(), navigateCategories, "Category operations.");
+        Navigation navigateBudget = new Navigation(budgetPresenter.getName());
         menuPresenter.addOperational(
             budgetPresenter.getName(), navigateBudget, "Budget operations.");
+        ExportOperation exportOperation = new ExportOperation(application.getView());
+        menuPresenter.addOperational(
+            OperationName.EXPORT.getName(), exportOperation, "Export existing transaction.");
+        ExitApp exit = new ExitApp(application.getView());
         menuPresenter.addOperational(
             "Exit", exit, "Exit application.");
 
@@ -126,7 +130,7 @@ public class App
         String applicationAction = "";
 
         while (!applicationAction.equals("EXIT")) {
-            applicationAction = runPresenter();
+            applicationAction = presenter.present();
 
             if (!applicationAction.equals("RELOAD")) {
                 presenter = presenterHashMap.get(applicationAction);
@@ -138,13 +142,5 @@ public class App
 
     public void exit() {
         System.exit(0);
-    }
-
-    public String runPresenter() {
-        return presenter.present();
-    }
-
-    public void setPresenter(@NotNull String name) {
-        presenter = presenterHashMap.get(name);
     }
 }
