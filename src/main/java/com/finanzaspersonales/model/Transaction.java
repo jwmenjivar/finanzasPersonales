@@ -22,26 +22,8 @@ public class Transaction {
   private String description = "";
   private double amount;
 
-  protected Transaction(@NotNull TransactionType type) {
+  Transaction(@NotNull TransactionType type) {
     this.type = type;
-  }
-
-  /**
-   * Makes a transaction of type INCOME.
-   * @return Transaction
-   */
-  @NotNull
-  public static Transaction makeIncomeTransaction() {
-    return new Transaction(TransactionType.INCOME);
-  }
-
-  /**
-   * Makes a transaction of type EXPENSE.
-   * @return Transaction
-   */
-  @NotNull
-  public static Transaction makeExpenseTransaction() {
-    return new Transaction(TransactionType.EXPENSE);
   }
 
   /**

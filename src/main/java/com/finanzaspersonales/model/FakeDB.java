@@ -195,10 +195,10 @@ class FakeDB implements Database {
     for (int i = 0; i < 200; i++) {
       Transaction t;
       if (this.random.nextInt(2) == 0) {
-        t = Transaction.makeIncomeTransaction();
+        t = new Transaction(Transaction.TransactionType.INCOME);
         t.setCategory(incomeCategories[this.random.nextInt(incomeCategories.length)]);
       } else {
-        t = Transaction.makeExpenseTransaction();
+        t = new Transaction(Transaction.TransactionType.EXPENSE);
         t.setCategory(expenseCategories[this.random.nextInt(expenseCategories.length)]);
       }
       t.setDate(randomDateBetween(ago, now));
