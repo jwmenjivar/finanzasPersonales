@@ -1,8 +1,8 @@
 package com.finanzaspersonales.presenter.ui;
 
-import com.finanzaspersonales.model.Budget;
-import com.finanzaspersonales.model.Report;
-import com.finanzaspersonales.model.Transaction;
+import com.finanzaspersonales.model.data.Budget;
+import com.finanzaspersonales.model.data.Report;
+import com.finanzaspersonales.model.data.Transaction;
 import org.fusesource.jansi.Ansi;
 import org.jetbrains.annotations.NotNull;
 

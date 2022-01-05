@@ -1,10 +1,10 @@
 package com.finanzaspersonales.presenter.operations;
 
-import com.finanzaspersonales.model.Budgets;
+import com.finanzaspersonales.model.db.Budgets;
 import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.view.View;
 
-public class DeleteBudget extends Operation {
+public class DeleteBudget extends ModelOperation {
 
   public DeleteBudget(View view) {
     super(view, "Disable the budget", "Disabling the budget sets the amount to 0: ");

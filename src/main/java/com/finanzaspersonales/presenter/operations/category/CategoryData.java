@@ -1,14 +1,14 @@
 package com.finanzaspersonales.presenter.operations.category;
 
-import com.finanzaspersonales.model.Category;
-import com.finanzaspersonales.model.CategoryNameValidator;
+import com.finanzaspersonales.model.data.Category;
+import com.finanzaspersonales.model.data.validators.CategoryNameValidator;
 import com.finanzaspersonales.presenter.input.SimpleInput;
-import com.finanzaspersonales.presenter.operations.Operation;
+import com.finanzaspersonales.presenter.operations.ModelOperation;
 import com.finanzaspersonales.presenter.ui.CategoryFormatter;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.View;
 
-public class CategoryData extends Operation {
+public class CategoryData extends ModelOperation {
   protected final String success;
 
   protected CategoryData(View view, String title, String subtitle, String success) {

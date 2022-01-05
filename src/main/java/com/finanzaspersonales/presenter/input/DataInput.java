@@ -1,7 +1,7 @@
 package com.finanzaspersonales.presenter.input;
 
-import com.finanzaspersonales.model.TransactionAmountValidator;
-import com.finanzaspersonales.model.DateValidator;
+import com.finanzaspersonales.model.data.validators.TransactionAmountValidator;
+import com.finanzaspersonales.model.data.validators.DateValidator;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.View;

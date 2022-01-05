@@ -1,6 +1,6 @@
 package com.finanzaspersonales.presenter.ui;
 
-import com.finanzaspersonales.model.Transaction;
+import com.finanzaspersonales.model.data.Transaction;
 import org.fusesource.jansi.Ansi;
 import org.jetbrains.annotations.NotNull;
 

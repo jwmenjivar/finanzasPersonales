@@ -1,7 +1,7 @@
 package com.finanzaspersonales.presenter.operations.category;
 
-import com.finanzaspersonales.model.Categories;
-import com.finanzaspersonales.model.Category;
+import com.finanzaspersonales.model.db.Categories;
+import com.finanzaspersonales.model.data.Category;
 import com.finanzaspersonales.presenter.input.DataInput;
 import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.input.SimpleInput;

@@ -1,8 +1,8 @@
 package com.finanzaspersonales.presenter.operations.transaction;
 
-import com.finanzaspersonales.model.Category;
-import com.finanzaspersonales.model.Transaction;
-import com.finanzaspersonales.model.Transactions;
+import com.finanzaspersonales.model.data.Category;
+import com.finanzaspersonales.model.data.Transaction;
+import com.finanzaspersonales.model.db.Transactions;
 import com.finanzaspersonales.presenter.input.DataInput;
 import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.ui.MenuItem;

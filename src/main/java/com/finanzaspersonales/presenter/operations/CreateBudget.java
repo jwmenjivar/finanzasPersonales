@@ -1,13 +1,13 @@
 package com.finanzaspersonales.presenter.operations;
 
-import com.finanzaspersonales.model.Budget;
-import com.finanzaspersonales.model.Budgets;
+import com.finanzaspersonales.model.data.Budget;
+import com.finanzaspersonales.model.db.Budgets;
 import com.finanzaspersonales.presenter.input.DataInput;
 import com.finanzaspersonales.presenter.ui.BudgetFormatter;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.view.View;
 
-public class CreateBudget extends Operation {
+public class CreateBudget extends ModelOperation {
 
   public CreateBudget(View view) {
     super(view, "Setting the budget", "Input the monthly total: ");

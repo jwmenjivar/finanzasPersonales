@@ -1,8 +1,10 @@
 package com.finanzaspersonales.presenter.operations.transaction;
 
-import com.finanzaspersonales.model.*;
+import com.finanzaspersonales.model.data.Category;
+import com.finanzaspersonales.model.data.Transaction;
+import com.finanzaspersonales.model.db.Categories;
 import com.finanzaspersonales.presenter.input.MenuInput;
-import com.finanzaspersonales.presenter.operations.Operation;
+import com.finanzaspersonales.presenter.operations.ModelOperation;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.TransactionFormatter;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
@@ -17,7 +19,7 @@ import java.util.List;
  * @version 1.0
  * @since 1.0
  */
-abstract class TransactionData extends Operation {
+abstract class TransactionData extends ModelOperation {
   protected final String success;
 
   TransactionData(View view, String title, String subtitle, String success) {

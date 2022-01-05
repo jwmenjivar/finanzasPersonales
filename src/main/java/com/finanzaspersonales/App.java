@@ -1,6 +1,5 @@
 package com.finanzaspersonales;
 
-import com.finanzaspersonales.model.Transactions;
 import com.finanzaspersonales.presenter.*;
 import com.finanzaspersonales.presenter.operations.*;
 import com.finanzaspersonales.presenter.operations.category.CreateCategory;
@@ -15,7 +14,6 @@ import com.finanzaspersonales.view.View;
 import lombok.Getter;
 import lombok.Setter;
 import org.fusesource.jansi.AnsiConsole;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 

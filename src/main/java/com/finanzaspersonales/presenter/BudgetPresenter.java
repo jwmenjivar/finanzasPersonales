@@ -1,9 +1,9 @@
 package com.finanzaspersonales.presenter;
 
-import com.finanzaspersonales.model.Budget;
-import com.finanzaspersonales.model.Budgets;
-import com.finanzaspersonales.model.Report;
-import com.finanzaspersonales.model.Reports;
+import com.finanzaspersonales.model.data.Budget;
+import com.finanzaspersonales.model.db.Budgets;
+import com.finanzaspersonales.model.data.Report;
+import com.finanzaspersonales.model.db.Reports;
 import com.finanzaspersonales.presenter.ui.BudgetFormatter;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;

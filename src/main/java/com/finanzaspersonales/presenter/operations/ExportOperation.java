@@ -1,8 +1,8 @@
 package com.finanzaspersonales.presenter.operations;
 
-import com.finanzaspersonales.model.Export;
-import com.finanzaspersonales.model.Mail;
-import com.finanzaspersonales.model.Transactions;
+import com.finanzaspersonales.model.exporter.Exports;
+import com.finanzaspersonales.model.mailer.Mails;
+import com.finanzaspersonales.model.db.Transactions;
 import com.finanzaspersonales.presenter.input.DataInput;
 import com.finanzaspersonales.presenter.input.MenuInput;
 import com.finanzaspersonales.presenter.input.SimpleInput;
@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ExportOperation extends Operation {
+public class ExportOperation extends ModelOperation {
 
   public ExportOperation(View view) {
     super(view, "Export transactions", "Exporting transactions");
@@ -44,7 +44,7 @@ public class ExportOperation extends Operation {
       fileName += ".xls";
 
       try {
-        Export.exportTransactionsByYear(fileName, year);
+        Exports.exportTransactionsByYear(fileName, year);
         view.success("Exported transactions\n");
 
         view.append(UIFormatter.highlightStyle("Send export as email?"));
@@ -54,7 +54,7 @@ public class ExportOperation extends Operation {
           String to = DataInput.inputEmail(view);
 
           view.append(UIFormatter.highlightStyle("Sending email..."));
-          Mail send = new Mail();
+          Mails send = new Mails();
           send.sendExportFile(System.getProperty("user.dir") + "/" + fileName, to);
 
           view.success("Message sent");

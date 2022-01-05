@@ -1,7 +1,7 @@
 package com.finanzaspersonales.presenter.operations.transaction;
 
-import com.finanzaspersonales.model.Transactions;
-import com.finanzaspersonales.presenter.operations.Operation;
+import com.finanzaspersonales.model.db.Transactions;
+import com.finanzaspersonales.presenter.operations.ModelOperation;
 import com.finanzaspersonales.presenter.ui.MenuItem;
 import com.finanzaspersonales.presenter.ui.UIFormatter;
 import com.finanzaspersonales.presenter.input.SimpleInput;
@@ -20,7 +20,7 @@ import com.finanzaspersonales.view.View;
  * @version 1.0
  * @since 1.0
  */
-public class DeleteTransaction extends Operation {
+public class DeleteTransaction extends ModelOperation {
   private final MenuItem[] deleteOptions =
       new MenuItem[] { new MenuItem("Single"), new MenuItem("All") };
 
