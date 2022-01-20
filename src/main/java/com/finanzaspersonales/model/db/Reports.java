@@ -2,7 +2,6 @@ package com.finanzaspersonales.model.db;
 
 import com.finanzaspersonales.model.data.Report;
 import com.finanzaspersonales.model.data.Transaction;
-import com.finanzaspersonales.model.db.Database;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;

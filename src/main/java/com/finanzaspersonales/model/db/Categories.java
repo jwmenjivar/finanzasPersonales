@@ -2,7 +2,6 @@ package com.finanzaspersonales.model.db;
 
 import com.finanzaspersonales.model.data.Category;
 import com.finanzaspersonales.model.data.Transaction;
-import com.finanzaspersonales.model.db.Database;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

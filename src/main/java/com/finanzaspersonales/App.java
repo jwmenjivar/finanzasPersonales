@@ -119,11 +119,6 @@ public class App
         application.run();
     }
 
-    public static void startJansi() {
-        System.setProperty("jansi.passthrough", "true");
-        AnsiConsole.systemInstall();
-    }
-
     public void run() {
         // runs the menu presenter
         Action applicationAction = new Action(ActionType.NONE);
@@ -139,7 +134,12 @@ public class App
         exit();
     }
 
-    public void exit() {
+    private static void startJansi() {
+        System.setProperty("jansi.passthrough", "true");
+        AnsiConsole.systemInstall();
+    }
+
+    private void exit() {
         System.exit(0);
     }
 }
