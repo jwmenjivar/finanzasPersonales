@@ -21,7 +21,7 @@ public final class TransactionAmountValidator extends Validator {
     this.isValid = amount > 0;
 
     if (!this.isValid) {
-      this.messages = "The value cannot be zero.";
+      this.messages = "Amount value must be greater than zero.";
     }
 
     return this.isValid;
