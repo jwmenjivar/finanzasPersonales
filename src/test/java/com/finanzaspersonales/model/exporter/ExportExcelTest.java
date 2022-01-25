@@ -1,4 +1,4 @@
-package com.finanzaspersonales.model;
+package com.finanzaspersonales.model.exporter;
 
 import com.finanzaspersonales.model.exporter.ExportExcel;
 
