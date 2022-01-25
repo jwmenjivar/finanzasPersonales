@@ -31,16 +31,34 @@ public class App
 
     public static void main(String[] args) {
         startJansi();
+        //She creates an instance of the Class we are currently
+        //Kind of recursive
 
         App application = new App();
+
+        //Don't know what is this for
         final String toMainMenu = "Back to the main menu.";
 
-        // Get an instance of the view
+        // Get an instance of view
+        //HL Explanation of the line below
+        //setView is a Lombock Set in line 25 ooc (of original code)
+        // receives a View.getView() as parameter,
+        // which invokes through interface the "RETURN" and "CONSTRUCTION of ViewImpl data type object",
+        // That ViewImpl data type returned object, is also considered a View type, because ViewImpl implements View
+        // is now set in the view field of application object.
+
         application.setView(View.getView());
 
         /* Create TransactionPresenter with all its operations */
+
+        //She creates a sub-instance of presenter abstract class
+       //using its TransactionPresenter subclass
         Presenter transactionPresenter =
             new TransactionPresenter(application.getView(), "Transactions");
+
+
+
+
         CreateTransaction createTransaction = new CreateTransaction(application.getView());
         transactionPresenter.addOperational(
             OperationName.CREATE.getName(), createTransaction, "Create a new transaction.");
