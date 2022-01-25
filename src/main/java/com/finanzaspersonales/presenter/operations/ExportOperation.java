@@ -44,20 +44,24 @@ public class ExportOperation extends ModelOperation {
       fileName += ".xls";
 
       try {
-        Exports.exportTransactionsByYear(fileName, year);
-        view.success("Exported transactions\n");
+        try {
+          Exports.exportTransactionsByYear(fileName, year);
+          view.success("Exported transactions\n");
 
-        view.append(UIFormatter.highlightStyle("Send export as email?"));
-        boolean choice = MenuInput.handleYesNo(view);
+          view.append(UIFormatter.highlightStyle("Send export as email?"));
+          boolean choice = MenuInput.handleYesNo(view);
 
-        if (choice) {
-          String to = DataInput.inputEmail(view);
+          if (choice) {
+            String to = DataInput.inputEmail(view);
 
-          view.append(UIFormatter.highlightStyle("Sending email..."));
-          Mails send = new Mails();
-          send.sendExportFile(System.getProperty("user.dir") + "/" + fileName, to);
+            view.append(UIFormatter.highlightStyle("Sending email..."));
+            Mails send = new Mails();
+            send.sendExportFile(System.getProperty("user.dir") + "/" + fileName, to);
 
-          view.success("Message sent");
+            view.success("Message sent");
+          }
+        } catch (IllegalArgumentException ex) {
+          view.error(ex.getMessage());
         }
       } catch (IOException e) {
         view.error(e.getMessage());
