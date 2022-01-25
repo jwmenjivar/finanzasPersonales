@@ -53,6 +53,7 @@ public class App
 
         //She creates a sub-instance of presenter abstract class
        //using its TransactionPresenter subclass
+        //This implies that all abstract fields and methods
         Presenter transactionPresenter =
             new TransactionPresenter(application.getView(), "Transactions");
 
