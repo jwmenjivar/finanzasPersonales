@@ -22,6 +22,8 @@ import java.util.List;
 abstract class TransactionData extends ModelOperation {
   protected final String success;
 
+
+  //Create Transactions uses it in line 44 of main of ooc.
   TransactionData(View view, String title, String subtitle, String success) {
     super(view, title, subtitle);
     this.success = success;

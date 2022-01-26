@@ -43,7 +43,7 @@ public class App
         //HL Explanation of the line below
         //setView is a Lombock Set in line 25 ooc (of original code)
         // receives a View.getView() as parameter,
-        // which invokes through interface the "RETURN" and "CONSTRUCTION of ViewImpl data type object",
+        // which invokes <through interface> the "RETURN" and "CONSTRUCTION of ViewImpl data type object",
         // That ViewImpl data type returned object, is also considered a View type, because ViewImpl implements View
         // is now set in the view field of application object.
 
@@ -52,17 +52,45 @@ public class App
         /* Create TransactionPresenter with all its operations */
 
         //She creates a sub-instance of presenter abstract class
-       //using its TransactionPresenter subclass
-        //This implies that all abstract fields and methods
+       //using its TransactionPresenter subclass overloaded constructor
+        //(This implies that all abstract fields and methods are inherited by the subclass)
+        //(As matter of fact there's more fields and methods in the abstract than in the sub)
+        //(which complies with a DRY rule)
+        /*
+        It's very curious, the abstract class has three methods.
+            public Action present()
+            public Void addOperational(overloaded); (this one looks like a setter)
+            protected Action runOperation(overloaded)
+
+            for further comments, refer to the Presenter.java abstract class
+        */
+        //The parameters of the constructor are: The View type object set above and,
+        //the name field, in this case transaction.
+        //Both the object and name field are inherited from the Presenter abstract class
+        //So the question now is, what is this transactionPresenter object going to be used for?
+        //No answer yet
         Presenter transactionPresenter =
             new TransactionPresenter(application.getView(), "Transactions");
 
 
 
 
+        //She now creates a CreateTransaction object type, called createTransaction.
+        //In this case she did not use the abstract class. Why not?? Asked Denisse & gc
+        //pending answer. Current guess, is TransactionData is the abstract class but...
+        // it extends to another abstract class called ModelOperation
+        //
+        // A este constructor tambien le pasamos el View object type, que seteamos arriba
+        //So the question now is, what is the createTransaction object for for?
+        //No answer yet
         CreateTransaction createTransaction = new CreateTransaction(application.getView());
+
+
         transactionPresenter.addOperational(
             OperationName.CREATE.getName(), createTransaction, "Create a new transaction.");
+
+
+
         UpdateTransaction updateTransaction = new UpdateTransaction(application.getView());
         transactionPresenter.addOperational(
             OperationName.UPDATE.getName(), updateTransaction, "Update an existing transaction.");

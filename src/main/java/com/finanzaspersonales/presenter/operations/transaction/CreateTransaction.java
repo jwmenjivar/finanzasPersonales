@@ -23,6 +23,11 @@ import java.time.LocalDate;
  */
 public class CreateTransaction extends TransactionData {
 
+  //The View object type comes from main line 44 ooc
+  //This constructor basiclly takes the View object,
+  //wraps it along with the other String parameters
+  //And sends them back to the Constructor of the parent class
+  //that happens to be an abstract class.
   public CreateTransaction(View view) {
     super(view,
         "Creating a new transaction",
