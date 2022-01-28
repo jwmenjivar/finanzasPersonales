@@ -64,11 +64,12 @@ public class App
 
             for further comments, refer to the Presenter.java abstract class
         */
-        //The parameters of the constructor are: The View type object set above and,
-        //the name field, in this case transaction.
+        //The parameters of the constructor are:
+        /*The View type object set above and,
+        the name field, in this case transaction.*/
         //Both the object and name field are inherited from the Presenter abstract class
         //So the question now is, what is this transactionPresenter object going to be used for?
-        //No answer yet
+        //No answer yet... It is to be used later on main codeline 45 ooc
         Presenter transactionPresenter =
             new TransactionPresenter(application.getView(), "Transactions");
 
@@ -81,11 +82,19 @@ public class App
         // it extends to another abstract class called ModelOperation
         //
         // A este constructor tambien le pasamos el View object type, que seteamos arriba
-        //So the question now is, what is the createTransaction object for for?
+        //So the question now is, what is the createTransaction object for?
         //No answer yet
         CreateTransaction createTransaction = new CreateTransaction(application.getView());
 
-
+        //this object was instantiated above, and we are now using one of its "inherited from Presenter" Super class ();
+        // addOperational()
+        //The argument of addOperational includes
+        /*
+            String for name, so we use an ENUM. then we select CREATE.
+                y luego get name (que es un fieldd del enum en el enum que               obtenemos con lombok, y que se crea con el constructor del                 Enum)
+            An Operational object type,
+            Another String for description
+         */
         transactionPresenter.addOperational(
             OperationName.CREATE.getName(), createTransaction, "Create a new transaction.");
 
