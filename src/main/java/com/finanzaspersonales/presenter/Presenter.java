@@ -48,11 +48,27 @@ public abstract class Presenter {
     return action;
   }
 
+
+  //With addOperational
+  // we put to the hashmap operations
+          /*
+          The name we got from main line 46 of main ooc
+          and an Operational object type
+           */
+  //we add to the menuItems ArrayList
+          /*
+            Se le pasa la construccion de un MenuItem con arguments name, and description
+           */
   public void addOperational(@NotNull String name, @NotNull Operational operation,
                              String description) {
     operations.put(name, operation);
     menuItems.add(new MenuItem(name, description));
   }
+
+
+
+
+  
 
   protected Action runOperation(@NotNull String operation) {
     Action action;

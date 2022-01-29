@@ -95,6 +95,7 @@ public class App
             An Operational object type,
             Another String for description
          */
+        //
         transactionPresenter.addOperational(
             OperationName.CREATE.getName(), createTransaction, "Create a new transaction.");
 
