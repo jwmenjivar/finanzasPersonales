@@ -68,7 +68,7 @@ public abstract class Presenter {
 
 
 
-  
+
 
   protected Action runOperation(@NotNull String operation) {
     Action action;

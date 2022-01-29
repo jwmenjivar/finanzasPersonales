@@ -76,7 +76,7 @@ public class App
 
 
 
-        //She now creates a CreateTransaction object type, called createTransaction.
+        //She now creates a CreateTransaction object type, called createTransaction. (Denisse States is an operational, and as matter of fact it is used as an operational down below)
         //In this case she did not use the abstract class. Why not?? Asked Denisse & gc
         //pending answer. Current guess, is TransactionData is the abstract class but...
         // it extends to another abstract class called ModelOperation
